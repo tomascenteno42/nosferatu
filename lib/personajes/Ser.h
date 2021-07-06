@@ -5,11 +5,11 @@
 #ifndef NOSFERATUV2_SER_H
 #define NOSFERATUV2_SER_H
 
-#include "Objeto.h"
+#include "../objetos/Objeto.h"
 
-class Ser : public Objeto {
+class Ser : public Objeto
+{
 public:
-
     /*
      * Post: Se crea el npc con la posicion Pos
      */
@@ -19,8 +19,6 @@ public:
      * Post: Se muestra por pantalla la informacion del objeto: nombre
      */
     void mostrar_informacion() override;
-
 };
-
 
 #endif //NOSFERATUV2_SER_H

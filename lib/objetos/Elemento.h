@@ -6,13 +6,15 @@
 #define NOSFERATUV2
 
 #include "Objeto.h"
+#include "../excepciones/Excepcion_error.h"
 
-class Elemento : public Objeto {
+class Elemento : public Objeto
+{
 
 protected:
     int cantidad;
-public:
 
+public:
     /* Pre:
      * Post: Crea el item listo para usarse con la posicion pos
      */
@@ -24,9 +26,6 @@ public:
      *
      */
     int obtener_cantidad();
-
-
 };
-
 
 #endif //NOSFERATUV2

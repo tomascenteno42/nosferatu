@@ -1,36 +1,34 @@
-//
-// Created by Lucas Williams on 30/05/2021.
-//
-
 #ifndef NOSFERATUV2_TABLERO_H
 #define NOSFERATUV2_TABLERO_H
 
-#include "Objeto.h"
-#include "Parser.h"
-#include "Contador.h"
+#include "../objetos/Objeto.h"
+#include "../utilidades/Parser.h"
+#include "../utilidades/Contador.h"
+#include "../interfaz/Posicion.h"
 #include <fstream>
 #include <iostream>
 
-class Tablero {
+class Tablero
+{
 private:
     //atributos
-    Objeto*** objetos;
+    Objeto ***objetos;
     int cant_filas;
     int cant_columnas;
-    Contador* contador;
-public:
+    Contador *contador;
 
+public:
     /*
      * Pre: La direccion (dir) es el directorio del archivo "estado.txt"
      * Post: Crea el tablero de tamanio pos_x y pos_y, ambos > 0
      */
-    explicit Tablero(const std::string& dir);
+    explicit Tablero(const std::string &dir);
 
     /*
      * Post: obtiene el objeto en la posicion indicada por parametro
      *       Si no hay ningun objeto en esa posicion, se retorna un NULL
      */
-    Objeto* obtener_elemento_en_posicion(int fila, int columna);
+    Objeto *obtener_elemento_en_posicion(int fila, int columna);
 
     /*
      * Post: obtiene la cantidad de filas
@@ -59,13 +57,13 @@ public:
      * Pre: en la posicion no hay ningun objeto (NULL)
      * Post: Se asigna un objeto en la posicion indicada por parametro
      */
-    void dar_de_alta(int fila, int columna, Objeto* nuevo_objeto);
+    void dar_de_alta(int fila, int columna, Objeto *nuevo_objeto);
 
     /*
      *
      * Post: obtiene la cantidad de
      */
-    int obtener_existentes(const std::string& nombre);
+    int obtener_existentes(const std::string &nombre);
 
     /*
     *
@@ -77,7 +75,7 @@ public:
      * Post: el cuadrante debe ser valido
      * Post: devuelve true si encuentra el objeto hallado en el cuadrante
      */
-    bool existe_objeto_en_cuadrante(const std::string& buscado, Posicion pos_min, Posicion pos_max);
+    bool existe_objeto_en_cuadrante(const std::string &buscado, Posicion pos_min, Posicion pos_max);
 
     /*
      * Post: Libera los recursos asociados
@@ -85,7 +83,6 @@ public:
     ~Tablero();
 
 private:
-
     /* Pre: La cantidad de filas y columnas > 0
      * Post: Reserva en memoria dinamica una matriz
      */
@@ -96,6 +93,5 @@ private:
      */
     bool comparar_objetos(const std::string &buscado, const std::string &hallado);
 };
-
 
 #endif //NOSFERATUV2_TABLERO_H

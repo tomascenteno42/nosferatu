@@ -1,7 +1,3 @@
-//
-// Created by Lucas Williams on 01/06/2021.
-//
-
 #ifndef NOSFERATUV2_MENU_H
 #define NOSFERATUV2_MENU_H
 
@@ -11,9 +7,8 @@
 #include <sstream>
 #include <iomanip>
 
-
-
-enum OPCION {
+enum OPCION
+{
     MOSTRAR_TABLERO = 1,
     MOSTRAR_RESUMEN,
     BUSCAR_POR_CUADRANTE,
@@ -23,11 +18,13 @@ enum OPCION {
     MAX_OPCIONES // Delimitador de opciones
 };
 
-class Menu {
+class Menu
+{
 private:
     //atributos
     int opcion_elegida;
     Tablero *tablero;
+
 public:
     //metodos
 
@@ -68,7 +65,7 @@ public:
      */
     ~Menu();
 
-//cambiar a private
+    //cambiar a private
 public:
     //metodos privados
 
@@ -153,7 +150,6 @@ public:
      * Post: devuelve true si se halla el objeto en el cuadrante elegido
      */
     bool buscar_objeto_en_cuadrante(const std::string &nombre_objeto, CUADRANTE zona);
-
 };
 
 #endif //NOSFERATUV2_MENU_H
