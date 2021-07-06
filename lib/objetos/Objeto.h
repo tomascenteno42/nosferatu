@@ -6,10 +6,11 @@
 #define NOSFERATUV2_OBJETO_H
 
 #include <iostream>
-#include "Constantes.h"
-#include "Excepcion_error.h"
+#include "../../Constantes.h"
+#include "../excepciones/Excepcion_error.h"
 
-class Objeto {
+class Objeto
+{
 
 protected:
     //atributos
@@ -17,12 +18,10 @@ protected:
     char caracter;
 
 public:
-
     /* Pre: -
      * Post: Se crea el objeto con el nombre y caracter pasado por parametro
      */
     explicit Objeto(std::string nombre, char caracter);
-
 
     /* Pre: -
      * Post: Muestra por pantalla la posicion
@@ -34,7 +33,6 @@ public:
      */
     char obtener_caracter();
 
-
     /*
      * Post: obtiene el nombre asignado al objeto
      */
@@ -45,6 +43,5 @@ public:
      */
     virtual ~Objeto(){};
 };
-
 
 #endif //NOSFERATUV2_OBJETO_H

@@ -9,7 +9,8 @@
 #include <iostream>
 #include <exception>
 
-class Excepcion_error : public std::exception {
+class Excepcion_error : public std::exception
+{
 
 private:
     unsigned int posicion;
@@ -23,9 +24,6 @@ public:
     unsigned int obtenerPosicionInvalida();
 
     std::string obtenerDescripcion();
-
-
 };
-
 
 #endif //NOSFERATUV2_EXCEPCION_ERROR_H

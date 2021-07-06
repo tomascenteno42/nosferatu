@@ -1,12 +1,14 @@
 #include <iostream>
-#include "Menu.h"
+#include "../lib/interfaz/Menu.h"
 
 using namespace std;
 
-int main() {
-    Menu* juego = new Menu(PATH_ARCHIVO_ESTADO); // PATH EN CONSTANTES
+int main()
+{
+    Menu *juego = new Menu(PATH_ARCHIVO_ESTADO); // PATH EN CONSTANTES
     bool seguir_jugando = true;
-    while(seguir_jugando){
+    while (seguir_jugando)
+    {
         juego->mostrar_opciones();
         juego->pedir_opcion();
         juego->procesar_opcion();

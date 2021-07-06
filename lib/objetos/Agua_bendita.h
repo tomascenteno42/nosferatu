@@ -6,21 +6,20 @@
 #define NOSFERATUV2_AGUA_BENDITA_H
 
 #include "Elemento.h"
-#include "Excepcion_error.h"
 
-class Agua_bendita : public Elemento {
+class Agua_bendita : public Elemento
+{
 
 private:
     int cantidad;
     static int contador;
-public:
 
+public:
     /* Pre: cantidad > 0
      * Post: item agua_bendita listo para usarse con la cantidad pasada por parametro
      *       Aumenta la cantidad de aguas existentes en 1
      */
     explicit Agua_bendita(int cantidad);
-
 
     /*
      * Post: Se muestra por pantalla la informacion del objeto: Nombre y cantidad
@@ -37,6 +36,5 @@ public:
      */
     ~Agua_bendita() override;
 };
-
 
 #endif //NOSFERATUV2_AGUA_BENDITA_H

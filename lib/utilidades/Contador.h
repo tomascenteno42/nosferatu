@@ -2,10 +2,10 @@
 #define NOSFERATUV2_CONTADOR_H
 
 #include <iostream>
-#include "Constantes.h"
-#include "Clases.h"
+#include "../../Constantes.h"
 
-class Contador {
+class Contador
+{
 private:
 public:
     /*
@@ -17,7 +17,7 @@ public:
      * Se deben haber creado objetos para que la cantidad sea > 0 (No es un requisito)
      * Post: obtiene la cantidad de
      */
-    int obtener_cantidad_existentes(const std::string& nombre);
+    int obtener_cantidad_existentes(const std::string &nombre);
 
     /*
      * Se deben haber creado objetos para que la cantidad sea > 0 (No es un requisito)
@@ -25,6 +25,5 @@ public:
      */
     float obtener_porcentaje(const std::string &nombre);
 };
-
 
 #endif //NOSFERATUV2_CONTADOR_H
