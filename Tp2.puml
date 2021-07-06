@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Objeto {
+nombre:string
+caracter:char
+#mostrar_informacion()
+}
+abstract class Elemento {
+cantidad: int
+}
+class Ser {}
+class Monstruo{}
+
+class Agua_bendita{}
+class Bala{}
+class Estaca{}
+class Cruz{}
+class Escopeta{}
+
+
+class Humano{}
+class Humano_cazador{}
+class Vanesa{}
+
+class Zombie{}
+class Vampiro{}
+class Vampirella{}
+class Nosferatu{}
+
+
+Objeto <|-- Ser
+
+    Ser <|-- Humano
+        Humano <|-- Humano_cazador
+            Humano_cazador <|-- Vanesa
+
+    Ser <|-- Monstruo
+        Monstruo <|-- Zombie
+        Monstruo <|-- Vampiro
+            Vampiro <|-- Nosferatu
+            Vampiro <|-- Vampirella
+
+Objeto <|-- Elemento
+
+    Elemento <|-- Agua_bendita
+    Elemento <|-- Cruz
+    Elemento <|-- Bala
+    Elemento <|-- Estaca
+    Elemento <|-- Escopeta
+
+
+
+
+
+
+@enduml
