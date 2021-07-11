@@ -33,15 +33,15 @@ const std::string S_ESCOPETA = "escopeta";
 
 const int MAX_OBJETOS = 12;
 
-const std::string PATH_ARCHIVO_ESTADO = "estado.txt";
+const std::string PATH_ARCHIVO_ESTADO = "archivos/estado.txt";
 
-
-enum ENUM_OBJETOS {
+enum ENUM_OBJETOS
+{
     HUMANO = 1,
     HUMANO_CV,
-    ZOMBIE,     // ZOMBIE = 2
-    VAMPIRO,    // VAMPIRO = 3
-    VAMPIRELLA, // ETC
+    ZOMBIE,
+    VAMPIRO,
+    VAMPIRELLA,
     NOSFERATU,
     VANESA,
     AGUA_BENDITA,
@@ -51,7 +51,8 @@ enum ENUM_OBJETOS {
     BALAS
 };
 
-enum CUADRANTE {
+enum CUADRANTE
+{
     NOROESTE = 1,
     NORESTE,
     SUROESTE,
