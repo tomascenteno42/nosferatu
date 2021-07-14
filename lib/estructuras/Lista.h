@@ -7,193 +7,242 @@ template <class T>
 class Lista
 {
 private:
-  //FIXME: no se sobre este nombre
-  Nodo<T> *cabeza;
-  Nodo<T> *cursor;
-  Nodo<T> *cola;
-  int cantidad;
+    int cantidad;
+
+    Nodo<T> *cabeza;
+    Nodo<T> *cursor;
+    Nodo<T> *cola;
 
 public:
-  Lista();
-  int getCantidad();
+    /**
+       Inicializa todos los atributos.
+    */
+    Lista();
 
-  T obtener(int idx);
+    /**
+     * @return La cantidad de elementos que contiene la lista.
+    */
+    int getCantidad();
 
-  void alta(T d);
-  void alta(T d, int idx);
+    /**
+     * Consulta el elemento de la lista en la posicion idx Consultate element in position pos of GenericList.
+     * @param idx Posicion de la lista donde se desea obtener data. Debe ser igual o mayor que 1.
+     * @return T Tipo de dato generico.
+    */
+    T obtener(int idx);
 
-  void baja();
-  void baja(int idx);
+    /**
+     * Inserta d al final de la lista e incrementa la cantidad 1.
+     * @param d Data a agregar a la lista.
+    */
+    void alta(T d);
 
-  bool estaVacia();
-  bool haySiguienteNodo();
+    /**
+     * Inserta d en la posicion idx e incrementa la cantidad 1.
+     * @param d Data a agregar a la lista.
+     * @param idx Posicion donde d sera agregada. Debe ser igual o mayor que 1.
+    */
+    void alta(T d, int idx);
 
-  virtual ~Lista();
+    /**
+     * Elimina el ultimo elemento de la lista.
+    */
+    void baja();
 
-  void reset();
+    /**
+     * Elimina el elemento de la lista en la posicion idx.
+     * @param idx Posicion donde se eliminar el elemento de la lista. Debe ser igual o mayor que 1.
+    */
+    void baja(int idx);
 
-  T getSiguiente();
+    /**
+     * Corrobora si la lista esta vacia, es decir si la cantidad de elementos es 0.
+    */
+    bool estaVacia();
+
+    /**
+     * Corrobora si existe un nodo siguiente a el nodo cursor.
+    */
+    bool haySiguienteNodo();
+
+    /**
+     * Limpia la lista.
+    */
+    virtual ~Lista();
+
+    /**
+     * Resetea el nodo cursor a la primera posicion, null en el caso de una lista vacia.
+    */
+    void reset();
+
+    /**
+     * Busca y retorna el nodo al que apunta el cursor.
+     * @return Nodo cursor.
+    */
+    T getSiguiente();
 
 private:
-  Nodo<T> *getNodo(int idx);
+    /**
+     * Busca un nodo en la posicion idx.
+     * @param idx Posicion donde debe buscar el nodo.
+     * @return Nodo en la posicion idx.
+    */
+    Nodo<T> *getNodo(int idx);
 };
 
-//IMPLEMENTACION
+/* IMPLEMENTACION */
+
 template <class T>
 Lista<T>::Lista()
 {
-  cabeza = 0;
-  cursor = 0;
-  cola = 0;
-  cantidad = 0;
+    cabeza = 0;
+    cursor = 0;
+    cola = 0;
+    cantidad = 0;
 }
 
 template <class T>
 void Lista<T>::alta(T d)
 {
-  Nodo<T> *nuevoNodo = new Nodo<T>(d);
+    Nodo<T> *nuevoNodo = new Nodo<T>(d);
 
-  if (estaVacia())
-  {
-    nuevoNodo->setSiguienteNodo(cabeza);
-    cabeza = nuevoNodo;
-    cola = nuevoNodo;
-  }
-  else
-  {
-    cola->setSiguienteNodo(nuevoNodo);
-    cola = nuevoNodo;
-  }
+    if (estaVacia())
+    {
+        nuevoNodo->setSiguienteNodo(cabeza);
+        cabeza = nuevoNodo;
+        cola = nuevoNodo;
+    }
+    else
+    {
+        cola->setSiguienteNodo(nuevoNodo);
+        cola = nuevoNodo;
+    }
 
-  cantidad++;
+    cantidad++;
 }
 
 template <class T>
 void Lista<T>::alta(T d, int idx)
 {
-  Nodo<T> *nuevoNodo = new Nodo<T>(d);
+    Nodo<T> *nuevoNodo = new Nodo<T>(d);
 
-  if (idx == 1)
-  {
-    nuevoNodo->setSiguienteNodo(cabeza);
-    cabeza = nuevoNodo;
-    cola = nuevoNodo;
-  }
-  else
-  {
-    Nodo<T> *anterior = getNodo(idx - 1);
-    Nodo<T> *siguiente = anterior->getSiguienteNodo();
+    if (idx == 1)
+    {
+        nuevoNodo->setSiguienteNodo(cabeza);
+        cabeza = nuevoNodo;
+        cola = nuevoNodo;
+    }
+    else
+    {
+        Nodo<T> *anterior = getNodo(idx - 1);
+        Nodo<T> *siguiente = anterior->getSiguienteNodo();
 
-    nuevoNodo->setSiguienteNodo(siguiente);
-    anterior->setSiguienteNodo(nuevoNodo);
+        nuevoNodo->setSiguienteNodo(siguiente);
+        anterior->setSiguienteNodo(nuevoNodo);
 
-    cola = nuevoNodo;
-  }
+        cola = nuevoNodo;
+    }
 
-  reset();
+    reset();
 
-  cantidad++;
+    cantidad++;
 }
 
 template <class T>
 void Lista<T>::baja()
 {
 
-  if (!estaVacia())
-  {
-    Nodo<T> *anteriorACola = getNodo(cantidad - 1);
+    if (!estaVacia())
+    {
+        Nodo<T> *anteriorACola = getNodo(cantidad - 1);
 
-    cola = anteriorACola;
+        cola = anteriorACola;
 
-    delete anteriorACola->getSiguienteNodo();
-    cantidad--;
-  }
+        delete anteriorACola->getSiguienteNodo();
+        cantidad--;
+    }
 
-  reset();
+    reset();
 }
 
 template <class T>
 void Lista<T>::baja(int idx)
 {
-  Nodo<T> *nodoAux;
+    Nodo<T> *nodoAux;
 
-  if (idx == 1)
-  {
-    nodoAux = cabeza;
-    // delete obtener(idx);
-    cabeza = nodoAux->getSiguienteNodo();
-  }
-  else
-  {
-    Nodo<T> *anterior = getNodo(idx - 1);
+    if (idx == 1)
+    {
+        nodoAux = cabeza;
+        cabeza = nodoAux->getSiguienteNodo();
+    }
+    else
+    {
+        Nodo<T> *anterior = getNodo(idx - 1);
 
-    nodoAux = anterior->getSiguienteNodo();
-    //TODO: Checkear si es suficiente con eliminar el nodoAux que apunta ya a la posicion a eliminar
-    //TODO: o si hace falta hacer un delete en esa posicion igual. No me queda claro que onda los punteros.
-    // delete obtener(idx);
-    Nodo<T> *siguiente = nodoAux->getSiguienteNodo();
+        nodoAux = anterior->getSiguienteNodo();
+        Nodo<T> *siguiente = nodoAux->getSiguienteNodo();
 
-    anterior->setSiguienteNodo(siguiente);
-  }
+        anterior->setSiguienteNodo(siguiente);
+    }
 
-  reset();
-  cantidad--;
-  delete nodoAux;
+    reset();
+    cantidad--;
+    delete nodoAux;
 }
 
 template <class T>
 T Lista<T>::obtener(int idx)
 {
-  return getNodo(idx)->getData();
+    return getNodo(idx)->getData();
 }
 
 template <class T>
 Nodo<T> *Lista<T>::getNodo(int idx)
 {
-  Nodo<T> *cursor = cabeza;
-  for (int i = 1; i < idx; i++)
-    cursor = cursor->getSiguienteNodo();
+    Nodo<T> *cursor = cabeza;
+    for (int i = 1; i < idx; i++)
+        cursor = cursor->getSiguienteNodo();
 
-  return cursor;
+    return cursor;
 }
 
 template <class T>
 bool Lista<T>::estaVacia()
 {
-  return cantidad == 0;
+    return cantidad == 0;
 }
 
 template <class T>
 int Lista<T>::getCantidad()
 {
-  return cantidad;
+    return cantidad;
 }
 
 template <class T>
 Lista<T>::~Lista()
 {
-  while (!estaVacia())
-  {
-    baja(1);
-  }
+    while (!estaVacia())
+    {
+        baja(1);
+    }
 }
 
 template <class T>
 void Lista<T>::reset()
 {
-  cursor = cabeza;
+    cursor = cabeza;
 }
 
 template <class T>
 bool Lista<T>::haySiguienteNodo()
 {
-  return cursor != 0;
+    return cursor != 0;
 }
 
 template <class T>
 T Lista<T>::getSiguiente()
 {
-  Nodo<T> *aux = cursor;
-  cursor = cursor->getNextNode();
-  return aux->getData();
+    Nodo<T> *aux = cursor;
+    cursor = cursor->getNextNode();
+    return aux->getData();
 }
