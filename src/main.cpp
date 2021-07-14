@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../lib/interfaz/Menu.h"
+#include "../lib/estructuras/Lista.h"
 
 using namespace std;
 
