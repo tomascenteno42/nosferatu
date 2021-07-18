@@ -2,7 +2,7 @@
 #define TP3_BST_H
 
 #include <iostream>
-
+#include <vector>
 #include "NodoABB.h"
 
 template <class K, class T>
@@ -66,10 +66,36 @@ private:
      */
     NodoABB<K, T> *insertar(K clave, T data, NodoABB<K, T> *nodo);
 
-    void print_in_order(NodoABB<K, T> *node);
-    NodoABB<K, T> *remove(NodoABB<K, T> *node, T data);
+    /**
+     * @brief Elimina un nodo que tiene clave.
+     * 
+     * @param nodo 
+     * @param clave 
+     * @return NodoABB<K, T>* 
+     */
+    NodoABB<K, T> *eliminar(NodoABB<K, T> *nodo, K clave);
 
-    void delete_all(NodoABB<K, T> *node);
+    /**
+     * @brief Imprime todos los valores del ABB.
+     * 
+     * @param nodo 
+     */
+    void imprimirEnOrden(NodoABB<K, T> *nodo);
+
+    /**
+     * @brief Ordena las claves y las va colocando en un vector pasado por referencia.
+     * 
+     * @param nodo 
+     * @param claves 
+     */
+    void clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves);
+
+    /**
+     * @brief Limpia el ABB.
+     * 
+     * @param nodo 
+     */
+    void eliminarTodo(NodoABB<K, T> *nodo);
 
 public:
     /**
@@ -77,6 +103,9 @@ public:
      * 
      */
     ABB();
+
+    T getData(K clave);
+    NodoABB<K, T> *getRaiz();
 
     /**
      * @brief Busca el minimo nodo y retorna su valor.
@@ -125,6 +154,13 @@ public:
     void insertar(K clave, T data);
 
     /**
+     * @brief Elimina un nodo del ABB.
+     * 
+     * @param clave
+     */
+    void eliminar(K clave);
+
+    /**
      * @brief Determinar si un nodo existe en el ABB. 
      * 
      * @param clave 
@@ -139,30 +175,48 @@ public:
     bool vacio();
 
     /**
+     * @brief Imprime toda la data del ABB, desde el menor al mayor.
+     * 
+     */
+    void imprimirEnOrden();
+
+    /**
+     * @brief Devuelve las claves del ABB en orden.
+     * 
+     * @return std::vector<K> 
+     */
+    std::vector<K> clavesEnOrden();
+
+    /**
+     * @brief Elimina todos los nodos del ABB.
+     */
+    void eliminarTodo();
+
+    /**
      * @brief Destruye el arbol.
      * 
      */
     ~ABB();
-
-    // Prints all the data stored in the BST, sorted from the
-    // smallest value to the greatest value.
-    void print_in_order();
-
-    // Removes a given data from the BST
-    void remove(T data);
-
-    NodoABB<K, T> *get_raiz();
-
-    // Deletes all the nodes in the BST
-    void delete_all();
-    ~BST<T>();
 };
 
 template <class K, class T>
 ABB<K, T>::ABB()
 {
-    this->raiz = NULL;
-    this->cantidad = 0;
+    raiz = NULL;
+    cantidad = 0;
+}
+
+template <class K, class T>
+T ABB<K, T>::getData(K clave)
+{
+    NodoABB<K, T> *nodo = buscar(clave, raiz);
+    return nodo->getData();
+}
+
+template <class K, class T>
+NodoABB<K, T> *ABB<K, T>::getRaiz()
+{
+    return root;
 }
 
 template <class K, class T>
@@ -171,7 +225,7 @@ NodoABB<K, T> *ABB<K, T>::buscar(K clave)
     if (vacio())
         return NULL;
 
-    return buscar(this->raiz, clave);
+    return buscar(raiz, clave);
 }
 
 template <class K, class T>
@@ -200,7 +254,7 @@ T ABB<K, T>::buscarMinimo()
         return -1;
     }
 
-    return buscarMinimo(this->raiz);
+    return buscarMinimo(raiz);
 }
 
 template <class K, class T>
@@ -224,7 +278,7 @@ T ABB<K, T>::buscarMaximo()
         return -1;
     }
 
-    return buscarMaximo(this->raiz);
+    return buscarMaximo(raiz);
 }
 
 template <class K, class T>
@@ -246,7 +300,7 @@ K ABB<K, T>::predecesor(K clave)
     if (vacio())
         return NULL;
 
-    return predecesor(buscar(this->raiz, clave));
+    return predecesor(buscar(raiz, clave));
 }
 
 template <class K, class T>
@@ -275,7 +329,7 @@ K ABB<K, T>::sucesor(K clave)
     if (vacio())
         return NULL;
 
-    return sucesor(buscar(clave, this->raiz));
+    return sucesor(buscar(clave, raiz));
 }
 
 template <class K, class T>
@@ -303,8 +357,8 @@ void ABB<K, T>::insertar(K clave, T data)
     //TODO: CHECK THIS (vacio())
     if (vacio() || !existe(clave))
     {
-        this->raiz = insertar(clave, data, this->raiz);
-        this->cantidad++;
+        raiz = insertar(clave, data, raiz);
+        cantidad++;
     }
 }
 
@@ -328,6 +382,73 @@ NodoABB<K, T> *ABB<K, T>::insertar(K clave, T data, NodoABB<K, T> *nodo)
 }
 
 template <class K, class T>
+void ABB<K, T>::eliminar(K clave)
+{
+    if (!vacio() && existe(clave))
+    {
+        eliminar(raiz, clave);
+    }
+}
+
+template <class K, class T>
+NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
+{
+    if (clave < nodo->getClave())
+    {
+        nodo->setIzquierdo(erase(nodo->getIzquierdo(), clave));
+        cantidad--;
+    }
+    else if (clave > nodo->getClave())
+    {
+        nodo->setDerecho(erase(nodo->getDerecho(), clave));
+        cantidad--;
+    }
+    else
+    {
+        if (nodo->esHoja())
+        {
+            delete nodo;
+            nodo = 0;
+        }
+        else if (nodo->tieneSoloHijoDerecho())
+        {
+            nodo->getDerecho()->setPadre(nodo->getPadre);
+            NodoABB<K, T> *nodoAux = nodo->getDerecho();
+            delete nodo;
+            nodo = nodoAux;
+        }
+        else if (nodo->tieneSoloHijoIzquierdo())
+        {
+            nodo->getIzquierdo()->setPadre(nodo->getPadre);
+            NodoABB<K, T> *nodoAux = nodo->getIzquierdo();
+            delete nodo;
+            nodo = nodoAux;
+        }
+        else
+        {
+            K remplazo;
+
+            if (buscar(sucesor(clave)))
+            {
+
+                remplazo = buscar(raiz, sucesor(clave))->getClave();
+            }
+            else
+            {
+                remplazo = buscar(raiz, predecesor(clave))->getClave();
+            }
+
+            T newData = getData(remplazo);
+            raiz = eliminar(raiz, remplazo);
+            nodo->setData(newData);
+            nodo->getClave(remplazo);
+        }
+        cantidad--;
+    }
+    return nodo;
+}
+
+template <class K, class T>
 bool ABB<K, T>::existe(K clave)
 {
     return buscar(clave) != NULL;
@@ -336,7 +457,7 @@ bool ABB<K, T>::existe(K clave)
 template <class K, class T>
 bool ABB<K, T>::vacio()
 {
-    return this->cantidad == 0;
+    return cantidad == 0;
 }
 
 template <class K, class T>
@@ -344,102 +465,69 @@ ABB<K, T>::~ABB()
 {
 }
 
-template <class T>
-void BST<T>::print_in_order(NodoABB<K, T> *node)
+template <class K, class T>
+void ABB<K, T>::imprimirEnOrden(NodoABB<K, T> *nodo)
 {
-    if (node != NULL)
+    if (nodo != = NULL)
     {
-        print_in_order(node->get_left());
-        std::cout << node->get_data() << ' ';
-        print_in_order(node->get_right());
+        imprimirEnOrden(nodo->getIzquierdo());
+        std::cout << nodo->getClave() << ' ';
+        imprimirEnOrden(nodo->getDerecho());
     }
 }
 
-template <class T>
-void BST<T>::print_in_order()
+template <class K, class T>
+void ABB<K, T>::imprimirEnOrden()
 {
-    this->print_in_order(this->raiz);
+    imprimirEnOrden(raiz);
+    cout << endl;
 }
 
-template <class T>
-NodoABB<K, T> *BST<T>::remove(NodoABB<K, T> *node, T data)
+template <class K, class T>
+std::vector<K> ABB<K, T>::clavesEnOrden()
 {
-    // The given node is not found in BST
-    if (node == NULL)
-        return NULL;
+    std::vector<K> claves;
 
-    if (node->get_data() == data)
+    clavesEnOrden(raiz, claves);
+
+    return claves;
+}
+
+template <class K, class T>
+void ABB<K, T>::clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
+{
+    if (nodo != NULL)
     {
-        if (node->isLeaf())
-            delete node;
-        else if (node->rightChildOnly())
-        {
-            // The only child will be connected to the parent's of node directly
-            node->get_right()->set_parent(node->get_parent());
-            // Bypass node
-            NodoABB<K, T> *aux = node;
-            node = node->get_right();
-            delete aux;
-        }
-        else if (node->leftChildOnly())
-        {
-            // The only child will be connected to the parent's of node directly
-            node->get_left()->set_parent(node->get_parent());
-            // Bypass node
-            NodoABB<K, T> *aux = node;
-            node = node->get_left();
-            delete aux;
-        }
+        clavesEnOrden(nodo->getIzquierdo(), claves);
 
-        // The node has two children (left and right)
-        else
-        {
-            // Find successor or predecessor to avoid quarrel
-            T successor_data = this->successor(data);
+        claves.push_back(nodo->getClave());
 
-            // Replace node's key with successor's key
-            node->set_data(successor_data);
-
-            // Delete the old successor's key
-            node->set_right(remove(node->get_right(), successor_data));
-        }
+        clavesEnOrden(nodo->getDerecho(), claves);
     }
-
-    else if (node->get_data() < data)
-        node->set_right(remove(node->get_right(), data));
-
-    else
-        node->set_left(remove(node->get_left(), data));
-
-    return node;
 }
 
-template <class T>
-void BST<T>::remove(T data)
+template <class K, class T>
+void ABB<K, T>::eliminarTodo(NodoABB<K, T> *nodo)
 {
-    this->raiz = remove(this->raiz, data);
+    if (nodo)
+    {
+        eliminarTodo(nodo->get_left());
+        eliminarTodo(nodo->get_right());
+
+        delete nodo;
+    }
 }
 
-template <class T>
-void BST<T>::delete_all(NodoABB<K, T> *node)
+template <class K, class T>
+void ABB<K, T>::eliminarTodo()
 {
-    if (node == NULL)
-        return;
-    this->delete_all(node->get_left());
-    this->delete_all(node->get_right());
-    delete node;
+    eliminarTodo(raiz);
 }
 
-template <class T>
-void BST<T>::delete_all()
+template <class K, class T>
+ABB<K, T>::~ABB()
 {
-    this->delete_all(this->raiz);
+    eliminarTodo();
 }
 
-template <class T>
-BST<T>::~BST<T>()
-{
-    this->delete_all();
-}
-
-#endif //TP3_BST_H
+#endif
