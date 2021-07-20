@@ -2,14 +2,17 @@
 
 int Vampirella::contador = 0;
 
-Vampirella::Vampirella() : Vampiro(S_VAMPIRELLA, C_VAMPIRELLA){
+Vampirella::Vampirella() : Vampiro(S_VAMPIRELLA, C_VAMPIRELLA)
+{
     Vampirella::contador++;
 }
 
-int Vampirella::obtener_existentes() {
+int Vampirella::obtener_existentes()
+{
     return Vampirella::contador;
 }
 
-Vampirella::~Vampirella() {
+Vampirella::~Vampirella()
+{
     Vampirella::contador--;
 }

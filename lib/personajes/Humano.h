@@ -1,15 +1,16 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_HUMANO_H
 #define NOSFERATUV2_HUMANO_H
 
 #include "Ser.h"
+#include "vector"
+#include "../objetos/Elemento.h"
 
-class Humano : public Ser{
+class Humano : public Ser
+{
 private:
     static int contador;
+    std::vector<Elemento *> inventario;
+
 public:
     /*
      * Post: Se crea el humano con nombre = S_HUMANO y caracter C_HUMANO
@@ -21,7 +22,14 @@ public:
      * Post: Se crea un un humano con nombre = "nombre" y caracter "caracter"
      *       Aumenta en 1 la cantidad de humanos existentes
      */
-    Humano(std:: string nombre, char caracter);
+    Humano(std::string nombre, char caracter);
+
+    /**
+     * @brief Agrega el objeto pasado por parametro a el inventario.
+     * 
+     * @param objeto 
+     */
+    void agarrarObjeto(Elemento *objeto);
 
     /*
      * Post: obtiene la cantidad de humanos (normales) existentes
@@ -34,5 +42,4 @@ public:
     ~Humano() override;
 };
 
-
-#endif //NOSFERATUV2_HUMANO_H
+#endif

@@ -2,15 +2,23 @@
 
 int Zombi::contador = 0;
 
-Zombi::Zombi() : Monstruo(S_ZOMBI, C_ZOMBI){
+Zombi::Zombi() : Monstruo(S_ZOMBI, C_ZOMBI)
+{
     Zombi::contador++;
+    cantidadDeAguaBenditas = 0;
 }
 
-int Zombi::obtener_existentes() {
+void Zombi::agarrarObjeto()
+{
+    cantidadDeAguaBenditas++;
+}
+
+int Zombi::obtener_existentes()
+{
     return Zombi::contador;
 }
 
-Zombi::~Zombi() {
+Zombi::~Zombi()
+{
     Zombi::contador--;
 }
-

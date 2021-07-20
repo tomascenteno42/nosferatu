@@ -1,11 +1,84 @@
 #include "Ser.h"
-using namespace std;
 
+Ser::Ser(std::string nombre, char caracter) : Objeto(nombre, caracter)
+{
+    energia = rand() % 20;
+    fuerza = rand() % 30 + 10;
+    vida = rand() % 100 + 20;
+    escudo = rand() % 2;
 
-Ser::Ser(std::string nombre, char caracter) : Objeto(nombre, caracter) {
-
+    nombre = nombre;
+    caracter = caracter;
 }
 
-void Ser::mostrar_informacion() {
-    cout << this->nombre << endl;
+/* GETTERS */
+
+int Ser::getEnergia()
+{
+    return energia;
+}
+
+int Ser::getVida()
+{
+    return vida;
+}
+
+int Ser::getEscudo()
+{
+    return escudo;
+}
+
+int Ser::getFuerza()
+{
+    return fuerza;
+}
+
+/* SETTERS */
+
+void Ser::setEnergia(int e)
+{
+    energia = e;
+}
+
+void Ser::setVida(int v)
+{
+    vida = v;
+}
+
+void Ser::setEscudo(int e)
+{
+    escudo = e;
+}
+
+void Ser::setFuerza(int f)
+{
+    fuerza = f;
+}
+
+void Ser::ajustarDanio(int &danio)
+{
+    switch (getEscudo())
+    {
+    case 0:
+        break;
+    case 1:
+        danio *= 0.9;
+        break;
+    case 2:
+        danio *= 0.8;
+        break;
+    default:
+        danio *= 0.2;
+        break;
+    }
+}
+
+bool Ser::estaMuerto()
+{
+    return getVida() == 0;
+}
+
+void Ser::mostrar_informacion()
+{
+    std::cout << nombre << std::endl;
 }
