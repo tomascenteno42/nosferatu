@@ -28,9 +28,9 @@ public:
     void setEscudo(int e);
     void setFuerza(int f);
 
-    virtual void atacar();
-    virtual void defender();
-    virtual void mover();
+    // virtual void atacar();
+    // virtual void defender();
+    // virtual void mover();
 
     /**
      * @brief Ajusta el danio pasado por referencia segun la cantidad de escudo del ser.

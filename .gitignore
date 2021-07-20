@@ -51,3 +51,6 @@ CMakeLists.txt
 
 # 
 .idea/
+
+# Project specifics
+nosferatu
