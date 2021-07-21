@@ -15,7 +15,8 @@ void Grafo::agregar_vertice(string terreno, int fila, int columna) {
 
 Grafo::~Grafo() {
     liberar_matriz_adyacencia();
-    for(int i = 0; i < vertices.size(); i++) {
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++) {
         delete vertices[i];
     }
     vertices.clear();
@@ -31,7 +32,7 @@ void Grafo::set_columna(int n) {
 
 void Grafo::agrandar_matriz() {
     int** aux;
-    int nueva_cantidad = vertices.size() + 1;
+    int nueva_cantidad = (int)vertices.size() + 1;
 
     aux = new int*[nueva_cantidad];
     for(int i = 0; i < nueva_cantidad; i++){
@@ -44,14 +45,15 @@ void Grafo::agrandar_matriz() {
 }
 
 void Grafo::copiar_matriz(int **nueva_matriz) {
-    for(int i = 0; i < vertices.size(); i++){
-        for(int j = 0; j < vertices.size(); j++)
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++){
+        for(int j = 0; j < tamanio; j++)
             nueva_matriz[i][j] = matriz_adyacencia[i][j];
     }
 }
 
 void Grafo::inicializar_nuevo(int** nueva_matriz) {
-    int cantidad_vertices = vertices.size();
+    int cantidad_vertices = (int )vertices.size();
     for(int i = 0; i < cantidad_vertices; i++){
         nueva_matriz[cantidad_vertices][i] = INF;
         nueva_matriz[i][cantidad_vertices] = INF;
@@ -60,7 +62,8 @@ void Grafo::inicializar_nuevo(int** nueva_matriz) {
 }
 
 void Grafo::liberar_matriz_adyacencia() {
-    for(int i = 0; i < vertices.size(); i++){
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++){
         delete[] matriz_adyacencia[i];
     }
     delete[] matriz_adyacencia;
@@ -73,7 +76,8 @@ void Grafo::mostrar_grafo() {
 }
 
 void Grafo::mostrar_vertices() {
-    for(int i = 0; i < vertices.size(); i++){
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++){
         cout << vertices[i]->get_terreno() << "|";
     }
     cout << endl;
@@ -81,9 +85,10 @@ void Grafo::mostrar_vertices() {
 }
 
 void Grafo::mostrar_matriz() {
-    for(int i = 0; i < vertices.size(); i++){
-        for(int j = 0; j < vertices.size() * 2; j++){
-            if(j == ((vertices.size() * 2) - 1) )
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++){
+        for(int j = 0; j < tamanio * 2; j++){
+            if(j == ((tamanio * 2) - 1) )
                 cout << endl;
             else if(j % 2 == 0){
                 if(matriz_adyacencia[i][j/2] == INF)
@@ -110,10 +115,11 @@ bool Grafo::comprobar_coordenada(Coordenada coordenada) {
 int Grafo::buscar_indice(Coordenada coordenada) {
     int i = 0;
     int indice = NO_ENCONTRADO;
+    int tamanio = (int)vertices.size();
     int fila = coordenada.get_fila();
     int columna = coordenada.get_columna();
     bool fue_encontrado = false;
-    while(!fue_encontrado && (i < vertices.size())){
+    while(!fue_encontrado && (i < tamanio)){
         if((vertices[i]->get_fila() == fila) && (vertices[i]->get_columna() == columna)) {
             fue_encontrado = true;
             indice = i;
@@ -128,13 +134,14 @@ void Grafo::agregar_camino(int origen, int destino, int costo) {
 }
 
 void Grafo::establecer_caminos(string personaje) {
-    for(int i = 0; i < vertices.size(); i++) {
+    int tamanio = (int)vertices.size();
+    for(int i = 0; i < tamanio; i++) {
         vertices[i]->ajustar_costo(personaje);
-        if ((i + columnas) < vertices.size())                                          //ajusto el de abajo
+        if ((i + columnas) < tamanio)                                          //ajusto el de abajo
             agregar_camino(i, i + columnas, vertices[i]->get_costo());
         if ((i - columnas) >= 0)                                                       //ajusto el de arriba
             agregar_camino(i, i - columnas, vertices[i]->get_costo());
-        if((i + 1) < vertices.size()) {
+        if((i + 1) < tamanio) {
             if (vertices[i]->get_fila() == vertices[i + 1]->get_fila())             //ajusto el de la derecha
                 agregar_camino(i, i + 1, vertices[i]->get_costo());
         }
@@ -148,8 +155,9 @@ void Grafo::establecer_caminos(string personaje) {
 int Grafo::indice_minimo(int distancias[], bool visitados[]) {
     int minimo = INF;
     int indice = 0;
+    int tamanio = (int)vertices.size();
 
-    for(int i = 0; i < vertices.size(); i++){
+    for(int i = 0; i < tamanio; i++){
         if(!visitados[i] && distancias[i] < minimo){
             minimo = distancias[i];
             indice = i;
@@ -164,7 +172,7 @@ int Grafo::camino_minimo(Coordenada origen, Coordenada destino) {
     if(origen_valido && destino_valido) {
         int indice_origen = buscar_indice(origen);
         int indice_destino = buscar_indice(destino);
-        int tamanio = vertices.size();
+        int tamanio = (int)vertices.size();
 
         int distancias[tamanio];
         bool visitados[tamanio];
