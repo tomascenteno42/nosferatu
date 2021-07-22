@@ -1,8 +1,7 @@
 #ifndef NOSFERATUV2_ZOMBI_H
 #define NOSFERATUV2_ZOMBI_H
 
-#include "Monstruo.h"
-#include "vector"
+#include "../../src/main.h"
 
 class Zombi : public Monstruo
 {

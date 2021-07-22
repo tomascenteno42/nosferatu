@@ -1,4 +1,4 @@
-#include "Ser.h"
+#include "../../src/main.h"
 
 Ser::Ser(std::string nombre, char caracter) : Objeto(nombre, caracter)
 {

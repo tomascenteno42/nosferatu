@@ -1,9 +1,7 @@
 #ifndef TP3_BST_H
 #define TP3_BST_H
 
-#include <iostream>
-#include <vector>
-#include "NodoABB.h"
+#include "../../src/main.h"
 
 template <class K, class T>
 class NodoABB;
@@ -216,7 +214,7 @@ T ABB<K, T>::getData(K clave)
 template <class K, class T>
 NodoABB<K, T> *ABB<K, T>::getRaiz()
 {
-    return root;
+    return raiz;
 }
 
 template <class K, class T>
@@ -461,14 +459,9 @@ bool ABB<K, T>::vacio()
 }
 
 template <class K, class T>
-ABB<K, T>::~ABB()
-{
-}
-
-template <class K, class T>
 void ABB<K, T>::imprimirEnOrden(NodoABB<K, T> *nodo)
 {
-    if (nodo != = NULL)
+    if (nodo != NULL)
     {
         imprimirEnOrden(nodo->getIzquierdo());
         std::cout << nodo->getClave() << ' ';

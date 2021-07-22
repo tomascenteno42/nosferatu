@@ -1,9 +1,10 @@
-#include "Elemento.h"
+#include "../../src/main.h"
 
-Elemento::Elemento(std::string nombre, char caracter) : Objeto(nombre, caracter){
-
+Elemento::Elemento(std::string nombre, char caracter) : Objeto(nombre, caracter)
+{
 }
 
-int Elemento::obtener_cantidad() {
+int Elemento::obtener_cantidad()
+{
     return this->cantidad;
 }

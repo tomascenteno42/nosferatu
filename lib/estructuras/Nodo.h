@@ -1,3 +1,5 @@
+#include "../../src/main.h"
+
 template <class T>
 class Nodo
 {

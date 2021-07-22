@@ -1,12 +1,10 @@
 #ifndef NOSFERATUV2_TABLERO_H
 #define NOSFERATUV2_TABLERO_H
 
-#include "../objetos/Objeto.h"
-#include "../utilidades/Parser.h"
-#include "../utilidades/Contador.h"
-#include "../interfaz/Posicion.h"
-#include <fstream>
-#include <iostream>
+#include "../../src/main.h"
+
+class Contador;
+class Jugador;
 
 class Tablero
 {
@@ -17,12 +15,18 @@ private:
     int cant_columnas;
     Contador *contador;
 
+    // jugadores[0] -> HUMANOS
+    // jugadores[1] -> MONSTRUOS
+    Jugador *jugadores[2];
+
+    ABB<int, Objeto *> *diccionario;
+
 public:
     /*
      * Pre: La direccion (dir) es el directorio del archivo "estado.txt"
      * Post: Crea el tablero de tamanio pos_x y pos_y, ambos > 0
      */
-    explicit Tablero(const std::string &dir);
+    explicit Tablero(const string &dir);
 
     /*
      * Post: obtiene el objeto en la posicion indicada por parametro
@@ -63,19 +67,21 @@ public:
      *
      * Post: obtiene la cantidad de
      */
-    int obtener_existentes(const std::string &nombre);
+    int obtener_existentes(const string &nombre);
 
     /*
     *
     * Post: Se obtiene el porcentaje del objeto en referencia al nombre en el mapa
     */
-    float obtener_porcentaje(const std::string &nombre);
+    float obtener_porcentaje(const string &nombre);
 
     /*
      * Post: el cuadrante debe ser valido
      * Post: devuelve true si encuentra el objeto hallado en el cuadrante
      */
-    bool existe_objeto_en_cuadrante(const std::string &buscado, Posicion pos_min, Posicion pos_max);
+    bool existe_objeto_en_cuadrante(const string &buscado, Posicion pos_min, Posicion pos_max);
+
+    Jugador *getJugador(int idx);
 
     /*
      * Post: Libera los recursos asociados
@@ -91,7 +97,7 @@ private:
     /*
      * Post: devuelve true si el nombre del objeto buscado es igual al hallado en el tablero
      */
-    bool comparar_objetos(const std::string &buscado, const std::string &hallado);
+    bool comparar_objetos(const string &buscado, const string &hallado);
 };
 
 #endif //NOSFERATUV2_TABLERO_H

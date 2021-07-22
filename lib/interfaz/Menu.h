@@ -1,11 +1,7 @@
 #ifndef NOSFERATUV2_MENU_H
 #define NOSFERATUV2_MENU_H
 
-#include "Tablero.h"
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <iomanip>
+#include "../../src/main.h"
 
 enum OPCION
 {
@@ -32,7 +28,7 @@ public:
      * Pre: La direccion del archivo estado.txt debe ser correcta
      * Post: Se crea el menu del juego listo para usarse
      */
-    Menu(std::string dir_archivo);
+    Menu(string dir_archivo);
 
     /*
      * Post: Se muestra por pantalla dos opciones, salir del juego o entrar a las opciones generales
@@ -117,12 +113,12 @@ public:
      *       texto_ingresado = 123 432 -> resultado = false
      *       texto_ingreado = 1 1 -> resultado = true;
      */
-    bool rango_valido(const std::string &texto_ingresado, int &fila, int &columna);
+    bool rango_valido(const string &texto_ingresado, int &fila, int &columna);
 
     /*
      * Devuelve true si el texto es un numero, false en otro caso
      */
-    bool es_un_numero(std::string texto);
+    bool es_un_numero(string texto);
 
     void pedir_posicion(int &fila, int &columna);
 
@@ -131,7 +127,7 @@ public:
      * Post: devuelve el objeto elegido por el usuario
      * Warning: Se reserva memoria para la creacion de dicho objeto
      */
-    std::string usuario_pedir_objeto();
+    string usuario_pedir_objeto();
 
     /*
      * Post: Pide por pantalla la cantidad deseada de agua o balas
@@ -149,7 +145,9 @@ public:
      * Post: La zona debe ser un cuadrante valido y el nombre_objeto un nombre valido
      * Post: devuelve true si se halla el objeto en el cuadrante elegido
      */
-    bool buscar_objeto_en_cuadrante(const std::string &nombre_objeto, CUADRANTE zona);
+    bool buscar_objeto_en_cuadrante(const string &nombre_objeto, CUADRANTE zona);
+
+    Tablero *getTablero();
 };
 
 #endif //NOSFERATUV2_MENU_H

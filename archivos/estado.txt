@@ -1,15 +1,15 @@
 13 13
-humano (1, 1)
-zombi (2, 2)
-vampiro (3, 3)
-agua 20 (4, 4)
-humano CV (5, 5)
-zombi (6, 6)
-Vanesa (7, 7)
-agua 10 (8, 8)
-Nosferatu (9, 9)
-bala 20 (10, 10)
-cruz (11, 11)
-escopeta (12, 12)
-Vampirella (13, 13)
-estaca (5, 4)
+humano (1, 1) 005
+zombi (2, 2) 101
+vampiro (3, 3) 202
+agua 20 (4, 4) 300
+humano CV (5, 5) 001
+zombi (6, 6) 102
+Vanesa (7, 7) 000
+agua 10 (8, 8) 305
+Nosferatu (9, 9) 200
+bala 20 (10, 10) 370
+cruz (11, 11) 330
+escopeta (12, 12) 350
+Vampirella (13, 13) 201
+estaca (5, 4) 400

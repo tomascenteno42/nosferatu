@@ -1,15 +1,13 @@
-//
-// Created by Lucas Williams on 30/05/2021.
-//
-
 #ifndef NOSFERATUV2_HUMANO_CAZADOR_H
 #define NOSFERATUV2_HUMANO_CAZADOR_H
 
-#include "Humano.h"
+#include "../../src/main.h"
 
-class Humano_cazador : public Humano {
+class Humano_cazador : public Humano
+{
 private:
     static int contador;
+
 public:
     /*
      * Post: Se crea el objeto listo para usarse
@@ -33,6 +31,5 @@ public:
      */
     ~Humano_cazador() override;
 };
-
 
 #endif //NOSFERATUV2_HUMANO_CAZADOR_H

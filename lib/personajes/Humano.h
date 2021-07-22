@@ -1,9 +1,7 @@
 #ifndef NOSFERATUV2_HUMANO_H
 #define NOSFERATUV2_HUMANO_H
 
-#include "Ser.h"
-#include "vector"
-#include "../objetos/Elemento.h"
+#include "../../src/main.h"
 
 class Humano : public Ser
 {

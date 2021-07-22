@@ -1,11 +1,7 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_AGUA_BENDITA_H
 #define NOSFERATUV2_AGUA_BENDITA_H
 
-#include "Elemento.h"
+#include "../../src/main.h"
 
 class Agua_bendita : public Elemento
 {

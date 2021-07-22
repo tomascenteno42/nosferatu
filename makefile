@@ -38,7 +38,7 @@ $(APPNAME): $(OBJ)
 #*.dll
 else
 $(APPNAME): $(OBJ)
-	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)  $(LIBDIR)/excepciones/*.cpp $(LIBDIR)/interfaz/*.cpp $(LIBDIR)/objetos/*.cpp  $(LIBDIR)/personajes/*.cpp $(LIBDIR)/utilidades/*.cpp $(SRCDIR)/*.cpp
+	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)  $(LIBDIR)/excepciones/*.cpp $(LIBDIR)/estructuras/grafo/*.cpp $(LIBDIR)/interfaz/*.cpp $(LIBDIR)/objetos/*.cpp  $(LIBDIR)/personajes/*.cpp $(LIBDIR)/utilidades/*.cpp $(SRCDIR)/*.cpp
 
 #-L/usr/include/SFML/ -lsfml-graphics -lsfml-window -lsfml-system
 endif

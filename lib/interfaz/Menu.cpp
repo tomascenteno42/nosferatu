@@ -1,6 +1,4 @@
-#include "Menu.h"
-
-using namespace std;
+#include "../../src/main.h"
 
 Menu::Menu(string PATH_ARCHIVO_ESTADO)
 {
@@ -436,4 +434,9 @@ CUADRANTE Menu::usuario_pedir_cuadrante()
     } while (opcion_ingresada < 1 || opcion_ingresada > 4);
     CUADRANTE elegido = CUADRANTE(opcion_ingresada);
     return elegido;
+}
+
+Tablero *Menu::getTablero()
+{
+    return tablero;
 }

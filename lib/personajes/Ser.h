@@ -1,8 +1,7 @@
 #ifndef NOSFERATUV2_SER_H
 #define NOSFERATUV2_SER_H
 
-#include "../objetos/Objeto.h"
-#include "../objetos/Elemento.h"
+#include "../../src/main.h"
 
 class Ser : public Objeto
 {
@@ -28,9 +27,9 @@ public:
     void setEscudo(int e);
     void setFuerza(int f);
 
-    // virtual void atacar();
-    // virtual void defender();
-    // virtual void mover();
+    // virtual void atacar(Tablero *tablero);
+    // virtual void defender(Tablero *tablero);
+    // virtual void mover(Tablero *tablero);
 
     /**
      * @brief Ajusta el danio pasado por referencia segun la cantidad de escudo del ser.

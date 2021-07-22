@@ -1,12 +1,7 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2
 #define NOSFERATUV2
 
-#include "Objeto.h"
-#include "../excepciones/Excepcion_error.h"
+#include "../../src/main.h"
 
 class Elemento : public Objeto
 {

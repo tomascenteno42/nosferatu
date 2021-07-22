@@ -1,15 +1,13 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_VANESA_H
 #define NOSFERATUV2_VANESA_H
 
-#include "Humano_cazador.h"
+#include "../../src/main.h"
 
-class Vanesa : public Humano_cazador {
+class Vanesa : public Humano_cazador
+{
 private:
     static int contador;
+
 public:
     /*
      * Post: se crea el objeto listo para usarse
@@ -27,6 +25,5 @@ public:
      */
     ~Vanesa() override;
 };
-
 
 #endif //NOSFERATUV2_VANESA_H

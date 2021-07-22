@@ -1,21 +1,18 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_BALA_H
 #define NOSFERATUV2_BALA_H
 
-#include "Elemento.h"
+#include "../../src/main.h"
 
-class Bala : public Elemento {
+class Bala : public Elemento
+{
 private:
     static int contador;
+
 public:
     /* Pre: cantidad > 0
      * Post: Se crea el objeto listo para usarse
      */
     explicit Bala(int cantidad);
-
 
     /*
      * Post: Muestra por pantalla la informacion del objeto instanciado
@@ -33,6 +30,5 @@ public:
      */
     ~Bala() override;
 };
-
 
 #endif //NOSFERATUV2_BALA_H

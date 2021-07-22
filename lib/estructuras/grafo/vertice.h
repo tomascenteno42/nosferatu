@@ -1,26 +1,10 @@
 #ifndef PRUEBA_GRAFO_VERTICE_H
 #define PRUEBA_GRAFO_VERTICE_H
 
-#include "coordenada.h"
-#include <string>
+#include "../../../src/main.h"
 
-using namespace std;
-
-const string HUMANO = "humano";
-const string ZOMBI = "zombi";
-const string VAMPIRO = "vampiro";
-const string VANESA = "Vanesa";
-const string VAMPIRELLA = "Vampirella";
-const string NOSFERATU = "Nosferatu";
-const string CV = "CV";
-const string MONTANIA = "M";
-const string PRECIPICIO = "P";
-const string VOLCAN = "V";
-const string LAGO = "L";
-const string CAMINO = "C";
-const string VACIO = "O";
-
-class Vertice{
+class Vertice
+{
 private:
     int costo;
     Coordenada coordenadas;
@@ -34,6 +18,5 @@ public:
     string get_terreno();
     void ajustar_costo(string tipo);
 };
-
 
 #endif

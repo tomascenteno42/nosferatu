@@ -1,15 +1,14 @@
-//
-// Created by Lucas Williams on 13/06/2021.
-//
-
 #ifndef NOSFERATUV2_POSICION_H
 #define NOSFERATUV2_POSICION_H
 
+#include "../../src/main.h"
 
-class Posicion {
+class Posicion
+{
 private:
     int fila;
     int columna;
+
 public:
     /*
      * Pre: -
@@ -44,6 +43,5 @@ public:
      */
     void cambiar_columna(int nueva_columna);
 };
-
 
 #endif //NOSFERATUV2_POSICION_H

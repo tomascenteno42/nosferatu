@@ -1,15 +1,13 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_ESCOPETA_H
 #define NOSFERATUV2_ESCOPETA_H
 
-#include "Elemento.h"
+#include "../../src/main.h"
 
-class Escopeta : public Elemento {
+class Escopeta : public Elemento
+{
 private:
     static int contador;
+
 public:
     /*
      * Post: Se crea el objeto listo para usarse
@@ -31,6 +29,5 @@ public:
      */
     ~Escopeta() override;
 };
-
 
 #endif //NOSFERATUV2_ESCOPETA_H

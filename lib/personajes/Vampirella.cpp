@@ -1,4 +1,4 @@
-#include "Vampirella.h"
+#include "../../src/main.h"
 
 int Vampirella::contador = 0;
 

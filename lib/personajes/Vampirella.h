@@ -1,7 +1,7 @@
 #ifndef NOSFERATUV2_VAMPIRELLA_H
 #define NOSFERATUV2_VAMPIRELLA_H
 
-#include "Vampiro.h"
+#include "../../src/main.h"
 
 class Vampirella : public Vampiro
 {

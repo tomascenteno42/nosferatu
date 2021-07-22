@@ -1,15 +1,13 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_VAMPIRO_H
 #define NOSFERATUV2_VAMPIRO_H
 
-#include "Monstruo.h"
+#include "../../src/main.h"
 
-class Vampiro : public Monstruo {
+class Vampiro : public Monstruo
+{
 private:
     static int contador;
+
 public:
     /*
      * Post: Se crea el objeto vampiro listo para usarse
@@ -33,6 +31,5 @@ public:
      */
     ~Vampiro() override;
 };
-
 
 #endif //NOSFERATUV2_VAMPIRO_H

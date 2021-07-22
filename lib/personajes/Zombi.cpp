@@ -1,4 +1,4 @@
-#include "Zombi.h"
+#include "../../src/main.h"
 
 int Zombi::contador = 0;
 

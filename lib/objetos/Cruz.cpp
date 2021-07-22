@@ -1,23 +1,24 @@
-#include "Cruz.h"
-
-using namespace std;
+#include "../../src/main.h"
 
 int Cruz::contador = 0;
 
-Cruz::Cruz() : Elemento(S_CRUZ, C_CRUZ){
+Cruz::Cruz() : Elemento(S_CRUZ, C_CRUZ)
+{
     this->cantidad = 1;
     Cruz::contador++;
 }
 
-void Cruz::mostrar_informacion() {
+void Cruz::mostrar_informacion()
+{
     cout << this->nombre << endl;
 }
 
-Cruz::~Cruz() {
+Cruz::~Cruz()
+{
     Cruz::contador--;
 }
 
-int Cruz::obtener_existentes() {
+int Cruz::obtener_existentes()
+{
     return Cruz::contador;
 }
-

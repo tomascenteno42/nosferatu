@@ -1,9 +1,5 @@
-//
-// Created by Lucas Williams on 30/05/2021.
-//
+#include "../../src/main.h"
 
-#include "Monstruo.h"
-
-Monstruo::Monstruo(std::string nombre, char caracter) : Ser(nombre, caracter) {
-
+Monstruo::Monstruo(std::string nombre, char caracter) : Ser(nombre, caracter)
+{
 }

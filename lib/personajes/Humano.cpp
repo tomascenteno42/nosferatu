@@ -1,6 +1,4 @@
-#include "Humano.h"
-
-using namespace std;
+#include "../../src/main.h"
 
 int Humano::contador = 0;
 

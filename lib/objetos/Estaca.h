@@ -1,17 +1,14 @@
-//
-// Created by lucas on 6/5/21.
-//
-
 #ifndef NOSFERATUV2_ESTACA_H
 #define NOSFERATUV2_ESTACA_H
 
-#include "Elemento.h"
+#include "../../src/main.h"
 
-class Estaca : public Elemento {
+class Estaca : public Elemento
+{
 private:
     static int contador;
-public:
 
+public:
     /*
      * Post: Se crea el objeto listo para usarse
      *       Aumenta en 1 la cantidad de estacas existentes
@@ -33,7 +30,5 @@ public:
      */
     ~Estaca() override;
 };
-
-
 
 #endif //NOSFERATUV2_ESTACA_H

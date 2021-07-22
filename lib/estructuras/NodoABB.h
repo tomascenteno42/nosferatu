@@ -1,6 +1,8 @@
 #ifndef TP3_NodoABB_H
 #define TP3_NodoABB_H
 
+#include "../../src/main.h"
+
 template <class K, class T>
 class NodoABB
 {
