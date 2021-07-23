@@ -1,18 +1,26 @@
 #include "grafo.h"
 #include <iostream>
 
+/*Construye un objeto de tipo agrafo, inicializando sus atributos a valores nulos*/
+
 Grafo::Grafo() {
     filas = 0;
     columnas = 0;
     matriz_adyacencia = nullptr;
 }
 
+/* Pre: fila y columna deben ser numeros positivos
+ * Pos: Dado un terreno, una fila y una columna, agrega un nuevo vertice con esas caracteristicas al vector de vertices
+ */
 void Grafo::agregar_vertice(string terreno, int fila, int columna) {
     agrandar_matriz();
     Vertice* nuevo = new Vertice(terreno, fila, columna);
     vertices.push_back(nuevo);
 }
 
+
+/* Pos: Destruye el objeto grafo, liberando la matriz de adyacencia y todos los punteros del vector de vertices
+*/
 Grafo::~Grafo() {
     liberar_matriz_adyacencia();
     int tamanio = (int)vertices.size();
@@ -22,14 +30,22 @@ Grafo::~Grafo() {
     vertices.clear();
 }
 
+/* Pre: n debe ser un numero positivo
+ * Pos: asigna n al atributo filas
+ */
 void Grafo::set_fila(int n) {
     filas = n;
 }
 
+/* Pre: n debe ser un numero positivo
+ * Pos: asigna n al atributo columnas
+ * */
 void Grafo::set_columna(int n) {
     columnas = n;
 }
 
+/* Pos: agranda la matriz de adyacencia en 1, para poder acomodar un nuevo vertice
+ * */
 void Grafo::agrandar_matriz() {
     int** aux;
     int nueva_cantidad = (int)vertices.size() + 1;
@@ -44,6 +60,9 @@ void Grafo::agrandar_matriz() {
     matriz_adyacencia = aux;
 }
 
+/* Pre: Recibe una matriz de 1 dimension mas grande que la matriz de adyacencia actual
+ * Pos: Copia los contenidos de la matriz de adyacencia a la nueva matriz
+ * */
 void Grafo::copiar_matriz(int **nueva_matriz) {
     int tamanio = (int)vertices.size();
     for(int i = 0; i < tamanio; i++){
@@ -52,6 +71,9 @@ void Grafo::copiar_matriz(int **nueva_matriz) {
     }
 }
 
+/* Pre: Recibe una matriz de 1 dimension mas grande que la matriz de adyacencia actual
+ * Pos: Inicializa las nuevas posiciones vacias de la nueva matriz
+ */
 void Grafo::inicializar_nuevo(int** nueva_matriz) {
     int cantidad_vertices = (int )vertices.size();
     for(int i = 0; i < cantidad_vertices; i++){
@@ -61,6 +83,8 @@ void Grafo::inicializar_nuevo(int** nueva_matriz) {
     nueva_matriz[cantidad_vertices][cantidad_vertices] = 0;
 }
 
+/* Pos: Libera la memoria de la matriz de adyacencia
+*/
 void Grafo::liberar_matriz_adyacencia() {
     int tamanio = (int)vertices.size();
     for(int i = 0; i < tamanio; i++){
@@ -69,12 +93,16 @@ void Grafo::liberar_matriz_adyacencia() {
     delete[] matriz_adyacencia;
 }
 
+/* Pos: Imprime por pantalla todos los vertices y la matriz de adyacencia
+ * */
 void Grafo::mostrar_grafo() {
     mostrar_vertices();
     mostrar_matriz();
 
 }
 
+/* Pos: Muestra por pantalla los vertices
+*/
 void Grafo::mostrar_vertices() {
     int tamanio = (int)vertices.size();
     for(int i = 0; i < tamanio; i++){
@@ -84,6 +112,8 @@ void Grafo::mostrar_vertices() {
     cout << endl;
 }
 
+/* Pos: Muestra por pantalla la matriz de adyacencia
+ * */
 void Grafo::mostrar_matriz() {
     int tamanio = (int)vertices.size();
     for(int i = 0; i < tamanio; i++){
@@ -104,6 +134,10 @@ void Grafo::mostrar_matriz() {
     cout << endl;
 }
 
+/* Pre: Recibe un objeto de tipo Coordenada
+ * Pos: Chequea si la coordenada es valida, es decir que no se sale de los limites establecidos
+ * por filas y columnas. Devuelve true si es valida, y false si no lo es
+ * */
 bool Grafo::comprobar_coordenada(Coordenada coordenada) {
     bool cumple_filas = ((coordenada.get_fila() <= filas) && (coordenada.get_fila() > 0));
     bool cumple_columnas = ((coordenada.get_columna() <= columnas) && (coordenada.get_columna() > 0));
@@ -112,6 +146,9 @@ bool Grafo::comprobar_coordenada(Coordenada coordenada) {
     return false;
 }
 
+/* Pre: Recibe un objeto de tipo Coordenada
+ * Pos: Dada las coordenadas, devuelve el indice (en el vector de vertices) del vertice que tiene esas coordenadas
+ */
 int Grafo::buscar_indice(Coordenada coordenada) {
     int i = 0;
     int indice = NO_ENCONTRADO;
@@ -129,10 +166,17 @@ int Grafo::buscar_indice(Coordenada coordenada) {
     return indice;
 }
 
+/* Pre: Tanto origen como destino representan indices en el vector de vertices, por lo que deben ser mayores o iguales a 0
+ * y simultaneamente menores a la longitud del vector. Costo debe ser positivo
+ * Pos: Agrega el costo en la matriz de adyacencia
+ */
 void Grafo::agregar_camino(int origen, int destino, int costo) {
     matriz_adyacencia[origen][destino] = costo;
 }
 
+/* Pre: Personaje debe representar, justamente, un personaje (zombi, vampiro, humano, etc)
+ * Pos: De acuerdo al personaje, establece los costos de moverse de un vertice a sus adyacentes
+ */
 void Grafo::establecer_caminos(string personaje) {
     int tamanio = (int)vertices.size();
     for(int i = 0; i < tamanio; i++) {
@@ -152,6 +196,9 @@ void Grafo::establecer_caminos(string personaje) {
     }
 }
 
+/* Pre: Recibe un vector de distancias y uno de vertices visitados, ninguno vacio
+ * Pos: Devuelve el indice del vertice con menor distancia que no fue visitado aun
+ * */
 int Grafo::indice_minimo(int distancias[], bool visitados[]) {
     int minimo = INF;
     int indice = 0;
@@ -166,6 +213,9 @@ int Grafo::indice_minimo(int distancias[], bool visitados[]) {
     return indice;
 }
 
+/* Pre: Recibe dos coordenadas, el origen y el destino deben ser coordenadas validas
+ * Pos: Devuelve el costo minimo de moverse de origen a destino, si no hay forma de ir, devuelve NO_ENCONTRADO
+ * */
 int Grafo::camino_minimo(Coordenada origen, Coordenada destino) {
     bool origen_valido = comprobar_coordenada(origen);
     bool destino_valido = comprobar_coordenada(destino);
