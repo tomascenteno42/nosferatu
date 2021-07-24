@@ -2,12 +2,12 @@
 
 int Vampiro::contador = 0;
 
-Vampiro::Vampiro() : Monstruo(S_VAMPIRO, C_VAMPIRO)
+Vampiro::Vampiro(int id) : Monstruo(S_VAMPIRO, C_VAMPIRO, id)
 {
     Vampiro::contador++;
 }
 
-Vampiro::Vampiro(std::string nombre, char caracter) : Monstruo(nombre, caracter)
+Vampiro::Vampiro(std::string nombre, char caracter, int id) : Monstruo(nombre, caracter, id)
 {
     Vampiro::contador++;
 }

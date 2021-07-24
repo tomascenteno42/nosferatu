@@ -3,7 +3,7 @@
 
 int Bala::contador = 0;
 
-Bala::Bala(int cantidad) : Elemento(S_BALA, C_BALAS)
+Bala::Bala(int cantidad, int id) : Elemento(S_BALA, C_BALAS, id)
 {
     if (cantidad <= 0)
     {
@@ -16,7 +16,7 @@ Bala::Bala(int cantidad) : Elemento(S_BALA, C_BALAS)
     }
 }
 
-void Bala::mostrar_informacion()
+void Bala::mostrarInformacion()
 {
     cout << this->nombre << ", " << this->cantidad << endl;
 }

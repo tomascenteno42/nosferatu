@@ -1,6 +1,6 @@
 #include "../../src/main.h"
 
-Ser::Ser(std::string nombre, char caracter) : Objeto(nombre, caracter)
+Ser::Ser(std::string nombre, char caracter, int id) : Objeto(nombre, caracter, id)
 {
     energia = rand() % 20;
     fuerza = rand() % 30 + 10;
@@ -78,7 +78,7 @@ bool Ser::estaMuerto()
     return getVida() == 0;
 }
 
-void Ser::mostrar_informacion()
+void Ser::mostrarInformacion()
 {
     std::cout << nombre << std::endl;
 }

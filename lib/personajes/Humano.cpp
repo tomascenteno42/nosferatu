@@ -2,12 +2,12 @@
 
 int Humano::contador = 0;
 
-Humano::Humano() : Ser(S_HUMANO, C_HUMANO)
+Humano::Humano(int id) : Ser(S_HUMANO, C_HUMANO, id)
 {
     Humano::contador++;
 }
 
-Humano::Humano(std::string nombre, char caracter) : Ser(nombre, caracter)
+Humano::Humano(std::string nombre, char caracter, int id) : Ser(nombre, caracter, id)
 {
     Humano::contador++;
 }
@@ -16,12 +16,12 @@ void Humano::agarrarObjeto(Elemento *objeto)
 {
     bool contieneEscopeta = false;
 
-    if (objeto->obtener_caracter() == C_ESCOPETA)
+    if (objeto->getCaracter() == C_ESCOPETA)
     {
         size_t i = 0;
 
         while (!contieneEscopeta && i < inventario.size())
-            if (inventario.at(i)->obtener_caracter() == C_ESCOPETA)
+            if (inventario.at(i)->getCaracter() == C_ESCOPETA)
                 contieneEscopeta = true;
     }
 

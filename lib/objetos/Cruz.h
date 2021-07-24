@@ -13,12 +13,12 @@ public:
      * Post: Se crea el objeto Cruz con nombre "Cruz" y caracter "c" y cantidad 1
      *       Aumenta la cantidad de cruces existentes en 1
      */
-    Cruz();
+    Cruz(int id);
 
     /*
      * Post: Muestra por pantalla la informacion del objeto : nombre
      */
-    void mostrar_informacion() override;
+    void mostrarInformacion() override;
 
     /*
      * Post: Obtiene la cantidad de cruces existentes

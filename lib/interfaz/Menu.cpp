@@ -5,7 +5,7 @@ Menu::Menu(string PATH_ARCHIVO_ESTADO)
     try
     {
         this->tablero = new Tablero(PATH_ARCHIVO_ESTADO);
-        this->opcion_elegida = 0;
+        this->opcionElegida = 0;
     }
     catch (const invalid_argument &e)
     {
@@ -28,7 +28,7 @@ Menu::Menu(string PATH_ARCHIVO_ESTADO)
     }
 }
 
-void Menu::acceder_a_opciones()
+void Menu::accederAOpciones()
 {
     cout << "Ingrese una opcion" << endl
          << "1. Ingresar a las opciones" << endl
@@ -39,7 +39,7 @@ void Menu::acceder_a_opciones()
     {
         cin.clear();
         cin >> opcion;
-        if (this->es_un_numero(opcion))
+        if (this->esUnNumero(opcion))
         {
             numero_opcion = stoi(opcion);
         }
@@ -54,14 +54,11 @@ void Menu::acceder_a_opciones()
     } while (numero_opcion != 0 && numero_opcion != 1);
     if (numero_opcion == 1)
     {
-        this->mostrar_opciones();
-    }
-    else
-    {
+        this->mostrarOpciones();
     }
 }
 
-void Menu::mostrar_opciones()
+void Menu::mostrarOpciones()
 {
 
     cout << "Eliga una opcion ingresando el numero correspondiente: " << endl
@@ -81,15 +78,15 @@ void Menu::mostrar_opciones()
          << "Salir del juego" << endl;
 }
 
-void Menu::pedir_opcion()
+void Menu::pedirOpcion()
 {
     bool opcion_valida = false;
 
     while (!opcion_valida)
     {
         cin.clear();
-        cin >> this->opcion_elegida;
-        opcion_valida = this->verificar_opcion_valida();
+        cin >> this->opcionElegida;
+        opcion_valida = this->verificarOpcionValida();
         if (!opcion_valida)
         {
             cout << "Por favor, ingrese una opcion valida" << endl;
@@ -97,59 +94,59 @@ void Menu::pedir_opcion()
     }
 }
 
-bool Menu::verificar_opcion_valida()
+bool Menu::verificarOpcionValida()
 {
-    return (opcion_elegida >= 0 && opcion_elegida < MAX_OPCIONES);
+    return (opcionElegida >= 0 && opcionElegida < MAX_OPCIONES);
 }
 
-void Menu::procesar_opcion()
+void Menu::procesarOpcion()
 {
 
-    switch (this->opcion_elegida)
+    switch (this->opcionElegida)
     {
     case (MOSTRAR_TABLERO):
-        this->mostrar_tablero();
+        this->mostrarTablero();
         break;
     case (MOSTRAR_RESUMEN):
-        this->mostrar_resumen();
+        this->mostrarResumen();
         break;
     case (BUSCAR_POR_CUADRANTE):
-        this->buscar_por_cuadrante();
+        this->buscarPorCuadrante();
         break;
     case (ALTA):
-        this->dar_de_alta();
-        this->mostrar_tablero();
+        this->darDeAlta();
+        this->mostrarTablero();
         break;
     case (BAJA):
-        this->dar_de_baja();
-        this->mostrar_tablero();
+        this->darDeBaja();
+        this->mostrarTablero();
         break;
     case (BUSCAR_POR_POSICION):
-        this->buscar_por_posicion();
+        this->buscarPorPosicion();
         break;
     default:
         break;
     }
 }
 
-void Menu::mostrar_tablero()
+void Menu::mostrarTablero()
 {
     int espaciado = 3;
     cout << setfill(' ') << setw(espaciado) << "";
-    for (int k = 0; k < this->tablero->cantidad_columnas(); k++)
+    for (int k = 0; k < this->tablero->cantidadColumnas(); k++)
     {
         cout << setw(espaciado) << k + 1;
     }
     cout << endl;
-    for (int i = 0; i < this->tablero->cantidad_filas(); i++)
+    for (int i = 0; i < this->tablero->cantidadFilas(); i++)
     {
         cout << setw(espaciado) << i + 1;
-        for (int j = 0; j < this->tablero->cantidad_columnas(); j++)
+        for (int j = 0; j < this->tablero->cantidadColumnas(); j++)
         {
-            Objeto *objeto_obtenido = this->tablero->obtener_elemento_en_posicion(i, j);
+            Objeto *objeto_obtenido = this->tablero->getElementoEnPosicion(i, j);
             if (objeto_obtenido != NULL)
             {
-                cout << setw(espaciado) << objeto_obtenido->obtener_caracter();
+                cout << setw(espaciado) << objeto_obtenido->getCaracter();
             }
             else
             {
@@ -161,7 +158,7 @@ void Menu::mostrar_tablero()
     cout << endl;
 }
 
-void Menu::mostrar_resumen()
+void Menu::mostrarResumen()
 {
     cout << endl
          << setw(20) << " "
@@ -177,27 +174,27 @@ void Menu::mostrar_resumen()
     for (auto &nombre : nombres)
     {
         cout << "|" << setw(15) << nombre << setw(4) << "|" << setw(15);
-        cout << this->tablero->obtener_existentes(nombre);
+        cout << this->tablero->getExistentes(nombre);
         cout << setw(4) << "|" << setw(20)
-             << this->tablero->obtener_porcentaje(nombre)
+             << this->tablero->getPorcentaje(nombre)
              << setw(11) << "|" << endl;
         cout << setfill('~') << setw(70) << "" << setfill(' ') << endl;
     }
 }
 
-int Menu::obtener_opcion_elegida()
+int Menu::getOpcionElegida()
 {
-    return this->opcion_elegida;
+    return this->opcionElegida;
 }
 
-void Menu::buscar_por_cuadrante()
+void Menu::buscarPorCuadrante()
 {
-    string nombre_objeto = this->usuario_pedir_objeto();
+    string nombre_objeto = this->usuarioPedirObjeto();
     if (!nombre_objeto.empty())
     {
-        this->mostrar_tablero();
-        CUADRANTE zona = this->usuario_pedir_cuadrante();
-        bool objeto_encontrado = this->buscar_objeto_en_cuadrante(nombre_objeto, zona);
+        this->mostrarTablero();
+        CUADRANTE zona = this->usuarioPedirCuadrante();
+        bool objeto_encontrado = this->buscarObjetoEnCuadrante(nombre_objeto, zona);
         if (!objeto_encontrado)
         {
             cout << "El objeto no se encontro en el cuadrante" << endl;
@@ -209,7 +206,7 @@ void Menu::buscar_por_cuadrante()
     }
 }
 
-bool Menu::buscar_objeto_en_cuadrante(const string &nombre_objeto, CUADRANTE zona)
+bool Menu::buscarObjetoEnCuadrante(const string &nombre_objeto, CUADRANTE zona)
 {
     Posicion pos_min;
     Posicion pos_max;
@@ -218,46 +215,51 @@ bool Menu::buscar_objeto_en_cuadrante(const string &nombre_objeto, CUADRANTE zon
     {
     case (NOROESTE):
         pos_min = Posicion(1, 1);
-        pos_max = Posicion(this->tablero->cantidad_filas() / 2, this->tablero->cantidad_columnas() / 2);
+        pos_max = Posicion(this->tablero->cantidadFilas() / 2, this->tablero->cantidadColumnas() / 2);
         break;
     case (NORESTE):
-        pos_min = Posicion((this->tablero->cantidad_filas() / 2) + 1, 1);
-        pos_max = Posicion(this->tablero->cantidad_filas(), this->tablero->cantidad_columnas() / 2);
+        pos_min = Posicion((this->tablero->cantidadFilas() / 2) + 1, 1);
+        pos_max = Posicion(this->tablero->cantidadFilas(), this->tablero->cantidadColumnas() / 2);
         break;
     case (SUROESTE):
-        pos_min = Posicion(1, (this->tablero->cantidad_columnas() / 2) + 1);
-        pos_max = Posicion(this->tablero->cantidad_filas() / 2, this->tablero->cantidad_columnas());
+        pos_min = Posicion(1, (this->tablero->cantidadColumnas() / 2) + 1);
+        pos_max = Posicion(this->tablero->cantidadFilas() / 2, this->tablero->cantidadColumnas());
         break;
     case (SURESTE):
-        pos_min = Posicion((this->tablero->cantidad_filas() / 2) + 1, (this->tablero->cantidad_columnas() / 2) + 1);
-        pos_max = Posicion(this->tablero->cantidad_filas(), this->tablero->cantidad_columnas());
+        pos_min = Posicion((this->tablero->cantidadFilas() / 2) + 1, (this->tablero->cantidadColumnas() / 2) + 1);
+        pos_max = Posicion(this->tablero->cantidadFilas(), this->tablero->cantidadColumnas());
         break;
     default:
         throw Excepcion_error("Error, no se pudo encontrar un cuadrante valido!!");
     }
-    encontrado = this->tablero->existe_objeto_en_cuadrante(nombre_objeto, pos_min, pos_max);
+    encontrado = this->tablero->existeObjetoEnCuadrante(nombre_objeto, pos_min, pos_max);
     return encontrado;
 }
 
-void Menu::dar_de_alta()
+void Menu::darDeAlta()
 {
     int fila, columna;
-    this->pedir_posicion(fila, columna);
+    this->pedirPosicion(fila, columna);
     bool opcion_aceptada = false;
     while (!opcion_aceptada)
     {
         try
         {
-            string nombre_obtenido = this->usuario_pedir_objeto();
+            string nombre_obtenido = this->usuarioPedirObjeto();
             if (!nombre_obtenido.empty())
             {
                 int cantidad = 1;
                 if (nombre_obtenido == S_BALA || nombre_obtenido == S_AGUA_BENDITA)
                 {
-                    cantidad = this->usuario_pedir_cantidad();
+                    cantidad = this->usuarioPedirCantidad();
                 }
+
+                int clave = this->usuarioPedirClave(parsearTextoAObjeto(nombre_obtenido));
+
                 Objeto *nuevo_objeto = Parser(nombre_obtenido, cantidad).obtener_objeto();
-                tablero->dar_de_alta(fila, columna, nuevo_objeto);
+
+                tablero->darDeAlta(fila, columna, nuevo_objeto);
+                tablero->getDiccionario()->insertar(clave, nuevo_objeto);
             }
             opcion_aceptada = true;
         }
@@ -269,14 +271,18 @@ void Menu::dar_de_alta()
     }
 }
 
-void Menu::dar_de_baja()
+void Menu::darDeBaja()
 {
     int fila, columna;
-    this->pedir_posicion(fila, columna);
-    Objeto *objeto_a_borrar = this->tablero->obtener_elemento_en_posicion(fila, columna);
-    if (objeto_a_borrar != NULL)
+
+    this->pedirPosicion(fila, columna);
+
+    Objeto *objeto = this->tablero->getElementoEnPosicion(fila, columna);
+
+    if (objeto != NULL)
     {
-        this->tablero->dar_de_baja(fila, columna);
+        this->tablero->getDiccionario()->eliminar(objeto->getId());
+        this->tablero->darDeBaja(fila, columna);
     }
     else
     {
@@ -284,16 +290,16 @@ void Menu::dar_de_baja()
     }
 }
 
-void Menu::buscar_por_posicion()
+void Menu::buscarPorPosicion()
 {
     int fila, columna;
-    this->pedir_posicion(fila, columna);
+    this->pedirPosicion(fila, columna);
 
-    Objeto *objeto_buscado = this->tablero->obtener_elemento_en_posicion(fila, columna);
+    Objeto *objeto_buscado = this->tablero->getElementoEnPosicion(fila, columna);
     if (objeto_buscado)
     {
         cout << "En la posicion se encontro: ";
-        objeto_buscado->mostrar_informacion();
+        objeto_buscado->mostrarInformacion();
         cout << endl;
     }
     else
@@ -302,7 +308,7 @@ void Menu::buscar_por_posicion()
     }
 }
 
-bool Menu::rango_valido(const std::string &texto_ingresado, int &fila, int &columna)
+bool Menu::rangoValido(const std::string &texto_ingresado, int &fila, int &columna)
 {
     bool rango_es_valido = false;
     string primer_numero, segundo_numero;
@@ -310,38 +316,38 @@ bool Menu::rango_valido(const std::string &texto_ingresado, int &fila, int &colu
     getline(input, primer_numero, ' ');
     getline(input, segundo_numero, ' ');
 
-    if (es_un_numero(primer_numero) && es_un_numero(segundo_numero))
+    if (esUnNumero(primer_numero) && esUnNumero(segundo_numero))
     {
         fila = stoi(primer_numero) - 1;
         columna = stoi(segundo_numero) - 1;
-        rango_es_valido = this->tablero->posicion_valida(fila, columna);
+        rango_es_valido = this->tablero->posicionValida(fila, columna);
     }
     return rango_es_valido;
 }
 
-bool Menu::es_un_numero(std::string texto)
+bool Menu::esUnNumero(std::string texto)
 {
-    bool es_un_numero = true;
+    bool esUnNumero = true;
     long unsigned i = 0;
-    while (es_un_numero && i < texto.length())
+    while (esUnNumero && i < texto.length())
     {
-        es_un_numero = isdigit(texto[i]);
+        esUnNumero = isdigit(texto[i]);
         i++;
     }
-    return es_un_numero;
+    return esUnNumero;
 }
 
-void Menu::pedir_posicion(int &fila, int &columna)
+void Menu::pedirPosicion(int &fila, int &columna)
 {
     string texto_ingresado;
-    cout << "Ingrese la posicion del objeto. MAX = " << this->tablero->cantidad_filas() << " "
-         << this->tablero->cantidad_columnas() << endl;
+    cout << "Ingrese la posicion del objeto. MAX = " << this->tablero->cantidadFilas() << " "
+         << this->tablero->cantidadColumnas() << endl;
     cout << "Ejemplo: 10 5  --> fila 10 columna 5" << endl;
     cin.clear();
     cin.ignore(256, '\n');
     getline(cin, texto_ingresado);
 
-    while (!this->rango_valido(texto_ingresado, fila, columna))
+    while (!this->rangoValido(texto_ingresado, fila, columna))
     {
         cout << "Las coordenadas ingresadas no estan dentro del rango del tablero, pruebe otra vez" << endl;
         getline(cin, texto_ingresado);
@@ -353,7 +359,7 @@ Menu::~Menu()
     delete this->tablero;
 }
 
-string Menu::usuario_pedir_objeto()
+string Menu::usuarioPedirObjeto()
 {
     string objeto_elegido;
     cout << left << "En el mapa se hallan estas cosas: elija una " << endl
@@ -389,7 +395,7 @@ string Menu::usuario_pedir_objeto()
     return objeto_elegido;
 }
 
-int Menu::usuario_pedir_cantidad()
+int Menu::usuarioPedirCantidad()
 {
     string texto;
     int cantidad = 0;
@@ -398,7 +404,7 @@ int Menu::usuario_pedir_cantidad()
         cout << "Ingrese la cantidad deseada" << endl;
         cin.clear();
         cin >> texto;
-        if (this->es_un_numero(texto))
+        if (this->esUnNumero(texto))
         {
             cantidad = stoi(texto);
         }
@@ -415,7 +421,53 @@ int Menu::usuario_pedir_cantidad()
     return cantidad;
 }
 
-CUADRANTE Menu::usuario_pedir_cuadrante()
+int Menu::usuarioPedirClave(ENUM_OBJETOS objeto)
+{
+    string texto;
+    int clave = -1;
+    // bool claveValida = false;
+
+    // cout << "Ingrese una clave identificadora del objeto" << endl;
+    // cin >> texto;
+
+    // while (!claveValida)
+    // {
+    //     cout << "Clave invalida, ingrese nuevamente. " << endl
+    //          << "Puede ser porque la clave no pertenece a el objeto en cuestion o la clave esta fuera de los limites"
+    //          << "(" << ID_VANESA << " - " << ID_NO_VALIDO - 1 << ")" << endl;
+    //     cin >> texto;
+
+    //     if (this->esUnNumero(texto))
+    //     {
+    //         clave = stoi(texto);
+    //         if (esIdValido(clave, objeto))
+    //             claveValida = true;
+    //     }
+    // }
+
+    do
+    {
+        cout << "Ingrese una clave identificadora del objeto" << endl;
+
+        cin.clear();
+        cin >> texto;
+
+        if (this->esUnNumero(texto))
+            clave = stoi(texto);
+        else
+            cout << "Solo ingrese numeros porfavor." << endl;
+
+        if (!esIdValido(clave, objeto))
+            cout << "Clave invalida, ingrese nuevamente. " << endl
+                 << "Puede ser porque la clave no pertenece a el objeto en cuestion o la clave esta fuera de los limites"
+                 << "(" << ID_VANESA << " - " << ID_NO_VALIDO - 1 << ")" << endl;
+
+    } while (!esIdValido(clave, objeto));
+
+    return clave;
+}
+
+CUADRANTE Menu::usuarioPedirCuadrante()
 {
     cout << "Elija la zona donde quiere buscar cierto objeto" << endl
          << NOROESTE << " Zona Noroeste (NO)" << endl

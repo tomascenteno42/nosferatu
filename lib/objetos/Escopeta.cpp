@@ -2,12 +2,12 @@
 
 int Escopeta::contador = 0;
 
-Escopeta::Escopeta() : Elemento(S_ESCOPETA, C_ESCOPETA)
+Escopeta::Escopeta(int id) : Elemento(S_ESCOPETA, C_ESCOPETA, id)
 {
     Escopeta::contador++;
 }
 
-void Escopeta::mostrar_informacion()
+void Escopeta::mostrarInformacion()
 {
     cout << this->nombre << endl;
 }

@@ -2,7 +2,7 @@
 
 int Vampirella::contador = 0;
 
-Vampirella::Vampirella() : Vampiro(S_VAMPIRELLA, C_VAMPIRELLA)
+Vampirella::Vampirella() : Vampiro(S_VAMPIRELLA, C_VAMPIRELLA, ID_VAMPIRELLA)
 {
     Vampirella::contador++;
 }

@@ -15,7 +15,7 @@ public:
     /*
      * Post: Se crea el npc con la posicion Pos
      */
-    explicit Ser(std::string nombre, char caracter);
+    explicit Ser(string nombre, char caracter, int id);
 
     int getEnergia();
     int getVida();
@@ -46,7 +46,7 @@ public:
     /*
      * Post: Se muestra por pantalla la informacion del objeto: nombre
      */
-    void mostrar_informacion() override;
+    void mostrarInformacion() override;
 };
 
 #endif

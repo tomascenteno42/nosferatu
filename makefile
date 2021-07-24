@@ -1,11 +1,11 @@
 # Compiler settings
 ifeq ($(OS),Windows_NT)
 CC = g++
-CXXFLAGS = -g -Werror
+CXXFLAGS = -g 
 LDFLAGS = 
 else
 CC = g++
-CXXFLAGS = -g -Werror -fsanitize=address -O1 -fno-omit-frame-pointer
+CXXFLAGS = -g  -fsanitize=address -O1 -fno-omit-frame-pointer
 LDFLAGS = 
 endif
 

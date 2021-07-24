@@ -26,10 +26,11 @@ using namespace std;
 
 #include "jugador.h"
 
-void inicializarJugadores(Jugador *humanos, Jugador *monstruos);
 BANDO parsearTextoABando(string texto);
-Ser *parsearTextoASer(string texto);
+ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
+ID parseId(int id);
+bool esIdValido(int id, ENUM_OBJETOS objeto);
 
 #include "../lib/personajes/Humano.h"
 #include "../lib/personajes/Humano_cazador.h"

@@ -12,12 +12,12 @@ public:
     /*
      * Post: Se crea el objeto listo para usarse
      */
-    Escopeta();
+    Escopeta(int id);
 
     /*
      * Post: Muestra por pantalla la informacion del objeto: solo el nombre en este caso
      */
-    void mostrar_informacion() override;
+    void mostrarInformacion() override;
 
     /*
     * Post: Aumenta la cantidad de escopetas existentes en 1

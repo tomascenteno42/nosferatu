@@ -5,6 +5,8 @@
 
 class Contador;
 class Jugador;
+template <class K, class T>
+class ABB;
 
 class Tablero
 {
@@ -32,57 +34,58 @@ public:
      * Post: obtiene el objeto en la posicion indicada por parametro
      *       Si no hay ningun objeto en esa posicion, se retorna un NULL
      */
-    Objeto *obtener_elemento_en_posicion(int fila, int columna);
+    Objeto *getElementoEnPosicion(int fila, int columna);
 
     /*
      * Post: obtiene la cantidad de filas
      */
-    int cantidad_filas();
+    int cantidadFilas();
 
     /*
      * Post: obtiene la cantidad de columnas
      */
-    int cantidad_columnas();
+    int cantidadColumnas();
 
     /*
      * Post: Devuelve true  si la fila y columna estan dentro del rango del tablero
      *       False en otro caso
      */
-    bool posicion_valida(int fila, int columna);
+    bool posicionValida(int fila, int columna);
 
     /*
      * Pre: El objeto en la fila y columna especificada debe existir
      *      La fila y columna deben estar dentro del rango del tablero
      * Post: Se elimina el objeto en la posicion (fila, columna) pasada por parametro
      */
-    void dar_de_baja(int fila, int columna);
+    void darDeBaja(int fila, int columna);
 
     /*
      * Pre: en la posicion no hay ningun objeto (NULL)
      * Post: Se asigna un objeto en la posicion indicada por parametro
      */
-    void dar_de_alta(int fila, int columna, Objeto *nuevo_objeto);
+    void darDeAlta(int fila, int columna, Objeto *nuevo_objeto);
 
     /*
      *
      * Post: obtiene la cantidad de
      */
-    int obtener_existentes(const string &nombre);
+    int getExistentes(const string &nombre);
 
     /*
     *
     * Post: Se obtiene el porcentaje del objeto en referencia al nombre en el mapa
     */
-    float obtener_porcentaje(const string &nombre);
+    float getPorcentaje(const string &nombre);
 
     /*
      * Post: el cuadrante debe ser valido
      * Post: devuelve true si encuentra el objeto hallado en el cuadrante
      */
-    bool existe_objeto_en_cuadrante(const string &buscado, Posicion pos_min, Posicion pos_max);
+    bool existeObjetoEnCuadrante(const string &buscado, Posicion pos_min, Posicion pos_max);
 
     Jugador *getJugador(int idx);
 
+    ABB<int, Objeto *> *getDiccionario();
     /*
      * Post: Libera los recursos asociados
      */
@@ -92,12 +95,12 @@ private:
     /* Pre: La cantidad de filas y columnas > 0
      * Post: Reserva en memoria dinamica una matriz
      */
-    void inicializar_matriz();
+    void inicializarMatriz();
 
     /*
      * Post: devuelve true si el nombre del objeto buscado es igual al hallado en el tablero
      */
-    bool comparar_objetos(const string &buscado, const string &hallado);
+    bool compararObjetos(const string &buscado, const string &hallado);
 };
 
 #endif //NOSFERATUV2_TABLERO_H

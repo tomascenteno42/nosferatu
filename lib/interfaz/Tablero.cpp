@@ -32,7 +32,7 @@ Tablero::Tablero(const string &dir)
         this->cant_filas = stoi(s_filas);
         this->cant_columnas = stoi(s_columnas);
 
-        this->inicializar_matriz();
+        this->inicializarMatriz();
 
         while (getline(archivo, linea))
         {
@@ -63,50 +63,50 @@ Tablero::Tablero(const string &dir)
     }
 }
 
-void Tablero::inicializar_matriz()
+void Tablero::inicializarMatriz()
 {
 
-    this->objetos = new Objeto **[this->cantidad_filas()];
-    for (int i = 0; i < this->cantidad_filas(); i++)
+    this->objetos = new Objeto **[this->cantidadFilas()];
+    for (int i = 0; i < this->cantidadFilas(); i++)
     {
-        this->objetos[i] = new Objeto *[this->cantidad_columnas()];
-        for (int j = 0; j < this->cantidad_columnas(); j++)
+        this->objetos[i] = new Objeto *[this->cantidadColumnas()];
+        for (int j = 0; j < this->cantidadColumnas(); j++)
         {
             this->objetos[i][j] = NULL;
         }
     }
 }
 
-bool Tablero::posicion_valida(int fila, int columna)
+bool Tablero::posicionValida(int fila, int columna)
 {
-    return (fila >= 0 && columna >= 0 && fila < this->cantidad_filas() && columna < this->cantidad_columnas());
+    return (fila >= 0 && columna >= 0 && fila < this->cantidadFilas() && columna < this->cantidadColumnas());
 }
 
-void Tablero::dar_de_baja(int fila, int columna)
+void Tablero::darDeBaja(int fila, int columna)
 {
-    if (this->posicion_valida(fila, columna))
+    if (this->posicionValida(fila, columna))
     {
         delete this->objetos[fila][columna];
         this->objetos[fila][columna] = NULL;
     }
 }
 
-Objeto *Tablero::obtener_elemento_en_posicion(int fila, int columna)
+Objeto *Tablero::getElementoEnPosicion(int fila, int columna)
 {
     return this->objetos[fila][columna];
 }
 
-int Tablero::cantidad_filas()
+int Tablero::cantidadFilas()
 {
     return this->cant_filas;
 }
 
-int Tablero::cantidad_columnas()
+int Tablero::cantidadColumnas()
 {
     return this->cant_columnas;
 }
 
-void Tablero::dar_de_alta(int fila, int columna, Objeto *nuevo_objeto)
+void Tablero::darDeAlta(int fila, int columna, Objeto *nuevo_objeto)
 {
     if (this->objetos[fila][columna] == NULL)
     {
@@ -114,22 +114,23 @@ void Tablero::dar_de_alta(int fila, int columna, Objeto *nuevo_objeto)
     }
     else
     {
+        // this->diccionario->eliminar();
         delete this->objetos[fila][columna];
         this->objetos[fila][columna] = nuevo_objeto;
     }
 }
 
-int Tablero::obtener_existentes(const string &nombre)
+int Tablero::getExistentes(const string &nombre)
 {
     return contador->obtener_cantidad_existentes(nombre);
 }
 
-float Tablero::obtener_porcentaje(const string &nombre)
+float Tablero::getPorcentaje(const string &nombre)
 {
     return this->contador->obtener_porcentaje(nombre);
 }
 
-bool Tablero::existe_objeto_en_cuadrante(const string &buscado, Posicion pos_min, Posicion pos_max)
+bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion pos_min, Posicion pos_max)
 {
     bool objeto_hallado = false;
     int i = pos_min.obtener_fila() - 1;
@@ -140,7 +141,7 @@ bool Tablero::existe_objeto_en_cuadrante(const string &buscado, Posicion pos_min
         {
             if (this->objetos[i][j] != NULL)
             {
-                objeto_hallado = this->comparar_objetos(buscado, this->objetos[i][j]->obtener_nombre());
+                objeto_hallado = this->compararObjetos(buscado, this->objetos[i][j]->getNombre());
             }
             j++;
         }
@@ -149,7 +150,7 @@ bool Tablero::existe_objeto_en_cuadrante(const string &buscado, Posicion pos_min
     return objeto_hallado;
 }
 
-bool Tablero::comparar_objetos(const string &buscado, const string &hallado)
+bool Tablero::compararObjetos(const string &buscado, const string &hallado)
 {
     bool objeto_hallado = false;
     objeto_hallado = buscado == hallado;
@@ -172,11 +173,16 @@ Jugador *Tablero::getJugador(int idx)
     return jugadores[idx];
 }
 
+ABB<int, Objeto *> *Tablero::getDiccionario()
+{
+    return this->diccionario;
+}
+
 Tablero::~Tablero()
 {
-    for (int i = 0; i < this->cantidad_filas(); i++)
+    for (int i = 0; i < this->cantidadFilas(); i++)
     {
-        for (int j = 0; j < this->cantidad_columnas(); j++)
+        for (int j = 0; j < this->cantidadColumnas(); j++)
         {
             if (this->objetos[i][j] != NULL)
             {
@@ -187,4 +193,7 @@ Tablero::~Tablero()
     }
     delete[] objetos;
     delete contador;
+    delete diccionario;
+    delete jugadores[0];
+    delete jugadores[1];
 }

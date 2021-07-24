@@ -13,7 +13,7 @@ public:
     /* Pre:
      * Post: Crea el item listo para usarse con la posicion pos
      */
-    explicit Elemento(std::string nombre, char caracter);
+    explicit Elemento(std::string nombre, char caracter, int id);
 
     /*
      * Post: obtiene la cantidad del elemento (Para cruces,

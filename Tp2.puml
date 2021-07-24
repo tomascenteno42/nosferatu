@@ -4,7 +4,7 @@
 abstract class Objeto {
 nombre:string
 caracter:char
-#mostrar_informacion()
+#mostrarInformacion()
 }
 abstract class Elemento {
 cantidad: int

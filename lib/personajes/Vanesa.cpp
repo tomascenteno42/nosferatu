@@ -2,7 +2,7 @@
 
 int Vanesa::contador = 0;
 
-Vanesa::Vanesa() : Humano_cazador(S_VANESA, C_VANESA)
+Vanesa::Vanesa() : Humano_cazador(S_VANESA, C_VANESA, ID_VANESA)
 {
     Vanesa::contador++;
 }

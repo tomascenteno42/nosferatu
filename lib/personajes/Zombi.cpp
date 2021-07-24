@@ -2,7 +2,7 @@
 
 int Zombi::contador = 0;
 
-Zombi::Zombi() : Monstruo(S_ZOMBI, C_ZOMBI)
+Zombi::Zombi(int id) : Monstruo(S_ZOMBI, C_ZOMBI, id)
 {
     Zombi::contador++;
     cantidadDeAguaBenditas = 0;

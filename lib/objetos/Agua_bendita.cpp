@@ -2,7 +2,7 @@
 
 int Agua_bendita::contador = 0;
 
-Agua_bendita::Agua_bendita(int cantidad) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDITA)
+Agua_bendita::Agua_bendita(int cantidad, int id) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDITA, id)
 {
     if (cantidad <= 0)
     {
@@ -15,7 +15,7 @@ Agua_bendita::Agua_bendita(int cantidad) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDI
     }
 }
 
-void Agua_bendita::mostrar_informacion()
+void Agua_bendita::mostrarInformacion()
 {
     cout << this->nombre << ", " << this->cantidad << endl;
 }

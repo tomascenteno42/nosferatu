@@ -139,112 +139,111 @@ public:
 template <class K, class T>
 NodoABB<K, T>::NodoABB(K k, T d)
 {
-    this->clave = k;
-    this->data = d;
-    this->left = NULL;
-    this->right = NULL;
-    this->parent = NULL;
+    clave = k;
+    data = d;
+    izquierdo = NULL;
+    derecho = NULL;
+    padre = NULL;
 }
 
 template <class K, class T>
 T NodoABB<K, T>::getData()
 {
-    return this->data;
+    return data;
 }
 
 template <class K, class T>
 K NodoABB<K, T>::getClave()
 {
-    return this->clave;
+    return clave;
 }
 
 template <class K, class T>
 NodoABB<K, T> *NodoABB<K, T>::getDerecho()
 {
-    return this->derecho;
+    return derecho;
 }
 
 template <class K, class T>
 NodoABB<K, T> *NodoABB<K, T>::getIzquierdo()
 {
-    return this->izquierdo;
+    return izquierdo;
 }
 
 template <class K, class T>
 NodoABB<K, T> *NodoABB<K, T>::getPadre()
 {
-    return this->padre;
+    return padre;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setData(T data)
 {
-    this->data = data;
+    data = data;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setClave(K clave)
 {
-    this->clave = clave;
+    clave = clave;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setDerecho(NodoABB<K, T> *nodoDerecho)
 {
-    this->derecho = nodoDerecho;
+    derecho = nodoDerecho;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setDerecho(NodoABB<K, T> *nodoDerecho, NodoABB<K, T> *nodoPadre)
 {
-    this->derecho = nodoDerecho;
-    this->padre = nodoPadre;
+    derecho = nodoDerecho;
+    padre = nodoPadre;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *nodoIzquierdo)
 {
-    this->izquierdo = nodoIzquierdo;
+    izquierdo = nodoIzquierdo;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *nodoIzquierdo, NodoABB<K, T> *nodoPadre)
 {
-    this->izquierdo = izquierdo;
-    this->padre = nodoPadre;
+    izquierdo = izquierdo;
+    padre = nodoPadre;
 }
 
 template <class K, class T>
 void NodoABB<K, T>::setPadre(NodoABB<K, T> *nodoPadre)
 {
-    this->padre = nodoPadre;
+    padre = nodoPadre;
 }
 
 template <class K, class T>
 bool NodoABB<K, T>::esHoja()
 {
 
-    return (this->izquierdo == 0 && this->derecho == 0);
+    return (izquierdo == 0 && derecho == 0);
 }
 
 template <class K, class T>
 bool NodoABB<K, T>::tieneSoloHijoDerecho()
 {
 
-    return (this->izquierdo == 0 && this->derecho != 0);
+    return (izquierdo == 0 && derecho != 0);
 }
 
 template <class K, class T>
 bool NodoABB<K, T>::tieneSoloHijoIzquierdo()
 {
 
-    return (this->izquierdo != 0 && this->derecho == 0);
+    return (izquierdo != 0 && derecho == 0);
 }
 
 template <class K, class T>
 NodoABB<K, T>::~NodoABB()
 {
-    delete data;
 }
 
 #endif //TP3_NodoABB_H

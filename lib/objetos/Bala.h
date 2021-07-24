@@ -12,13 +12,13 @@ public:
     /* Pre: cantidad > 0
      * Post: Se crea el objeto listo para usarse
      */
-    explicit Bala(int cantidad);
+    explicit Bala(int cantidad, int id);
 
     /*
      * Post: Muestra por pantalla la informacion del objeto instanciado
      *       En este caso "bala 20" , "bala 25"
      */
-    void mostrar_informacion() override;
+    void mostrarInformacion() override;
 
     /*
      * Post: Obtiene la cantidad de objetos Balas existentes

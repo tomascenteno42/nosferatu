@@ -22,7 +22,7 @@ private:
      *       Si no hay texto que coincida con algun objeto se lanza un Excepcion_error
      * WARNING: Se crea el objeto en memoria dinamica
      */
-    Objeto *obtener_objeto_del_texto(string texto);
+    Objeto *obtener_objeto_del_texto(string texto, int clave);
 
 public:
     /*

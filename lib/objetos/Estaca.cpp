@@ -2,12 +2,12 @@
 
 int Estaca::contador = 0;
 
-Estaca::Estaca() : Elemento(S_ESTACA, C_ESTACA)
+Estaca::Estaca(int id) : Elemento(S_ESTACA, C_ESTACA, id)
 {
     Estaca::contador++;
 }
 
-void Estaca::mostrar_informacion()
+void Estaca::mostrarInformacion()
 {
     cout << this->nombre << endl;
 }

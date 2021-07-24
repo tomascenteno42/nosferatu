@@ -32,13 +32,17 @@ Parser::Parser(const string &linea)
 
     getline(linea_s, id, '\n');
 
+    id.erase(remove(id.begin(), id.end(), ' '), id.end());
+
     this->clave = stoi(id);
+
+    cout << this->clave << endl;
 
     this->asignar_especial(especial);
 
     this->pos = new Posicion(stoi(posicion_x, nullptr), stoi(posicion_y, nullptr));
 
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre);
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave);
 }
 
 Objeto *Parser::obtener_objeto()
@@ -51,7 +55,7 @@ int Parser::getClave()
     return this->clave;
 }
 
-Objeto *Parser::obtener_objeto_del_texto(string texto)
+Objeto *Parser::obtener_objeto_del_texto(string texto, int clave)
 {
     Objeto *nuevo_objeto;
 
@@ -59,19 +63,19 @@ Objeto *Parser::obtener_objeto_del_texto(string texto)
 
     if (texto == S_HUMANO)
     {
-        nuevo_objeto = new Humano();
+        nuevo_objeto = new Humano(clave);
     }
     else if (texto == S_HUMANO_CV)
     {
-        nuevo_objeto = new Humano_cazador();
+        nuevo_objeto = new Humano_cazador(clave);
     }
     else if (texto == S_ZOMBI)
     {
-        nuevo_objeto = new Zombi();
+        nuevo_objeto = new Zombi(clave);
     }
     else if (texto == S_VAMPIRO)
     {
-        nuevo_objeto = new Vampiro();
+        nuevo_objeto = new Vampiro(clave);
     }
     else if (texto == S_VAMPIRELLA)
     {
@@ -87,23 +91,23 @@ Objeto *Parser::obtener_objeto_del_texto(string texto)
     }
     else if (texto == S_ESCOPETA)
     {
-        nuevo_objeto = new Escopeta();
+        nuevo_objeto = new Escopeta(clave);
     }
     else if (texto == S_ESTACA)
     {
-        nuevo_objeto = new Estaca();
+        nuevo_objeto = new Estaca(clave);
     }
     else if (texto == S_CRUZ)
     {
-        nuevo_objeto = new Cruz();
+        nuevo_objeto = new Cruz(clave);
     }
     else if (texto == S_AGUA_BENDITA)
     {
-        nuevo_objeto = new Agua_bendita(this->cantidad);
+        nuevo_objeto = new Agua_bendita(this->cantidad, clave);
     }
     else if (texto == S_BALA)
     {
-        nuevo_objeto = new Bala(this->cantidad);
+        nuevo_objeto = new Bala(this->cantidad, clave);
     }
     else
     {
@@ -205,5 +209,5 @@ Parser::Parser(const string &nombre, int cantidad)
     this->cantidad = cantidad;
     this->nombre = nombre;
     this->pos = NULL;
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre);
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave);
 }

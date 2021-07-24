@@ -13,13 +13,13 @@ public:
      * Post: Se crea el objeto listo para usarse
      *       Aumenta en 1 la cantidad de humanos cazadores existentes
      */
-    Humano_cazador();
+    Humano_cazador(int id);
 
     /* Humano Cazador Especial *
      * Post: Se crea el objeto, con el nombre y caracter pasado por parametros
      *       Aumenta en 1 la cantidad de humanos cazadores existentes
      */
-    Humano_cazador(std::string nombre, char caracter);
+    Humano_cazador(string nombre, char caracter, int id);
 
     /*
      * Post: obtiene la cantidad de humanos cazadores existentes

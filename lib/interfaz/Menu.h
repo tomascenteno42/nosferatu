@@ -18,7 +18,7 @@ class Menu
 {
 private:
     //atributos
-    int opcion_elegida;
+    int opcionElegida;
     Tablero *tablero;
 
 public:
@@ -33,28 +33,28 @@ public:
     /*
      * Post: Se muestra por pantalla dos opciones, salir del juego o entrar a las opciones generales
      */
-    void acceder_a_opciones();
+    void accederAOpciones();
 
     /*
      * Post: Se imprime por pantalla las diferentes opciones del menu
      */
-    void mostrar_opciones();
+    void mostrarOpciones();
 
     /*
      * Pre: Se debe informar al usuario las opciones que dispone el menu
      * Post: Obtiene la opcion del usuario y la almacena en opcion_elegida.
      */
-    void pedir_opcion();
+    void pedirOpcion();
 
     /* Pre: se debe haber elegido una opcion valida previamente
      * Post: Procesa la opcion elegida
      */
-    void procesar_opcion();
+    void procesarOpcion();
 
     /*
      * Post: Obtiene la opcion elegida
      */
-    int obtener_opcion_elegida();
+    int getOpcionElegida();
 
     /*
      * Post: se liberan los recursos asociados (tablero)
@@ -68,41 +68,41 @@ public:
     /*
      * Post: se imprime por pantalla el tablero
      */
-    void mostrar_tablero();
+    void mostrarTablero();
 
     /*
      * Post: Se imprime por pantalla el resumen del juego
      */
-    void mostrar_resumen();
+    void mostrarResumen();
 
     /*
      * Post: Se lleva a cabo una instancia para buscar un objeto a traves
      *       del ingreso manual del usuario
      */
-    void buscar_por_cuadrante();
+    void buscarPorCuadrante();
 
     /*
      * Post: Se lleva a cabo una instancia para dar de alta un objeto a traves
      *       del ingreso manual del usuario
      */
-    void dar_de_alta();
+    void darDeAlta();
 
     /*
      *  Post: Se lleva a cabo una instancia para dar de baja un objeto a traves
      *        del ingreso manual del usuario
      */
-    void dar_de_baja();
+    void darDeBaja();
 
     /*
      *  Post: Se lleva a cabo una instancia para buscar un objeto en el tablero
      *        a traves del ingreso manual del usuario
      */
-    void buscar_por_posicion();
+    void buscarPorPosicion();
 
     /*
     * Post: Devuelve true si la opcion ingresada esta dentro del rango valido
     */
-    bool verificar_opcion_valida();
+    bool verificarOpcionValida();
 
     /* Pre:
      * Post: Devuelve true si el texto ingresado son dos coordenadas separadas y caen
@@ -113,39 +113,46 @@ public:
      *       texto_ingresado = 123 432 -> resultado = false
      *       texto_ingreado = 1 1 -> resultado = true;
      */
-    bool rango_valido(const string &texto_ingresado, int &fila, int &columna);
+    bool rangoValido(const string &texto_ingresado, int &fila, int &columna);
 
     /*
      * Devuelve true si el texto es un numero, false en otro caso
      */
-    bool es_un_numero(string texto);
+    bool esUnNumero(string texto);
 
-    void pedir_posicion(int &fila, int &columna);
+    void pedirPosicion(int &fila, int &columna);
+
+    /**
+     * @brief Le pide al usuario la clave a almacenar en el diccionario.
+     * 
+     * @return clave
+     */
+    int usuarioPedirClave(ENUM_OBJETOS objeto);
 
     /*  Este metodo le pide al usuario (por pantalla) que elija un objeto
      *  a asignar en el tablero
      * Post: devuelve el objeto elegido por el usuario
      * Warning: Se reserva memoria para la creacion de dicho objeto
      */
-    string usuario_pedir_objeto();
+    string usuarioPedirObjeto();
 
     /*
      * Post: Pide por pantalla la cantidad deseada de agua o balas
      *       para asignarle a un objeto y lo devuelve
      *
      */
-    int usuario_pedir_cantidad();
+    int usuarioPedirCantidad();
 
     /*
      * Post: Devuelve un CUADRANTE elegido por el usuario
      */
-    CUADRANTE usuario_pedir_cuadrante();
+    CUADRANTE usuarioPedirCuadrante();
 
     /*
      * Post: La zona debe ser un cuadrante valido y el nombre_objeto un nombre valido
      * Post: devuelve true si se halla el objeto en el cuadrante elegido
      */
-    bool buscar_objeto_en_cuadrante(const string &nombre_objeto, CUADRANTE zona);
+    bool buscarObjetoEnCuadrante(const string &nombre_objeto, CUADRANTE zona);
 
     Tablero *getTablero();
 };

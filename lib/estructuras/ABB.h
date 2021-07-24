@@ -15,20 +15,20 @@ private:
     NodoABB<K, T> *raiz;
 
     /**
-     * @brief Busca de forma recursiva el nodo con el valor mas chico y retorna su valor.
+     * @brief Busca de forma recursiva el nodo con el clave mas chica y retorna su clave.
      * 
      * @param nodo 
-     * @return T 
+     * @return K clave
      */
-    T buscarMinimo(NodoABB<K, T> *nodo);
+    K buscarMinimo(NodoABB<K, T> *nodo);
 
     /**
-     * @brief Busca de forma recursiva el nodo con el valor mas grande y retorna su valor.
+     * @brief Busca de forma recursiva el nodo con el clave mas grande y retorna su clave.
      * 
      * @param nodo 
-     * @return T 
+     * @return K clave
      */
-    T buscarMaximo(NodoABB<K, T> *nodo);
+    K buscarMaximo(NodoABB<K, T> *nodo);
 
     /**
      * @brief 
@@ -108,24 +108,16 @@ public:
     /**
      * @brief Busca el minimo nodo y retorna su valor.
      * 
-     * @return T 
+     * @return K clave
      */
-    T buscarMinimo();
+    K buscarMinimo();
 
     /**
      * @brief Busca el maximo nodo y retorna su valor.
      * 
-     * @return T 
+     * @return K clave
      */
-    T buscarMaximo();
-
-    /**
-     * @brief Busca el nodo por la clave. 
-     * 
-     * @param clave 
-     * @return NodoABB<K, T>* 
-     */
-    NodoABB<K, T> *buscar(K clave);
+    K buscarMaximo();
 
     /**
      * @brief Busca el sucesor de un nodo dado un valor.
@@ -207,7 +199,7 @@ ABB<K, T>::ABB()
 template <class K, class T>
 T ABB<K, T>::getData(K clave)
 {
-    NodoABB<K, T> *nodo = buscar(clave, raiz);
+    NodoABB<K, T> *nodo = buscar(raiz, clave);
     return nodo->getData();
 }
 
@@ -218,34 +210,19 @@ NodoABB<K, T> *ABB<K, T>::getRaiz()
 }
 
 template <class K, class T>
-NodoABB<K, T> *ABB<K, T>::buscar(K clave)
-{
-    if (vacio())
-        return NULL;
-
-    return buscar(raiz, clave);
-}
-
-template <class K, class T>
 NodoABB<K, T> *ABB<K, T>::buscar(NodoABB<K, T> *nodo, K clave)
 {
-    K claveAux = nodo->getClave();
+    if (nodo && clave < nodo->getClave())
+        nodo = buscar(nodo->getIzquierdo(), clave);
 
-    if (nodo && clave < claveAux)
-    {
-        buscar(nodo->getIzquierdo(), clave);
-    }
-
-    if (nodo && clave > claveAux)
-    {
-        buscar(nodo->getDerecho(), clave);
-    }
+    if (nodo && clave > nodo->getClave())
+        nodo = buscar(nodo->getDerecho(), clave);
 
     return nodo;
 }
 
 template <class K, class T>
-T ABB<K, T>::buscarMinimo()
+K ABB<K, T>::buscarMinimo()
 {
     if (vacio())
     {
@@ -256,20 +233,20 @@ T ABB<K, T>::buscarMinimo()
 }
 
 template <class K, class T>
-T ABB<K, T>::buscarMinimo(NodoABB<K, T> *nodo)
+K ABB<K, T>::buscarMinimo(NodoABB<K, T> *nodo)
 {
     NodoABB<K, T> *nodoIzquierdo = nodo->getIzquierdo();
 
     if (nodoIzquierdo)
     {
-        buscarMinimo(nodoIzquierdo);
+        return buscarMinimo(nodoIzquierdo);
     }
 
-    return nodo->getData();
+    return nodo->getClave();
 }
 
 template <class K, class T>
-T ABB<K, T>::buscarMaximo()
+K ABB<K, T>::buscarMaximo()
 {
     if (vacio())
     {
@@ -280,7 +257,7 @@ T ABB<K, T>::buscarMaximo()
 }
 
 template <class K, class T>
-T ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
+K ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
 {
     NodoABB<K, T> *nodoDerecho = nodo->getDerecho();
 
@@ -289,24 +266,32 @@ T ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
         buscarMaximo(nodoDerecho);
     }
 
-    return nodo->getData();
+    return nodo->getClave();
 }
 
 template <class K, class T>
 K ABB<K, T>::predecesor(K clave)
 {
-    if (vacio())
-        return NULL;
+    NodoABB<K, T> *nodo = buscar(this->raiz, clave);
 
-    return predecesor(buscar(raiz, clave));
+    if (!nodo)
+    {
+        cout << "Esta vacio o no existe la clave" << endl;
+        return -1;
+    }
+
+    return predecesor(nodo);
 }
 
 template <class K, class T>
 K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
 {
 
-    if (!nodo || nodo->getClave() == buscarMinimo())
-        return NULL;
+    if (nodo->getClave() == buscarMinimo())
+    {
+        cout << "Es el minimo" << endl;
+        return -1;
+    }
 
     if (nodo->getIzquierdo())
         return buscarMaximo(nodo->getIzquierdo());
@@ -324,17 +309,19 @@ K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
 template <class K, class T>
 K ABB<K, T>::sucesor(K clave)
 {
-    if (vacio())
-        return NULL;
+    NodoABB<K, T> *nodo = buscar(this->raiz, clave);
 
-    return sucesor(buscar(clave, raiz));
+    if (!nodo)
+        return -1;
+
+    return sucesor(nodo);
 }
 
 template <class K, class T>
 K ABB<K, T>::sucesor(NodoABB<K, T> *nodo)
 {
-    if (!nodo || nodo->getClave() == buscarMaximo())
-        return NULL;
+    if (nodo->getClave() == buscarMaximo())
+        return -1;
 
     if (nodo->getDerecho())
         return buscarMinimo(nodo->getDerecho());
@@ -352,10 +339,9 @@ K ABB<K, T>::sucesor(NodoABB<K, T> *nodo)
 template <class K, class T>
 void ABB<K, T>::insertar(K clave, T data)
 {
-    //TODO: CHECK THIS (vacio())
-    if (vacio() || !existe(clave))
+    if (!existe(clave))
     {
-        raiz = insertar(clave, data, raiz);
+        raiz = insertar(clave, data, this->raiz);
         cantidad++;
     }
 }
@@ -382,9 +368,9 @@ NodoABB<K, T> *ABB<K, T>::insertar(K clave, T data, NodoABB<K, T> *nodo)
 template <class K, class T>
 void ABB<K, T>::eliminar(K clave)
 {
-    if (!vacio() && existe(clave))
+    if (existe(clave))
     {
-        eliminar(raiz, clave);
+        raiz = eliminar(raiz, clave);
     }
 }
 
@@ -393,12 +379,12 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
 {
     if (clave < nodo->getClave())
     {
-        nodo->setIzquierdo(erase(nodo->getIzquierdo(), clave));
+        nodo->setIzquierdo(eliminar(nodo->getIzquierdo(), clave));
         cantidad--;
     }
     else if (clave > nodo->getClave())
     {
-        nodo->setDerecho(erase(nodo->getDerecho(), clave));
+        nodo->setDerecho(eliminar(nodo->getDerecho(), clave));
         cantidad--;
     }
     else
@@ -406,18 +392,18 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
         if (nodo->esHoja())
         {
             delete nodo;
-            nodo = 0;
+            nodo = NULL;
         }
         else if (nodo->tieneSoloHijoDerecho())
         {
-            nodo->getDerecho()->setPadre(nodo->getPadre);
+            nodo->getDerecho()->setPadre(nodo->getPadre());
             NodoABB<K, T> *nodoAux = nodo->getDerecho();
             delete nodo;
             nodo = nodoAux;
         }
         else if (nodo->tieneSoloHijoIzquierdo())
         {
-            nodo->getIzquierdo()->setPadre(nodo->getPadre);
+            nodo->getIzquierdo()->setPadre(nodo->getPadre());
             NodoABB<K, T> *nodoAux = nodo->getIzquierdo();
             delete nodo;
             nodo = nodoAux;
@@ -426,9 +412,8 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
         {
             K remplazo;
 
-            if (buscar(sucesor(clave)))
+            if (existe(sucesor(clave)))
             {
-
                 remplazo = buscar(raiz, sucesor(clave))->getClave();
             }
             else
@@ -439,7 +424,7 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
             T newData = getData(remplazo);
             raiz = eliminar(raiz, remplazo);
             nodo->setData(newData);
-            nodo->getClave(remplazo);
+            nodo->setClave(remplazo);
         }
         cantidad--;
     }
@@ -449,7 +434,7 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
 template <class K, class T>
 bool ABB<K, T>::existe(K clave)
 {
-    return buscar(clave) != NULL;
+    return buscar(raiz, clave) != NULL;
 }
 
 template <class K, class T>
@@ -464,7 +449,7 @@ void ABB<K, T>::imprimirEnOrden(NodoABB<K, T> *nodo)
     if (nodo != NULL)
     {
         imprimirEnOrden(nodo->getIzquierdo());
-        std::cout << nodo->getClave() << ' ';
+        cout << nodo->getClave() << ' ';
         imprimirEnOrden(nodo->getDerecho());
     }
 }
@@ -504,8 +489,8 @@ void ABB<K, T>::eliminarTodo(NodoABB<K, T> *nodo)
 {
     if (nodo)
     {
-        eliminarTodo(nodo->get_left());
-        eliminarTodo(nodo->get_right());
+        eliminarTodo(nodo->getIzquierdo());
+        eliminarTodo(nodo->getDerecho());
 
         delete nodo;
     }

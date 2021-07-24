@@ -15,12 +15,12 @@ public:
      * Post: item agua_bendita listo para usarse con la cantidad pasada por parametro
      *       Aumenta la cantidad de aguas existentes en 1
      */
-    explicit Agua_bendita(int cantidad);
+    explicit Agua_bendita(int cantidad, int id);
 
     /*
      * Post: Se muestra por pantalla la informacion del objeto: Nombre y cantidad
      */
-    void mostrar_informacion() override;
+    void mostrarInformacion() override;
 
     /*
      * Post: Obtiene la cantidad de agua benditas existentes

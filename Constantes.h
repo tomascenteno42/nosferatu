@@ -33,6 +33,7 @@ const string S_HUMANO_CV = "humano cv";
 const string S_ESCOPETA = "escopeta";
 
 const int MAX_OBJETOS = 12;
+const int MAX_ID = 999;
 
 const string PATH_ARCHIVO_ESTADO = "archivos/estado.txt";
 
@@ -50,6 +51,23 @@ enum ENUM_OBJETOS
     ESTACA,
     ESCOPETA,
     BALAS
+};
+
+enum ID
+{
+    ID_VANESA = 0,
+    ID_HUMANO = 1,
+    ID_HUMANO_CV = 50,
+    ID_ZOMBIE = 100,
+    ID_NOSFERATU = 200,
+    ID_VAMPIRELLA = 201,
+    ID_VAMPIRO = 202,
+    ID_AGUA_BENDITA = 300,
+    ID_CRUZ = 320,
+    ID_ESCOPETA = 340,
+    ID_BALAS = 360,
+    ID_ESTACA = 380,
+    ID_NO_VALIDO = 1000
 };
 
 enum CUADRANTE

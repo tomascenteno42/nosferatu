@@ -1,37 +1,5 @@
 #include "main.h"
 
-void inicializarJugadores(Jugador *humanos, Jugador *monstruos)
-{
-    ifstream archivo;
-
-    archivo.open(PATH_ARCHIVO_ESTADO);
-
-    string basura, personaje;
-
-    // Leemos las dimensiones de la matriz,
-    // ya que no las necesitamos
-    getline(archivo, basura);
-
-    while (!archivo.eof())
-    {
-        //Lee el personaje
-        getline(archivo, personaje, '(');
-
-        //Salteo las posiciones que no sirven en este caso.
-        getline(archivo, basura, '\n');
-
-        //Eliminamos el espacio al final
-        personaje = personaje.substr(0, personaje.size() - 1);
-
-        BANDO bando = parsearTextoABando(personaje);
-
-        if (bando == HUMANOS)
-            humanos->agregarPersonaje(parsearTextoASer(personaje));
-        else if (bando == MONSTRUOS)
-            monstruos->agregarPersonaje(parsearTextoASer(personaje));
-    }
-}
-
 BANDO parsearTextoABando(string texto)
 {
     toLower(texto);
@@ -45,42 +13,108 @@ BANDO parsearTextoABando(string texto)
     return OBJETO;
 }
 
-Ser *parsearTextoASer(string texto)
+ENUM_OBJETOS parsearTextoAObjeto(string texto)
 {
-    Ser *ser;
-
     toLower(texto);
 
     if (texto == S_HUMANO)
-    {
-        ser = new Humano();
-    }
+        return HUMANO;
     else if (texto == S_HUMANO_CV)
-    {
-        ser = new Humano_cazador();
-    }
+        return HUMANO_CV;
     else if (texto == S_ZOMBI)
-    {
-        ser = new Zombi();
-    }
+        return ZOMBIE;
     else if (texto == S_VAMPIRO)
-    {
-        ser = new Vampiro();
-    }
+        return VAMPIRO;
     else if (texto == S_VAMPIRELLA)
-    {
-        ser = new Vampirella();
-    }
+        return VAMPIRELLA;
     else if (texto == S_NOSFERATU)
-    {
-        ser = new Nosferatu();
-    }
+        return NOSFERATU;
     else if (texto == S_VANESA)
-    {
-        ser = new Vanesa();
-    }
+        return VANESA;
+    else if (texto == S_AGUA_BENDITA)
+        return AGUA_BENDITA;
+    else if (texto == S_CRUZ)
+        return CRUZ;
+    else if (texto == S_ESTACA)
+        return ESTACA;
+    else if (texto == S_ESCOPETA)
+        return ESCOPETA;
+    else
+        return BALAS;
+}
 
-    return ser;
+ID parseId(int id)
+{
+    if (id == ID_VANESA)
+        return ID_VANESA;
+
+    if (id == ID_VAMPIRELLA)
+        return ID_VAMPIRELLA;
+
+    if (id == ID_NOSFERATU)
+        return ID_NOSFERATU;
+
+    if (id >= ID_HUMANO && id < ID_HUMANO_CV)
+        return ID_HUMANO;
+
+    else if (id >= ID_HUMANO_CV && id < ID_ZOMBIE)
+        return ID_HUMANO_CV;
+
+    else if (id >= ID_ZOMBIE && id < NOSFERATU)
+        return ID_ZOMBIE;
+
+    else if (id >= ID_VAMPIRO && id < ID_AGUA_BENDITA)
+        return ID_VAMPIRO;
+
+    else if (id >= ID_AGUA_BENDITA && id < ID_CRUZ)
+        return ID_AGUA_BENDITA;
+
+    else if (id >= ID_CRUZ && id < ID_ESCOPETA)
+        return ID_CRUZ;
+
+    else if (id >= ID_ESCOPETA && id < ID_BALAS)
+        return ID_ESCOPETA;
+
+    else if (id >= ID_BALAS && id < ID_ESTACA)
+        return ID_BALAS;
+
+    else if (id >= ID_ESTACA && id < ID_NO_VALIDO)
+        return ID_ESTACA;
+
+    return ID_NO_VALIDO;
+}
+
+bool esIdValido(int id, ENUM_OBJETOS objeto)
+{
+    switch (objeto)
+    {
+    case VANESA:
+        return id == ID_VANESA;
+    case HUMANO:
+        return id >= ID_HUMANO && id < ID_HUMANO_CV;
+    case HUMANO_CV:
+        return id >= ID_HUMANO_CV && id < ID_ZOMBIE;
+    case ZOMBIE:
+        return id >= ZOMBIE && id < ID_NOSFERATU;
+    case NOSFERATU:
+        return id == ID_NOSFERATU;
+    case VAMPIRELLA:
+        return id == ID_VAMPIRELLA;
+    case VAMPIRO:
+        return id >= ID_VAMPIRO && id < ID_AGUA_BENDITA;
+    case AGUA_BENDITA:
+        return id >= ID_AGUA_BENDITA && id < ID_CRUZ;
+    case CRUZ:
+        return id >= ID_CRUZ && id < ID_ESCOPETA;
+    case ESCOPETA:
+        return id >= ID_ESCOPETA && id < ID_BALAS;
+    case BALAS:
+        return id >= ID_BALAS && id < ID_ESTACA;
+    case ESTACA:
+        return id >= ID_ESTACA && id < ID_NO_VALIDO;
+    default:
+        return false;
+    }
 }
 
 void toLower(string &str)

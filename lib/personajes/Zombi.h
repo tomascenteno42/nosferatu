@@ -15,7 +15,7 @@ public:
      * Post: Se crea el objeto listo para usarse
      *       Aumenta en 1 la cantidad de objetos Zombi existentes
      */
-    Zombi();
+    Zombi(int id);
 
     /**
      * @brief Aumenta la cantidad de agua benditas del inventario.

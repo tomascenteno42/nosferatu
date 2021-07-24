@@ -2,13 +2,13 @@
 
 int Cruz::contador = 0;
 
-Cruz::Cruz() : Elemento(S_CRUZ, C_CRUZ)
+Cruz::Cruz(int id) : Elemento(S_CRUZ, C_CRUZ, id)
 {
     this->cantidad = 1;
     Cruz::contador++;
 }
 
-void Cruz::mostrar_informacion()
+void Cruz::mostrarInformacion()
 {
     cout << this->nombre << endl;
 }
