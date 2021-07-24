@@ -275,10 +275,7 @@ K ABB<K, T>::predecesor(K clave)
     NodoABB<K, T> *nodo = buscar(this->raiz, clave);
 
     if (!nodo)
-    {
-        cout << "Esta vacio o no existe la clave" << endl;
         return -1;
-    }
 
     return predecesor(nodo);
 }
@@ -288,10 +285,7 @@ K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
 {
 
     if (nodo->getClave() == buscarMinimo())
-    {
-        cout << "Es el minimo" << endl;
         return -1;
-    }
 
     if (nodo->getIzquierdo())
         return buscarMaximo(nodo->getIzquierdo());

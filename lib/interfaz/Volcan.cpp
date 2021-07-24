@@ -1,13 +1,12 @@
 
-#include "Volcan.h"
+#include "../../src/main.h"
 
-using namespace std;
-
-
-Volcan::Volcan() : Casillero("Volcan", COLOR_VOLCAN) {
+Volcan::Volcan() : Casillero("Volcan", COLOR_VOLCAN)
+{
 }
 
-int Volcan::costo(char personaje) {
+int Volcan::costo(char personaje)
+{
     int energia = 0;
     if (personaje == C_HUMANO)
         energia = 1;

@@ -1,12 +1,11 @@
-#include "Montania.h"
+#include "../../src/main.h"
 
-using namespace std;
-
-
-Montania::Montania() : Casillero("Montania", COLOR_MONTANIA) {
+Montania::Montania() : Casillero("Montania", COLOR_MONTANIA)
+{
 }
 
-int Montania::costo(char personaje) {
+int Montania::costo(char personaje)
+{
     int energia = 0;
     if (personaje == C_HUMANO)
         energia = 2;

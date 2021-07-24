@@ -26,12 +26,6 @@ using namespace std;
 
 #include "jugador.h"
 
-BANDO parsearTextoABando(string texto);
-ENUM_OBJETOS parsearTextoAObjeto(string texto);
-void toLower(string &str);
-ID parseId(int id);
-bool esIdValido(int id, ENUM_OBJETOS objeto);
-
 #include "../lib/personajes/Humano.h"
 #include "../lib/personajes/Humano_cazador.h"
 #include "../lib/personajes/Vanesa.h"
@@ -61,5 +55,19 @@ bool esIdValido(int id, ENUM_OBJETOS objeto);
 
 #include "../lib/utilidades/Contador.h"
 #include "../lib/utilidades/Parser.h"
+
+#include "../lib/interfaz/Casillero.h"
+#include "../lib/interfaz/Camino.h"
+#include "../lib/interfaz/Lago.h"
+#include "../lib/interfaz/Montania.h"
+#include "../lib/interfaz/Precipicio.h"
+#include "../lib/interfaz/Vacio.h"
+#include "../lib/interfaz/Volcan.h"
+
+BANDO parsearTextoABando(string texto);
+ENUM_OBJETOS parsearTextoAObjeto(string texto);
+void toLower(string &str);
+ID parseId(int id);
+bool esIdValido(int id, ENUM_OBJETOS objeto);
 
 #endif

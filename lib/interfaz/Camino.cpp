@@ -1,12 +1,11 @@
-#include "Camino.h"
+#include "../../src/main.h"
 
-using namespace std;
-
-
-Camino::Camino() : Casillero("Camino", COLOR_CAMINO){
+Camino::Camino() : Casillero("Camino", COLOR_CAMINO)
+{
 }
 
-int Camino::costo(char personaje) {
+int Camino::costo(char personaje)
+{
     int energia = -1;
     return energia;
 }

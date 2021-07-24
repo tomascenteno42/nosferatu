@@ -1,12 +1,11 @@
-#include "Vacio.h"
+#include "../../src/main.h"
 
-using namespace std;
-
-
-Vacio::Vacio() : Casillero("Vacio", COLOR_VACIO){
+Vacio::Vacio() : Casillero("Vacio", COLOR_VACIO)
+{
 }
 
-int Vacio::costo(char personaje) {
+int Vacio::costo(char personaje)
+{
     int energia = -15;
     return energia;
 }
