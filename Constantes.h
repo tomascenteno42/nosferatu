@@ -32,6 +32,15 @@ const string S_VANESA = "vanesa";
 const string S_HUMANO_CV = "humano cv";
 const string S_ESCOPETA = "escopeta";
 
+
+const std::string COLOR_LAGO = "\e[30;44m";
+const std::string COLOR_VOLCAN = "\e[30;41m";
+const std::string COLOR_PRECIPICIO = "\e[30;107m";
+const std::string COLOR_MONTANIA = "\e[30;43m";
+const std::string COLOR_CAMINO = "\e[30;103m";
+const std::string COLOR_VACIO = "\e[30;45m";
+const std::string SIN_COLOR = "\e[0m";
+
 const int MAX_OBJETOS = 12;
 const int MAX_ID = 999;
 
