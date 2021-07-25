@@ -2,15 +2,15 @@
 
 int main()
 {
-    Grafo *mapa = new Grafo;
+    Juego *juego = new Juego();
+    ABB<int, Objeto *> *diccionario = juego->tablero->getDiccionario();
 
-    ifstream archivo;
-    archivo.open("archivos/tablero.txt");
+    while (!juego->menu->cerrarMenu())
+    {
+        juego->menu->mostrarMenu();
+        juego->menu->renderizarOpcion(diccionario);
+    }
 
-    lectorCasilleros(mapa, archivo);
-
-    mapa->mostrarGrafo();
-
-    delete mapa;
+    delete juego;
     return 0;
 }
