@@ -31,6 +31,18 @@ int Casillero::obtenerFila()
     return (this->coordenadas.getFila());
 }
 
+/* Pre: el nuevoObjeto no debe ser nullptr
+ * Pos:
+ */
+void Casillero::agregarObjeto(Objeto *nuevoObjeto) {
+    this->objeto = nuevoObjeto;
+    ID idObjeto = parseId(nuevoObjeto->getId());
+
+    if(idObjeto == ID_HUMANO || idObjeto == ID_HUMANO_CV || idObjeto == ID_VANESA || idObjeto == ID_NOSFERATU || idObjeto == ID_VAMPIRELLA
+    || idObjeto == ID_VAMPIRO || idObjeto == ID_ZOMBIE)
+        this->ocupado = true;
+}
+
 int Casillero::obtenerColumna()
 {
     return (this->coordenadas.getColumna());

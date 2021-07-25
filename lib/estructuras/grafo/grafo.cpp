@@ -201,6 +201,19 @@ int Grafo::buscarIndice(Posicion coordenada)
     return indice;
 }
 
+
+/* Pre: la fila y la columna deben ser numeros positivos, el puntero a objeto no debe ser nullptr
+ * Pos: Dado un puntero a un objeto y una posicion, agrega el puntero al casillero que se encuentra en esa posicion
+ */
+void Grafo::agregarObjeto(Objeto *nuevoObjeto, int fila, int columna) {
+    Posicion aux(fila, columna);
+    bool valida = comprobarCoordenada(aux);
+    if(valida) {
+        int indice = buscarIndice(aux);
+        casilleros[indice]->agregarObjeto(nuevoObjeto);
+    }
+}
+
 /* Pre: Tanto origen como destino representan indices en el vector de vertices, por lo que deben ser mayores o iguales a 0
  * y simultaneamente menores a la longitud del vector. Costo debe ser positivo
  * Pos: Agrega el costo en la matriz de adyacencia

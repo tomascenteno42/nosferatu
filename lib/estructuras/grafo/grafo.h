@@ -35,9 +35,11 @@ private:
 public:
     Grafo();
     void agregarCasillero(string terreno, int fila, int columna);
+    void agregarObjeto(Objeto* nuevoObjeto, int fila, int columna);
     void setFila(int n);
     void setColumna(int n);
     void mostrarGrafo();
+    void mostrarMapa();
     void establecerCaminos(string personaje);
     int obtenerCantidad();
     void ocupar(Posicion coordenada);

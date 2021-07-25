@@ -14,9 +14,12 @@ protected:
 
 public:
     explicit Casillero(string tipo, string color, int fila, int columna);
+
     string obtenerTipo();
 
     string obtenerColor();
+
+    void agregarObjeto(Objeto* nuevoObjeto);
 
     int obtenerFila();
 
