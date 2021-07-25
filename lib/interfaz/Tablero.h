@@ -9,11 +9,13 @@ class Jugador;
 template <class K, class T>
 class ABB;
 
+class Grafo;
+
 class Tablero
 {
 private:
     //atributos
-
+    Grafo *mapa;
     Objeto ***objetos;
     int cant_filas;
     int cant_columnas;

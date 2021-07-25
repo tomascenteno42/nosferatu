@@ -133,7 +133,7 @@ void Grafo::mostrarCasilleros()
     int tamanio = (int)casilleros.size();
     for (int i = 0; i < tamanio; i++)
     {
-        cout << casilleros[i]->obtenerColor() << casilleros[i]->obtenerTipo() << "|";
+        cout << casilleros[i]->obtenerColor() << " ";
     }
     cout << SIN_COLOR;
     cout << endl;
