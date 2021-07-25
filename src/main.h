@@ -49,8 +49,6 @@ using namespace std;
 #include "../lib/estructuras/NodoABB.h"
 #include "../lib/estructuras/ABB.h"
 
-#include "../lib/estructuras/grafo/coordenada.h"
-#include "../lib/estructuras/grafo/vertice.h"
 #include "../lib/estructuras/grafo/grafo.h"
 
 #include "../lib/utilidades/Contador.h"
@@ -137,5 +135,6 @@ void procesarOpcionPasarTurno(MenuJuego *menu);
 
 /* MENU COMIENZO DE TURNO */
 void procesarGuardarJuego();
+void lectorCasilleros(Grafo *mapa, ifstream &datos);
 
 #endif

@@ -1,15 +1,15 @@
 #include "../../src/main.h"
 
-Precipicio::Precipicio() : Casillero("Precipicio", COLOR_PRECIPICIO)
+Precipicio::Precipicio(int fila, int columna) : Casillero(PRECIPICIO, COLOR_PRECIPICIO, fila, columna)
 {
 }
 
-int Precipicio::costo(char personaje)
+void Precipicio::ajustarCosto(string personaje)
 {
-    int energia = 0;
-    if (personaje == C_HUMANO)
-        energia = 2;
-    else if (personaje == C_ZOMBI)
-        energia = 1;
-    return energia;
+    if (personaje == S_HUMANO || personaje == S_VANESA || personaje == S_HUMANO_CV)
+        costo = 2;
+    else if (personaje == S_ZOMBI)
+        costo = 1;
+    else if(personaje == S_VAMPIRO || personaje == S_VAMPIRELLA || personaje == S_NOSFERATU)
+        costo = 0;
 }

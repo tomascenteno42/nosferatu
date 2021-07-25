@@ -6,9 +6,8 @@ class Montania : public Casillero
 {
 
 public:
-    explicit Montania();
-
-    int costo(char personaje);
+    explicit Montania(int fila, int columna);
+    void ajustarCosto(string personaje);
 };
 
 #endif //NOFERATU_LOCAL_MONTANIA_H

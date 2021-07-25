@@ -7,15 +7,28 @@ class Casillero
 protected:
     string tipo;
     string color;
-
+    int costo;
+    Posicion coordenadas;
+    bool ocupado; //por un personaje, no elemento
 public:
-    explicit Casillero(string tipo, string color);
+    explicit Casillero(string tipo, string color, int fila, int columna);
+    string obtenerTipo();
 
-    string obtener_tipo();
+    string obtenerColor();
 
-    string obtener_color();
+    int obtenerFila();
 
-    virtual int costo(char personaje) = 0;
+    int obtenerColumna();
+
+    int obtenerCosto();
+
+    bool estaOcupado();
+
+    void ocupar();
+
+    void desocupar();
+
+    virtual void ajustarCosto(string personaje) = 0;
 
     virtual ~Casillero(){};
 };

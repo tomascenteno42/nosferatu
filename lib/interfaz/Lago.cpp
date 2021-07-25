@@ -1,17 +1,17 @@
 #include "../../src/main.h"
 
-Lago::Lago() : Casillero("Lago", COLOR_LAGO)
+Lago::Lago(int fila, int columna) : Casillero(LAGO, COLOR_LAGO, fila, columna)
 {
 }
 
-int Lago::costo(char personaje)
+void Lago::ajustarCosto(string personaje)
 {
-    int energia = 0;
-    if (personaje == C_ZOMBI)
-        energia = 2;
-    else if (personaje == C_VAMPIRO)
-        energia = 1;
-    return energia;
+    if (personaje == S_ZOMBI)
+        costo = 2;
+    else if (personaje == S_VAMPIRO || personaje == S_NOSFERATU || personaje == S_VAMPIRELLA)
+        costo = 1;
+    else if(personaje == S_HUMANO || personaje == S_VANESA || personaje == S_HUMANO_CV)
+        costo = 0;
 }
 
 /*string Lago::devolver_color(){

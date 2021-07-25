@@ -121,3 +121,32 @@ void toLower(string &str)
 {
     transform(str.begin(), str.end(), str.begin(), ::tolower);
 }
+
+void lectorCasilleros(Grafo *mapa, ifstream &datos)
+{
+    string s_filas;
+    string s_columnas;
+    string leido;
+    int contador = 1;
+
+    getline(datos, s_filas, ' ');
+    getline(datos, s_columnas, '\n');
+
+    int filas = stoi(s_filas);
+    int columnas = stoi(s_columnas);
+
+    mapa->setFila(filas);
+    mapa->setColumna(columnas);
+
+    while (!datos.eof())
+    {
+        for (int j = 0; j < (columnas - 1); j++)
+        {
+            getline(datos, leido, ',');
+            mapa->agregarCasillero(leido, contador, j + 1);
+        }
+        getline(datos, leido, '\n');
+        mapa->agregarCasillero(leido, contador, columnas);
+        contador++;
+    }
+}
