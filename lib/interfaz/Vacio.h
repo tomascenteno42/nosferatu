@@ -6,9 +6,9 @@ class Vacio : public Casillero
 {
 
 public:
-    explicit Vacio();
+    explicit Vacio(int fila, int columna);
 
-    int costo(char personaje);
+    void ajustarCosto(string personaje);
 };
 
 #endif //NOFERATU_LOCAL_VACIO_H

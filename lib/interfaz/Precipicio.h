@@ -6,9 +6,9 @@ class Precipicio : public Casillero
 {
 
 public:
-    explicit Precipicio();
+    explicit Precipicio(int fila, int columna);
 
-    int costo(char personaje);
+    void ajustarCosto(string personaje);
 };
 
 #endif //NOFERATU_LOCAL_PRECIPICIO_H

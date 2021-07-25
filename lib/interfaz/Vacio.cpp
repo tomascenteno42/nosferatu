@@ -1,11 +1,10 @@
 #include "../../src/main.h"
 
-Vacio::Vacio() : Casillero("Vacio", COLOR_VACIO)
+Vacio::Vacio(int fila, int columna) : Casillero(VACIO, COLOR_VACIO, fila, columna)
 {
 }
 
-int Vacio::costo(char personaje)
+void Vacio::ajustarCosto(string personaje)
 {
-    int energia = -15;
-    return energia;
+    costo = 15;
 }

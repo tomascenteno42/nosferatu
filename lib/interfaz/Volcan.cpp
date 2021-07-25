@@ -1,16 +1,16 @@
 
 #include "../../src/main.h"
 
-Volcan::Volcan() : Casillero("Volcan", COLOR_VOLCAN)
+Volcan::Volcan(int fila, int columna) : Casillero(VOLCAN, COLOR_VOLCAN, fila, columna)
 {
 }
 
-int Volcan::costo(char personaje)
+void Volcan::ajustarCosto(string personaje)
 {
-    int energia = 0;
-    if (personaje == C_HUMANO)
-        energia = 1;
-    else if (personaje == C_VAMPIRO)
-        energia = 1;
-    return energia;
+    if (personaje == S_HUMANO || personaje == S_HUMANO_CV || personaje == S_VANESA)
+        costo = 1;
+    else if (personaje == S_VAMPIRO || personaje == S_NOSFERATU || personaje == S_VAMPIRELLA)
+        costo = 2;
+    else if(personaje == S_ZOMBI)
+        costo = 0;
 }

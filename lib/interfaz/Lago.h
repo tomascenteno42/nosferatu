@@ -6,9 +6,9 @@ class Lago : public Casillero
 {
 
 public:
-    explicit Lago();
+    explicit Lago(int fila, int columna);
 
-    int costo(char personaje);
+    void ajustarCosto(string personaje);
 
     //std::string devolver_color();
 };
