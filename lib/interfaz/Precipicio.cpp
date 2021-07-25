@@ -4,6 +4,9 @@ Precipicio::Precipicio(int fila, int columna) : Casillero(PRECIPICIO, COLOR_PREC
 {
 }
 
+/* Pre: personaje debe representar algun tipo de Ser, humano, vampiro o zombi
+ * Pos: Dado el personaje, modifica el valor de lo que cuesta pasar por el casillero
+ */
 void Precipicio::ajustarCosto(string personaje)
 {
     if (personaje == S_HUMANO || personaje == S_VANESA || personaje == S_HUMANO_CV)

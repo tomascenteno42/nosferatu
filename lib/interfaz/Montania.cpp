@@ -4,6 +4,9 @@ Montania::Montania(int fila, int columna) : Casillero(MONTANIA, COLOR_MONTANIA, 
 {
 }
 
+/* Pre: personaje debe representar algun tipo de Ser, humano, vampiro o zombi
+ * Pos: Dado el personaje, modifica el valor de lo que cuesta pasar por el casillero
+ */
 void Montania::ajustarCosto(string personaje)
 {
     if (personaje == S_HUMANO)

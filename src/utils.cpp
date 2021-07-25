@@ -122,6 +122,10 @@ void toLower(string &str)
     transform(str.begin(), str.end(), str.begin(), ::tolower);
 }
 
+
+/* Pre: *mapa no debe ser nullptr, y datos debe existir
+ * Pos: Llena el grafo con los datos extraidos del archivo de casilleros
+ */
 void lectorCasilleros(Grafo *mapa, ifstream &datos)
 {
     string s_filas;
