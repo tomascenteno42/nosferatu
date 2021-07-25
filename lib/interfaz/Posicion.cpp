@@ -6,22 +6,22 @@ Posicion::Posicion(int fila, int columna)
     this->columna = columna;
 }
 
-int Posicion::obtener_fila()
+int Posicion::getFila()
 {
     return this->fila;
 }
 
-int Posicion::obtener_columna()
+int Posicion::getColumna()
 {
     return this->columna;
 }
 
-void Posicion::cambiar_fila(int nueva_fila)
+void Posicion::cambiarFila(int nueva_fila)
 {
     this->fila = nueva_fila;
 }
 
-void Posicion::cambiar_columna(int nueva_columna)
+void Posicion::cambiarColumna(int nueva_columna)
 {
     this->columna = nueva_columna;
 }

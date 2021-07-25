@@ -5,11 +5,13 @@
 class Casillero
 {
 protected:
+    Posicion coordenadas;
     string tipo;
     string color;
     int costo;
-    Posicion coordenadas;
     bool ocupado; //por un personaje, no elemento
+    Objeto *objeto;
+
 public:
     explicit Casillero(string tipo, string color, int fila, int columna);
     string obtenerTipo();

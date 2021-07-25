@@ -44,8 +44,8 @@ Tablero::Tablero(const string &dir)
             int claveEntidad = parser.getClave();
 
             // Posicion donde se ubicara el objeto
-            int fila = parser.obtener_posicion()->obtener_fila() - 1;
-            int columna = parser.obtener_posicion()->obtener_columna() - 1;
+            int fila = parser.obtener_posicion()->getFila() - 1;
+            int columna = parser.obtener_posicion()->getColumna() - 1;
 
             // Establecemos el objeto en la posicion indicada
             this->objetos[fila][columna] = objeto;
@@ -132,11 +132,11 @@ float Tablero::getPorcentaje(const string &nombre)
 bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion pos_min, Posicion pos_max)
 {
     bool objeto_hallado = false;
-    int i = pos_min.obtener_fila() - 1;
-    int j = pos_min.obtener_columna() - 1;
-    while (!objeto_hallado && i < pos_max.obtener_fila())
+    int i = pos_min.getFila() - 1;
+    int j = pos_min.getColumna() - 1;
+    while (!objeto_hallado && i < pos_max.getFila())
     {
-        while (!objeto_hallado && j < pos_max.obtener_columna())
+        while (!objeto_hallado && j < pos_max.getColumna())
         {
             if (this->objetos[i][j] != NULL)
             {

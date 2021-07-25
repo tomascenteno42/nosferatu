@@ -16,17 +16,17 @@ void Grafo::agregarCasillero(string terreno, int fila, int columna)
 {
     agrandarMatriz();
     Casillero *nuevo;
-    if(terreno == MONTANIA)
+    if (terreno == MONTANIA)
         nuevo = new Montania(fila, columna);
-    else if(terreno == CAMINO)
+    else if (terreno == CAMINO)
         nuevo = new Camino(fila, columna);
-    else if(terreno == LAGO)
+    else if (terreno == LAGO)
         nuevo = new Lago(fila, columna);
-    else if(terreno == PRECIPICIO)
+    else if (terreno == PRECIPICIO)
         nuevo = new Precipicio(fila, columna);
-    else if(terreno == VACIO)
+    else if (terreno == VACIO)
         nuevo = new Vacio(fila, columna);
-    else if(terreno == VOLCAN)
+    else if (terreno == VOLCAN)
         nuevo = new Volcan(fila, columna);
 
     casilleros.push_back(nuevo);
@@ -133,8 +133,9 @@ void Grafo::mostrarCasilleros()
     int tamanio = (int)casilleros.size();
     for (int i = 0; i < tamanio; i++)
     {
-        cout << casilleros[i]->obtenerTipo() << "|";
+        cout << casilleros[i]->obtenerColor() << casilleros[i]->obtenerTipo() << "|";
     }
+    cout << SIN_COLOR;
     cout << endl;
     cout << endl;
 }
@@ -170,8 +171,8 @@ void Grafo::mostrarMatriz()
  * */
 bool Grafo::comprobarCoordenada(Posicion coordenada)
 {
-    bool cumple_filas = ((coordenada.obtener_fila() <= filas) && (coordenada.obtener_fila() > 0));
-    bool cumple_columnas = ((coordenada.obtener_columna() <= columnas) && (coordenada.obtener_columna() > 0));
+    bool cumple_filas = ((coordenada.getFila() <= filas) && (coordenada.getFila() > 0));
+    bool cumple_columnas = ((coordenada.getColumna() <= columnas) && (coordenada.getColumna() > 0));
     if (cumple_filas && cumple_columnas)
         return true;
     return false;
@@ -185,8 +186,8 @@ int Grafo::buscarIndice(Posicion coordenada)
     int i = 0;
     int indice = NO_ENCONTRADO;
     int tamanio = (int)casilleros.size();
-    int fila = coordenada.obtener_fila();
-    int columna = coordenada.obtener_columna();
+    int fila = coordenada.getFila();
+    int columna = coordenada.getColumna();
     bool fue_encontrado = false;
     while (!fue_encontrado && (i < tamanio))
     {
@@ -237,9 +238,11 @@ void Grafo::establecerCaminos(string personaje)
 
 /* Pos: Dada una cierta coordenada, indica el casillero correspondiente como ocupado
  */
-void Grafo::ocupar(Posicion coordenada) {
+void Grafo::ocupar(Posicion coordenada)
+{
     bool valida = comprobarCoordenada(coordenada);
-    if(valida){
+    if (valida)
+    {
         int indice = buscarIndice(coordenada);
         casilleros[indice]->ocupar();
     }
@@ -247,19 +250,21 @@ void Grafo::ocupar(Posicion coordenada) {
 
 /* Pos: Dada una cierta coordenada, indica el casillero correspondiente como desocupado
  */
-void Grafo::desocupar(Posicion coordenada) {
+void Grafo::desocupar(Posicion coordenada)
+{
     bool valida = comprobarCoordenada(coordenada);
-    if(valida){
+    if (valida)
+    {
         int indice = buscarIndice(coordenada);
         casilleros[indice]->desocupar();
     }
 }
 
-
 /*Pos: Devuelve la cantidad de casilleros
  */
-int Grafo::obtenerCantidad() {
-    return((int)casilleros.size());
+int Grafo::obtenerCantidad()
+{
+    return ((int)casilleros.size());
 }
 
 /* Pre: Recibe un vector de distancias y uno de vertices visitados, ninguno vacio
@@ -283,21 +288,22 @@ int Grafo::indiceMinimo(int distancias[], bool visitados[])
 }
 
 /* Pre: indiceDestino debe ser un indice valido, mayor o igual a 0 y menor a la cantidad de casilleros*/
-void Grafo::ordenarCamino(int anteriores[], vector<int> *camino, int indiceDestino) {
+void Grafo::ordenarCamino(int anteriores[], vector<int> *camino, int indiceDestino)
+{
     int i = indiceDestino;
-    while(anteriores[i] != -1){
+    while (anteriores[i] != -1)
+    {
         camino->push_back(i);
         i = anteriores[i];
     }
     camino->push_back(i);
 }
 
-
 /* Pre: Recibe dos coordenadas, el origen y el destino deben ser coordenadas validas
  * Pos: Devuelve un puntero a un vector, que contiene los indices de los casilleros que conforman el
  * camino minimo
  */
-vector<int>* Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje)
+vector<int> *Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje)
 {
     bool origen_valido = comprobarCoordenada(origen);
     bool destino_valido = comprobarCoordenada(destino);
@@ -310,7 +316,7 @@ vector<int>* Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaP
         int distancias[tamanio];
         bool visitados[tamanio];
         int anteriores[tamanio];
-        vector<int>* camino = new vector<int>;
+        vector<int> *camino = new vector<int>;
 
         anteriores[indice_origen] = -1;
         for (int i = 0; i < tamanio; i++)
@@ -326,21 +332,20 @@ vector<int>* Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaP
 
             for (int j = 0; j < tamanio; j++)
             {
-                if (!visitados[j] && (!casilleros[j]->estaOcupado()) && (distancias[minimo] + matriz_adyacencia[minimo][j] < distancias[j])) {
+                if (!visitados[j] && (!casilleros[j]->estaOcupado()) && (distancias[minimo] + matriz_adyacencia[minimo][j] < distancias[j]))
+                {
                     distancias[j] = distancias[minimo] + matriz_adyacencia[minimo][j];
                     anteriores[j] = minimo;
                 }
             }
         }
-        if(distancias[indice_destino] <= energiaPersonaje) {
+        if (distancias[indice_destino] <= energiaPersonaje)
+        {
             ordenarCamino(anteriores, camino, indice_destino);
             reverse(camino->begin(), camino->end());
             return camino;
         }
         delete camino;
-
     }
     return nullptr;
-
-
 }

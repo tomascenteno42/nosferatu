@@ -6,8 +6,9 @@ Casillero::Casillero(std::string tipo, std::string color, int fila, int columna)
     this->color = color;
     this->costo = 0;
     this->ocupado = false;
-    this->coordenadas.cambiar_fila(fila);
-    this->coordenadas.cambiar_columna(columna);
+    this->coordenadas.cambiarFila(fila);
+    this->coordenadas.cambiarColumna(columna);
+    this->objeto = NULL;
 }
 
 string Casillero::obtenerColor()
@@ -20,26 +21,32 @@ string Casillero::obtenerTipo()
     return (this->tipo);
 }
 
-int Casillero::obtenerCosto() {
+int Casillero::obtenerCosto()
+{
     return (this->costo);
 }
 
-int Casillero::obtenerFila() {
-    return (this->coordenadas.obtener_fila());
+int Casillero::obtenerFila()
+{
+    return (this->coordenadas.getFila());
 }
 
-int Casillero::obtenerColumna() {
-    return (this->coordenadas.obtener_columna());
+int Casillero::obtenerColumna()
+{
+    return (this->coordenadas.getColumna());
 }
 
-bool Casillero::estaOcupado(){
+bool Casillero::estaOcupado()
+{
     return ocupado;
 }
 
-void Casillero::ocupar(){
+void Casillero::ocupar()
+{
     this->ocupado = true;
 }
 
-void Casillero::desocupar(){
+void Casillero::desocupar()
+{
     this->ocupado = false;
 }

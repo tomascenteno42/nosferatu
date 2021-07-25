@@ -13,6 +13,7 @@ class Tablero
 {
 private:
     //atributos
+
     Objeto ***objetos;
     int cant_filas;
     int cant_columnas;

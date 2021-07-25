@@ -30,7 +30,7 @@ private:
     int buscarIndice(Posicion coordenada);
     void agregarCamino(int origen, int destino, int costo);
     int indiceMinimo(int distancias[], bool visitados[]);
-    void ordenarCamino(int anteriores[], vector<int>* camino, int indiceDestino);
+    void ordenarCamino(int anteriores[], vector<int> *camino, int indiceDestino);
 
 public:
     Grafo();
@@ -42,7 +42,7 @@ public:
     int obtenerCantidad();
     void ocupar(Posicion coordenada);
     void desocupar(Posicion coordenada);
-    vector<int>* caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje);
+    vector<int> *caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje);
     ~Grafo();
 };
 
