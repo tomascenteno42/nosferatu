@@ -40,7 +40,7 @@ Parser::Parser(const string &linea)
 
     this->pos = new Posicion(stoi(posicion_x, nullptr), stoi(posicion_y, nullptr));
 
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, this->pos->obtener_fila(), this->pos->obtener_columna());
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, this->pos->getFila(), this->pos->getColumna());
 }
 
 Objeto *Parser::obtenerObjeto()
@@ -207,5 +207,5 @@ Parser::Parser(const string &nombre, int cantidad, int fila, int columna)
     this->cantidad = cantidad;
     this->nombre = nombre;
     this->pos = NULL;
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, (fila+1), (columna+1));
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, (fila + 1), (columna + 1));
 }

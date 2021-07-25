@@ -238,7 +238,7 @@ void procesarAgregarObjeto(MenuJuego *menu)
 
                 int clave = pedirId(parsearTextoAObjeto(nombre));
 
-                Objeto *objeto = Parser(nombre, cantidad).obtenerObjeto();
+                Objeto *objeto = Parser(nombre, cantidad, fila, columna).obtenerObjeto();
 
                 menu->juego->tablero->darDeAlta(fila, columna, objeto);
                 menu->juego->tablero->getDiccionario()->insertar(clave, objeto);
