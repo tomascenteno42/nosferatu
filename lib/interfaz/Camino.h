@@ -6,9 +6,9 @@ class Camino : public Casillero
 {
 
 public:
-    explicit Camino();
+    explicit Camino(int fila, int columna);
 
-    int costo(char personaje);
+    void ajustarCosto(string personaje);
 };
 
 #endif //NOFERATU_LOCAL_CAMINO_H

@@ -1,11 +1,10 @@
 #include "../../src/main.h"
 
-Camino::Camino() : Casillero("Camino", COLOR_CAMINO)
+Camino::Camino(int fila, int columna) : Casillero(CAMINO, COLOR_CAMINO, fila, columna)
 {
 }
 
-int Camino::costo(char personaje)
+void Camino::ajustarCosto(string personaje)
 {
-    int energia = -1;
-    return energia;
+    costo = 1;
 }

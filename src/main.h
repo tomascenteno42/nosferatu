@@ -49,8 +49,6 @@ using namespace std;
 #include "../lib/estructuras/NodoABB.h"
 #include "../lib/estructuras/ABB.h"
 
-#include "../lib/estructuras/grafo/coordenada.h"
-#include "../lib/estructuras/grafo/vertice.h"
 #include "../lib/estructuras/grafo/grafo.h"
 
 #include "../lib/utilidades/Contador.h"
@@ -69,5 +67,7 @@ ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
 ID parseId(int id);
 bool esIdValido(int id, ENUM_OBJETOS objeto);
+
+void lectorCasilleros(Grafo *mapa, ifstream& datos);
 
 #endif

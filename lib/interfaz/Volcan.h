@@ -7,9 +7,9 @@ class Volcan : public Casillero
 {
 
 public:
-    explicit Volcan();
+    explicit Volcan(int fila, int columna);
 
-    int costo(char personaje);
+    void ajustarCosto(string personaje);
 };
 
 #endif //NOFERATU_LOCAL_VOLCAN_H
