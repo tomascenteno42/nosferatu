@@ -5,15 +5,15 @@
 class Casillero
 {
 protected:
-    std::string tipo;
-    std::string color;
+    string tipo;
+    string color;
 
 public:
-    explicit Casillero(std::string tipo, std::string color);
+    explicit Casillero(string tipo, string color);
 
-    std::string obtener_tipo();
+    string obtener_tipo();
 
-    std::string obtener_color();
+    string obtener_color();
 
     virtual int costo(char personaje) = 0;
 

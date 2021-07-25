@@ -3,6 +3,12 @@
 
 #include "./src/main.h"
 
+#define OPCIONES_MENU_MAIN "archivos/mainMenu.txt"
+#define OPCIONES_MENU_SIMULACION "archivos/simulacionMenu.txt"
+#define OPCIONES_MENU_TURNO "archivos/turnoMenu.txt"
+#define OPCIONES_MENU_COMIENZO_TURNO "archivos/comienzoTurnoMenu.txt"
+const string PATH_ARCHIVO_ESTADO = "archivos/estado.txt";
+
 //Caracteres que aparecen en el mapa
 const char C_HUMANO = 'h';
 const char C_HUMANO_CV = 'H';
@@ -51,8 +57,7 @@ const string SIN_COLOR = "\e[0m";
 
 const int MAX_OBJETOS = 12;
 const int MAX_ID = 999;
-
-const string PATH_ARCHIVO_ESTADO = "archivos/estado.txt";
+const int CANTIDAD_MENUES = 4;
 
 enum ENUM_OBJETOS
 {
@@ -102,4 +107,12 @@ enum BANDO
     OBJETO = 3
 };
 
-#endif // _CONSTANTES_
+enum enumMenu
+{
+    menuMain = 1,
+    menuSimulacion = 2,
+    menuComienzoDeTurno = 3,
+    menuTurno = 4
+};
+
+#endif

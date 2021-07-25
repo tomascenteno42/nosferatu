@@ -39,7 +39,7 @@ Tablero::Tablero(const string &dir)
             // El parser agarra la linea y mapea la data a sus atributos.
             Parser parser(linea);
 
-            Objeto *objeto = parser.obtener_objeto();
+            Objeto *objeto = parser.obtenerObjeto();
             string nombreEntidad = parser.obtener_nombre();
             int claveEntidad = parser.getClave();
 
@@ -114,7 +114,6 @@ void Tablero::darDeAlta(int fila, int columna, Objeto *nuevo_objeto)
     }
     else
     {
-        // this->diccionario->eliminar();
         delete this->objetos[fila][columna];
         this->objetos[fila][columna] = nuevo_objeto;
     }

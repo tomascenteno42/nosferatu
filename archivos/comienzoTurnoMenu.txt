@@ -1,0 +1,5 @@
+Guardar partida
+Defenderse
+Atacar
+Moverse
+Pasar

@@ -1,0 +1,5 @@
+Buscar por ID los detalles de un personaje u objeto en particular.
+Mostrar el tablero
+Mostrar la cantidad de integrantes de un bando.
+Seleccionar bando.
+Volver al menu principal

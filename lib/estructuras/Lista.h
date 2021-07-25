@@ -29,7 +29,7 @@ public:
      * @param idx Posicion de la lista donde se desea obtener data. Debe ser igual o mayor que 1.
      * @return T Tipo de dato generico.
     */
-    T obtener(int idx);
+    T get(int idx);
 
     /**
      * Inserta d al final de la lista e incrementa la cantidad 1.
@@ -173,15 +173,18 @@ void Lista<T>::baja(int idx)
     if (idx == 1)
     {
         nodoAux = cabeza;
+        delete get(idx);
+
         cabeza = nodoAux->getSiguienteNodo();
     }
     else
     {
         Nodo<T> *anterior = getNodo(idx - 1);
-
         nodoAux = anterior->getSiguienteNodo();
-        Nodo<T> *siguiente = nodoAux->getSiguienteNodo();
 
+        delete get(idx);
+
+        Nodo<T> *siguiente = nodoAux->getSiguienteNodo();
         anterior->setSiguienteNodo(siguiente);
     }
 
@@ -191,7 +194,7 @@ void Lista<T>::baja(int idx)
 }
 
 template <class T>
-T Lista<T>::obtener(int idx)
+T Lista<T>::get(int idx)
 {
     return getNodo(idx)->getData();
 }

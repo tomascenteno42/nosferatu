@@ -36,8 +36,6 @@ Parser::Parser(const string &linea)
 
     this->clave = stoi(id);
 
-    cout << this->clave << endl;
-
     this->asignar_especial(especial);
 
     this->pos = new Posicion(stoi(posicion_x, nullptr), stoi(posicion_y, nullptr));
@@ -45,7 +43,7 @@ Parser::Parser(const string &linea)
     this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave);
 }
 
-Objeto *Parser::obtener_objeto()
+Objeto *Parser::obtenerObjeto()
 {
     return this->objeto_obtenido;
 }

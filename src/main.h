@@ -64,10 +64,78 @@ using namespace std;
 #include "../lib/interfaz/Vacio.h"
 #include "../lib/interfaz/Volcan.h"
 
+#include "../lib/interfaz/test.h"
+#include "../lib/interfaz/Juego.h"
+#include "../lib/interfaz/MenuJuego.h"
+
+// UTILS
 BANDO parsearTextoABando(string texto);
 ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
 ID parseId(int id);
 bool esIdValido(int id, ENUM_OBJETOS objeto);
+
+// Solicitudes al usuario
+/**
+ * @brief Solicita al usuario que objeto desea crear
+ * 
+ * @return string 
+ */
+string pedirTipoObjeto();
+
+/**
+ * @brief Solicita al usuario que cantidad de objetos desea crear.
+ * 
+ * @return int 
+ */
+int pedirCantidad();
+
+/**
+ * @brief Solicita al usuario que id desea darle al tipo de objeto pasado por parametro
+ * 
+ * @param objeto
+ * @return string 
+ */
+int pedirId(ENUM_OBJETOS objeto);
+
+/**
+ * @brief Solicita al usuario un cuadrante.
+ * 
+ * @return CUADRANTE 
+ */
+CUADRANTE pedirCuadrante();
+
+/* IMPORTANTE: MIGRAR A OTRO LADO */
+bool buscarObjetoEnCuadrante(const string &nombreObjeto, CUADRANTE zona, Tablero *tablero);
+
+// Validadores
+bool esUnNumero(string str);
+bool posicionEstaEnTablero(string texto, int &fila, int &columna, Tablero *tablero);
+
+//MENU UTILS
+void llenarMenu(Menu *menu, const char *nombre);
+int getCantidadOpcionesMenu(const char *nombre);
+
+void mostrarTablero(Tablero *tablero);
+
+/* MENU MAIN */
+void procesarAgregarObjeto(MenuJuego *menu);
+void procesarEliminarObjeto(MenuJuego *menu);
+void procesarBuscarPorCuadrante(MenuJuego *menu);
+void procesarMostrarEstadisticasPorId(MenuJuego *menu);
+void procesarComenzarSimulacion(MenuJuego *menu);
+
+/* MENU SIMULACION */
+void mostrarCantidadPersonajesPorBando(MenuJuego *menu);
+void procesarSeleccionBando(MenuJuego *menu);
+
+/* MENU TURNO */
+void procesarOpcionDefenderse(MenuJuego *menu);
+void procesarOpcionAtacar(MenuJuego *menu);
+void procesarOpcionMoverse(MenuJuego *menu);
+void procesarOpcionPasarTurno(MenuJuego *menu);
+
+/* MENU COMIENZO DE TURNO */
+void procesarGuardarJuego();
 
 #endif

@@ -80,5 +80,8 @@ bool Ser::estaMuerto()
 
 void Ser::mostrarInformacion()
 {
-    std::cout << nombre << std::endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Vida: " << vida << endl;
+    cout << "Escudo: " << escudo << endl;
+    cout << "Fuerza: " << fuerza << endl;
 }

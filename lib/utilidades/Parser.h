@@ -50,7 +50,7 @@ public:
     /*
      * Post: Devuelve el objeto creado en memoria dinamica
      */
-    Objeto *obtener_objeto();
+    Objeto *obtenerObjeto();
 
     /*
      * Pre: -

@@ -1,0 +1,4 @@
+Defenderse
+Atacar
+Moverse
+Pasar
