@@ -2,7 +2,7 @@
 
 int Estaca::contador = 0;
 
-Estaca::Estaca(int id) : Elemento(S_ESTACA, C_ESTACA, id)
+Estaca::Estaca(int id, int fila, int columna) : Elemento(S_ESTACA, C_ESTACA, id, fila, columna)
 {
     Estaca::contador++;
 }

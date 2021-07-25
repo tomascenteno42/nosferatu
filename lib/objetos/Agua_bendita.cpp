@@ -2,7 +2,7 @@
 
 int Agua_bendita::contador = 0;
 
-Agua_bendita::Agua_bendita(int cantidad, int id) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDITA, id)
+Agua_bendita::Agua_bendita(int cantidad, int id, int fila, int columna) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDITA, id, fila, columna)
 {
     if (cantidad <= 0)
     {

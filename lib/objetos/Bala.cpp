@@ -3,7 +3,7 @@
 
 int Bala::contador = 0;
 
-Bala::Bala(int cantidad, int id) : Elemento(S_BALA, C_BALAS, id)
+Bala::Bala(int cantidad, int id, int fila, int columna) : Elemento(S_BALA, C_BALAS, id, fila, columna)
 {
     if (cantidad <= 0)
     {

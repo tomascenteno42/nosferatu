@@ -2,7 +2,7 @@
 
 int Cruz::contador = 0;
 
-Cruz::Cruz(int id) : Elemento(S_CRUZ, C_CRUZ, id)
+Cruz::Cruz(int id, int fila, int columna) : Elemento(S_CRUZ, C_CRUZ, id, fila, columna)
 {
     this->cantidad = 1;
     Cruz::contador++;

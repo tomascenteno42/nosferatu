@@ -2,7 +2,7 @@
 
 int Nosferatu::contador = 0;
 
-Nosferatu::Nosferatu() : Vampiro(S_NOSFERATU, C_NOSFERATU, ID_NOSFERATU)
+Nosferatu::Nosferatu(int fila, int columna) : Vampiro(S_NOSFERATU, C_NOSFERATU, ID_NOSFERATU, fila ,columna)
 {
     Nosferatu::contador++;
 }

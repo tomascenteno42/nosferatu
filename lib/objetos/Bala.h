@@ -12,7 +12,7 @@ public:
     /* Pre: cantidad > 0
      * Post: Se crea el objeto listo para usarse
      */
-    explicit Bala(int cantidad, int id);
+    explicit Bala(int cantidad, int id, int fila, int columna);
 
     /*
      * Post: Muestra por pantalla la informacion del objeto instanciado

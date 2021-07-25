@@ -40,7 +40,7 @@ Parser::Parser(const string &linea)
 
     this->pos = new Posicion(stoi(posicion_x, nullptr), stoi(posicion_y, nullptr));
 
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave);
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, this->pos->obtener_fila(), this->pos->obtener_columna());
 }
 
 Objeto *Parser::obtenerObjeto()
@@ -53,7 +53,7 @@ int Parser::getClave()
     return this->clave;
 }
 
-Objeto *Parser::obtener_objeto_del_texto(string texto, int clave)
+Objeto *Parser::obtener_objeto_del_texto(string texto, int clave, int fila, int columna)
 {
     Objeto *nuevo_objeto;
 
@@ -61,51 +61,51 @@ Objeto *Parser::obtener_objeto_del_texto(string texto, int clave)
 
     if (texto == S_HUMANO)
     {
-        nuevo_objeto = new Humano(clave);
+        nuevo_objeto = new Humano(clave, fila, columna);
     }
     else if (texto == S_HUMANO_CV)
     {
-        nuevo_objeto = new Humano_cazador(clave);
+        nuevo_objeto = new Humano_cazador(clave, fila, columna);
     }
     else if (texto == S_ZOMBI)
     {
-        nuevo_objeto = new Zombi(clave);
+        nuevo_objeto = new Zombi(clave, fila, columna);
     }
     else if (texto == S_VAMPIRO)
     {
-        nuevo_objeto = new Vampiro(clave);
+        nuevo_objeto = new Vampiro(clave, fila, columna);
     }
     else if (texto == S_VAMPIRELLA)
     {
-        nuevo_objeto = new Vampirella();
+        nuevo_objeto = new Vampirella(fila, columna);
     }
     else if (texto == S_NOSFERATU)
     {
-        nuevo_objeto = new Nosferatu();
+        nuevo_objeto = new Nosferatu(fila, columna);
     }
     else if (texto == S_VANESA)
     {
-        nuevo_objeto = new Vanesa();
+        nuevo_objeto = new Vanesa(fila, columna);
     }
     else if (texto == S_ESCOPETA)
     {
-        nuevo_objeto = new Escopeta(clave);
+        nuevo_objeto = new Escopeta(clave, fila, columna);
     }
     else if (texto == S_ESTACA)
     {
-        nuevo_objeto = new Estaca(clave);
+        nuevo_objeto = new Estaca(clave, fila, columna);
     }
     else if (texto == S_CRUZ)
     {
-        nuevo_objeto = new Cruz(clave);
+        nuevo_objeto = new Cruz(clave, fila, columna);
     }
     else if (texto == S_AGUA_BENDITA)
     {
-        nuevo_objeto = new Agua_bendita(this->cantidad, clave);
+        nuevo_objeto = new Agua_bendita(this->cantidad, clave, fila, columna);
     }
     else if (texto == S_BALA)
     {
-        nuevo_objeto = new Bala(this->cantidad, clave);
+        nuevo_objeto = new Bala(this->cantidad, clave, fila, columna);
     }
     else
     {
@@ -202,10 +202,10 @@ string Parser::obtener_nombre()
     return this->nombre;
 }
 
-Parser::Parser(const string &nombre, int cantidad)
+Parser::Parser(const string &nombre, int cantidad, int fila, int columna)
 {
     this->cantidad = cantidad;
     this->nombre = nombre;
     this->pos = NULL;
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave);
+    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, (fila+1), (columna+1));
 }

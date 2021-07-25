@@ -2,7 +2,7 @@
 
 int Escopeta::contador = 0;
 
-Escopeta::Escopeta(int id) : Elemento(S_ESCOPETA, C_ESCOPETA, id)
+Escopeta::Escopeta(int id, int fila, int columna) : Elemento(S_ESCOPETA, C_ESCOPETA, id, fila, columna)
 {
     Escopeta::contador++;
 }

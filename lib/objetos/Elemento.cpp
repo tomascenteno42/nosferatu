@@ -1,6 +1,6 @@
 #include "../../src/main.h"
 
-Elemento::Elemento(std::string nombre, char caracter, int id) : Objeto(nombre, caracter, id)
+Elemento::Elemento(std::string nombre, char caracter, int id, int fila, int columna) : Objeto(nombre, caracter, id, fila, columna)
 {
 }
 

@@ -14,13 +14,13 @@ public:
      * Post: Se crea el humano con nombre = S_HUMANO y caracter C_HUMANO
      *       Aumenta en 1 la cantidad de humanos existentes
      */
-    Humano(int id);
+    Humano(int id, int fila, int columna);
 
     /*
      * Post: Se crea un un humano con nombre = "nombre" y caracter "caracter"
      *       Aumenta en 1 la cantidad de humanos existentes
      */
-    Humano(string nombre, char caracter, int id);
+    Humano(string nombre, char caracter, int id, int fila, int columna);
 
     /**
      * @brief Agrega el objeto pasado por parametro a el inventario.
@@ -28,6 +28,9 @@ public:
      * @param objeto 
      */
     void agarrarObjeto(Elemento *objeto);
+
+
+    void atacar(Tablero *tablero);
 
     /*
      * Post: obtiene la cantidad de humanos (normales) existentes

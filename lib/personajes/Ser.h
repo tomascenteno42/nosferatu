@@ -15,7 +15,7 @@ public:
     /*
      * Post: Se crea el npc con la posicion Pos
      */
-    explicit Ser(string nombre, char caracter, int id);
+    explicit Ser(string nombre, char caracter, int id, int fila, int columna);
 
     int getEnergia();
     int getVida();
@@ -27,7 +27,7 @@ public:
     void setEscudo(int e);
     void setFuerza(int f);
 
-    // virtual void atacar(Tablero *tablero);
+    //virtual void atacar(Tablero *tablero) = 0;
     // virtual void defender(Tablero *tablero);
     // virtual void mover(Tablero *tablero);
 

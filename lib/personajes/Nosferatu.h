@@ -13,7 +13,7 @@ public:
     * Post: Se crea nosferatu listo para usarse
      *      Aumenta en 1 la cantidad de Nosferatu existentes
     */
-    explicit Nosferatu();
+    explicit Nosferatu(int fila, int columna);
 
     /*
      * Post: obtiene la cantidad de Nosferatu existentes

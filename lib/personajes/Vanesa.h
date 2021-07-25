@@ -13,7 +13,7 @@ public:
      * Post: se crea el objeto listo para usarse
      *       Aumenta en 1 la cantidad de objetos Vanesa existentes
      */
-    Vanesa();
+    Vanesa(int fila, int columna);
 
     /*
      * Post: obtiene la cantidad de objetos Vanesa existentes

@@ -10,12 +10,14 @@ protected:
     string nombre;
     char caracter;
     int id;
+    int fila;
+    int columna;
 
 public:
     /* Pre: -
      * Post: Se crea el objeto con el nombre y caracter pasado por parametro
      */
-    explicit Objeto(string nombre, char caracter, int id);
+    explicit Objeto(string nombre, char caracter, int id, int fila, int columna);
 
     /* Pre: -
      * Post: Muestra por pantalla la posicion
@@ -38,6 +40,11 @@ public:
      * @return int 
      */
     int getId();
+
+    int getFila();
+
+    int getColumna();
+
     /*
      *
      */

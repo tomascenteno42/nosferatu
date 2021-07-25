@@ -1,11 +1,13 @@
 
 #include "../../src/main.h"
 
-Objeto::Objeto(std::string nombre, char caracter, int id)
+Objeto::Objeto(std::string nombre, char caracter, int id, int fila, int columna)
 {
     this->nombre = nombre;
     this->caracter = caracter;
     this->id = id;
+    this->fila = (fila-1);
+    this->columna = (columna-1);
 }
 
 char Objeto::getCaracter()
@@ -21,4 +23,12 @@ std::string Objeto::getNombre()
 int Objeto::getId()
 {
     return this->id;
+}
+
+int Objeto::getFila(){
+    return this->fila;
+}
+
+int Objeto::getColumna(){
+    return this->columna;
 }

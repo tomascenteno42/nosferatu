@@ -199,9 +199,9 @@
 
 //     } while (!this->esUnNumero(texto));
 
-//     this->getTablero()->getDiccionario()->getData(id);
-// }
+                int clave = this->usuarioPedirClave(parsearTextoAObjeto(nombre_obtenido));
 
+  ///ACAAAAA    Objeto *nuevo_objeto = Parser(nombre_obtenido, cantidad, fila, columna).obtener_objeto();
 // // void Menu::imprimirDetallesObjeto()
 // // {
 // // }

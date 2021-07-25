@@ -12,7 +12,7 @@ public:
     /*
      * Post: Se crea el objeto listo para usarse
      */
-    Escopeta(int id);
+    Escopeta(int id, int fila, int columna);
 
     /*
      * Post: Muestra por pantalla la informacion del objeto: solo el nombre en este caso

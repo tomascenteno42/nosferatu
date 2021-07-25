@@ -10,7 +10,7 @@ public:
     /*
      * Post: se crea el objeto Monstruo con nombre y caracter por parametro
      */
-    Monstruo(string nombre, char caracter, int id);
+    Monstruo(string nombre, char caracter, int id, int fila, int columna);
 };
 
 #endif //NOSFERATUV2_MONSTRUO_H

@@ -1,14 +1,14 @@
 #include "../../src/main.h"
 
-Ser::Ser(std::string nombre, char caracter, int id) : Objeto(nombre, caracter, id)
+Ser::Ser(std::string nombre, char caracter, int id, int fila, int columna) : Objeto(nombre, caracter, id, fila, columna)
 {
-    energia = rand() % 20;
-    fuerza = rand() % 30 + 10;
-    vida = rand() % 100 + 20;
-    escudo = rand() % 2;
-
     nombre = nombre;
     caracter = caracter;
+    energia = rand() % 20;
+    vida = rand() % 100 + 20;
+    escudo = rand() % 2;
+    fuerza = rand() % 30 + 10;
+
 }
 
 /* GETTERS */

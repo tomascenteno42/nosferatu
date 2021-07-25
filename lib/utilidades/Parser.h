@@ -22,7 +22,7 @@ private:
      *       Si no hay texto que coincida con algun objeto se lanza un Excepcion_error
      * WARNING: Se crea el objeto en memoria dinamica
      */
-    Objeto *obtener_objeto_del_texto(string texto, int clave);
+    Objeto *obtener_objeto_del_texto(string texto, int clave, int fila, int columna);
 
 public:
     /*
@@ -45,7 +45,7 @@ public:
      * Post: Guarda un objeto a partir del nombre y la cantidad, con posiciones nulas.
      *
      */
-    Parser(const string &nombre, int cantidad);
+    Parser(const string &nombre, int cantidad, int fila, int columna);
 
     /*
      * Post: Devuelve el objeto creado en memoria dinamica

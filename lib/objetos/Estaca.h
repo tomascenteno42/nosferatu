@@ -13,7 +13,7 @@ public:
      * Post: Se crea el objeto listo para usarse
      *       Aumenta en 1 la cantidad de estacas existentes
      */
-    Estaca(int id);
+    Estaca(int id, int fila, int columna);
 
     /*
      *  Post: Muestra por pantalla la informacion. En este caso el nombre.
