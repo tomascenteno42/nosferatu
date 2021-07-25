@@ -12,18 +12,25 @@ bool posicionEstaEnTablero(string texto, int &fila, int &columna, Tablero *table
 
     if (esUnNumero(posicionX) && esUnNumero(posicionY))
     {
-        fila = stoi(posicionX) - 1;
-        columna = stoi(posicionY) - 1;
-        rangoValido = tablero->posicionValida(fila, columna);
+        fila = stoi(posicionX);
+        columna = stoi(posicionY);
+        rangoValido = tablero->getMapa()->coordenadaValida(Posicion(fila, columna));
     }
+
     return rangoValido;
 }
 
 bool esUnNumero(string str)
 {
-    for (int i = 0; i < str.length(); i++)
-        if ((int)str[i] < 48 || (int)str[i] > 57)
-            return false;
+    bool esUnNumero = true;
 
-    return true;
+    long unsigned i = 0;
+
+    while (esUnNumero && i < str.length())
+    {
+        esUnNumero = isdigit(str[i]);
+        i++;
+    }
+
+    return esUnNumero;
 }

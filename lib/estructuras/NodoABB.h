@@ -34,7 +34,7 @@ public:
     * 
     * @return K
     */
-    K getClave();
+    K getId();
 
     /**
      * @brief Devuelve el nodo derecho
@@ -153,7 +153,7 @@ T NodoABB<K, T>::getData()
 }
 
 template <class K, class T>
-K NodoABB<K, T>::getClave()
+K NodoABB<K, T>::getId()
 {
     return clave;
 }

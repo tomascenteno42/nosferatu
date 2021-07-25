@@ -60,7 +60,7 @@ ID parseId(int id)
     else if (id >= ID_HUMANO_CV && id < ID_ZOMBIE)
         return ID_HUMANO_CV;
 
-    else if (id >= ID_ZOMBIE && id < NOSFERATU)
+    else if (id >= ID_ZOMBIE && id < ID_NOSFERATU)
         return ID_ZOMBIE;
 
     else if (id >= ID_VAMPIRO && id < ID_AGUA_BENDITA)
@@ -122,11 +122,10 @@ void toLower(string &str)
     transform(str.begin(), str.end(), str.begin(), ::tolower);
 }
 
-
 /* Pre: *mapa no debe ser nullptr, y datos debe existir
  * Pos: Llena el grafo con los datos extraidos del archivo de casilleros
  */
-void lectorCasilleros(Grafo *mapa, ifstream &datos)
+void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos)
 {
     string s_filas;
     string s_columnas;
@@ -139,8 +138,8 @@ void lectorCasilleros(Grafo *mapa, ifstream &datos)
     int filas = stoi(s_filas);
     int columnas = stoi(s_columnas);
 
-    mapa->setFila(filas);
-    mapa->setColumna(columnas);
+    mapa->setFilas(filas);
+    mapa->setColumnas(columnas);
 
     while (!datos.eof())
     {

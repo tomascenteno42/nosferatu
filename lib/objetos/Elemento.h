@@ -20,7 +20,7 @@ public:
      *       estacas y escopetas la cantidad es 1, para balas y agua bendita varia)
      *
      */
-    int obtener_cantidad();
+    int getCantidad();
 };
 
 #endif //NOSFERATUV2

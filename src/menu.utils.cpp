@@ -7,8 +7,8 @@ bool buscarObjetoEnCuadrante(const string &nombreObjeto, CUADRANTE zona, Tablero
     Posicion maxPos;
     bool encontrado;
 
-    int filas = tablero->cantidadFilas();
-    int columnas = tablero->cantidadColumnas();
+    int filas = tablero->getMapa()->getFilas();
+    int columnas = tablero->getMapa()->getColumnas();
 
     switch (zona)
     {
@@ -73,28 +73,29 @@ int getCantidadOpcionesMenu(const char *nombre)
 
 void mostrarTablero(Tablero *tablero)
 {
-    int espaciado = 3;
-    cout << setfill(' ') << setw(espaciado) << "";
-    for (int k = 0; k < tablero->cantidadColumnas(); k++)
-    {
-        cout << setw(espaciado) << k + 1;
-    }
-    cout << endl;
-    for (int i = 0; i < tablero->cantidadFilas(); i++)
-    {
-        cout << setw(espaciado) << i + 1;
-        for (int j = 0; j < tablero->cantidadColumnas(); j++)
-        {
-            Objeto *objeto = tablero->getElementoEnPosicion(i, j);
+    // int espaciado = 3;
+    // cout << setfill(' ') << setw(espaciado) << "";
+    // for (int k = 0; k < tablero->cantidadColumnas(); k++)
+    // {
+    //     cout << setw(espaciado) << k + 1;
+    // }
+    // cout << endl;
+    // for (int i = 0; i < tablero->cantidadFilas(); i++)
+    // {
+    //     cout << setw(espaciado) << i + 1;
+    //     for (int j = 0; j < tablero->cantidadColumnas(); j++)
+    //     {
+    //         Objeto *objeto = tablero->getElementoEnPosicion(Posicion(i, j));
 
-            if (objeto != NULL)
-                cout << setw(espaciado) << objeto->getCaracter();
-            else
-                cout << setw(espaciado) << "*";
-        }
-        cout << endl;
-    }
-    cout << endl;
+    //         if (objeto != NULL)
+    //             cout << setw(espaciado) << objeto->getCaracter();
+    //         else
+    //             cout << setw(espaciado) << "*";
+    //     }
+    //     cout << endl;
+    // }
+    // cout << endl;
+    tablero->getMapa()->mostrarMapa();
 }
 
 int pedirId(ENUM_OBJETOS objeto)
@@ -185,7 +186,7 @@ string pedirTipoObjeto()
     } while (opcion < 0 || opcion > MAX_OBJETOS);
 
     if (opcion != 0)
-        objeto = Parser(ENUM_OBJETOS(opcion)).obtener_nombre();
+        objeto = Parser(ENUM_OBJETOS(opcion)).getNombre();
 
     return objeto;
 }
@@ -238,10 +239,17 @@ void procesarAgregarObjeto(MenuJuego *menu)
 
                 int clave = pedirId(parsearTextoAObjeto(nombre));
 
-                Objeto *objeto = Parser(nombre, cantidad, fila, columna).obtenerObjeto();
+                if (menu->juego->tablero->getDiccionario()->existe(clave))
+                {
+                    cout << "La clave ya existe, intente de nuevo luego." << endl;
+                }
+                else
+                {
+                    Objeto *objeto = Parser(nombre, cantidad, fila, columna).getObjeto();
 
-                menu->juego->tablero->darDeAlta(fila, columna, objeto);
-                menu->juego->tablero->getDiccionario()->insertar(clave, objeto);
+                    menu->juego->tablero->darDeAlta(Posicion(fila, columna), objeto);
+                    menu->juego->tablero->getDiccionario()->insertar(clave, objeto);
+                }
             }
             opcionAceptada = true;
         }
@@ -258,12 +266,13 @@ void procesarEliminarObjeto(MenuJuego *menu)
 
     menu->pedirPosicion(fila, columna);
 
-    Objeto *objeto = menu->juego->tablero->getElementoEnPosicion(fila, columna);
+    Objeto *objeto = menu->juego->tablero->getElementoEnPosicion(Posicion(fila, columna));
 
     if (objeto != NULL)
     {
+        objeto->mostrarInformacion();
         menu->juego->tablero->getDiccionario()->eliminar(objeto->getId());
-        menu->juego->tablero->darDeBaja(fila, columna);
+        menu->juego->tablero->darDeBaja(Posicion(fila, columna));
     }
     else
     {
@@ -288,14 +297,17 @@ void procesarBuscarPorCuadrante(MenuJuego *menu)
             cout << "<<<<Objeto hallado>>>>" << endl;
     }
 }
+
 void procesarMostrarEstadisticasPorId(MenuJuego *menu)
 {
     int id = pedirId(parsearTextoAObjeto(pedirTipoObjeto()));
 
-    Objeto *objeto = menu->juego->tablero->getDiccionario()->getData(id);
-
-    objeto->mostrarInformacion();
+    if (menu->juego->tablero->getDiccionario()->existe(id))
+        menu->juego->tablero->getDiccionario()->getData(id)->mostrarInformacion();
+    else
+        cout << "El id no existe, intente de nuevo luego." << endl;
 }
+
 void procesarComenzarSimulacion(MenuJuego *menu)
 {
     menu->cambiarMenu(menuSimulacion);

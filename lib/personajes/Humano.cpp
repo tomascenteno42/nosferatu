@@ -33,28 +33,51 @@ void Humano::agarrarObjeto(Elemento *objeto)
 
 void Humano::atacar(Tablero *tablero)
 {
+    int fila_enemigo, columna_enemigo;
     bool habilitado = true;
     size_t i = 0;
-    if (energia < 5){
-        cout << "No papi, no podes hacer eso, te falta energia ლ(ಠ_ಠლ)" <<endl;
+    if (energia < 5)
+    {
+        cout << "No papi, no podes hacer eso, te falta energia ლ(ಠಠლ)" << endl;
         habilitado = false;
     }
-    while (contieneEscopeta && i < inventario.size()){
-        if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->obtener_cantidad() < 2){
-            cout << "No papi, no podes hacer eso, te faltan balas ლ(ಠ_ಠლ)" <<endl;
+    while (contieneEscopeta && i < inventario.size())
+    {
+        if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() < 2)
+        {
+            cout << "No papi, no podes hacer eso, te faltan balas ლ(ಠಠლ)" << endl;
             habilitado = false;
         }
     }
-    if (habilitado){
-        cout << "Indique a quien quiere atacar" << endl;
+    if (habilitado)
+    {
+        Ser *personaje = dynamic_cast<Ser *>(tablero->getElementoEnPosicion(Posicion(fila, columna)));
+        cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
         int danio = 0;
-        for (int i = (fila-1); i < (fila+1); i++) {
-            for (int j = (columna-1); j < (columna+1); j++) {
-                Objeto *objeto_encontrado = tablero->getElementoEnPosicion(i, j);
+        for (int i = (fila - 1); i < (fila + 1); i++)
+        {
+            for (int j = (columna - 1); j < (columna + 1); j++)
+            {
+                Objeto *objeto_encontrado = tablero->getElementoEnPosicion(Posicion(i, j));
                 if (objeto_encontrado)
                     objeto_encontrado->mostrarInformacion();
+                cout << "en la posicion" << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna() << endl;
             }
+        }
+        cout << "Ingrese la fila" << endl;
+        cin >> fila_enemigo;
+
+        cout << "Ingrese la columna" << endl;
+        cin >> columna_enemigo;
+        Ser *enemigo = dynamic_cast<Ser *>(tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo)));
+        if (enemigo->getCaracter() == C_ZOMBI)
+        {
+            enemigo->setVida((enemigo->getVida() - personaje->getFuerza()));
+        }
+        else if (enemigo->getCaracter() == C_VAMPIRO)
+        {
+            enemigo->setVida(enemigo->getVida() - ((personaje->getFuerza())));
         }
     }
 }

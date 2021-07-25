@@ -26,7 +26,6 @@ private:
     void liberarMatrizAdyacencia();
     void mostrarCasilleros();
     void mostrarMatriz();
-    bool comprobarCoordenada(Posicion coordenada);
     int buscarIndice(Posicion coordenada);
     void agregarCamino(int origen, int destino, int costo);
     int indiceMinimo(int distancias[], bool visitados[]);
@@ -34,16 +33,20 @@ private:
 
 public:
     Grafo();
+    bool coordenadaValida(Posicion coordenada);
     void agregarCasillero(string terreno, int fila, int columna);
-    void agregarObjeto(Objeto* nuevoObjeto, int fila, int columna);
-    void setFila(int n);
-    void setColumna(int n);
+    void agregarObjeto(Objeto *nuevoObjeto, Posicion pos);
+    void setFilas(int n);
+    void setColumnas(int n);
+    int getFilas();
+    int getColumnas();
     void mostrarGrafo();
     void mostrarMapa();
     void establecerCaminos(string personaje);
-    int obtenerCantidad();
+    int getCantidad();
     void ocupar(Posicion coordenada);
     void desocupar(Posicion coordenada);
+    Casillero *getCasillero(Posicion coordenada);
     vector<int> *caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje);
     ~Grafo();
 };

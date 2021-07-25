@@ -98,7 +98,7 @@ void MenuJuego::procesarOpcionMenuMain(int opcion)
         procesarEliminarObjeto(this);
         break;
     case 3:
-        mostrarTablero(this->juego->tablero);
+        this->juego->tablero->getMapa()->mostrarMapa();
         break;
     case 4:
         procesarBuscarPorCuadrante(this);
@@ -125,7 +125,7 @@ void MenuJuego::procesarOpcionMenuSimulacion(int opcion)
         procesarMostrarEstadisticasPorId(this);
         break;
     case 2:
-        mostrarTablero(this->juego->tablero);
+        this->juego->tablero->getMapa()->mostrarMapa();
         break;
     case 3:
         mostrarCantidadPersonajesPorBando(this);
@@ -177,8 +177,8 @@ void MenuJuego::procesarOpcionMenuTurno(int opcion)
 void MenuJuego::pedirPosicion(int &fila, int &columna)
 {
     string strPosicion;
-    cout << "Ingrese la posicion del objeto. MAX = " << this->juego->tablero->cantidadFilas() << " "
-         << this->juego->tablero->cantidadColumnas() << endl;
+    cout << "Ingrese la posicion del objeto. MAX = " << this->juego->tablero->getMapa()->getFilas() << " "
+         << this->juego->tablero->getMapa()->getColumnas() << endl;
     cout << "Ejemplo: 10 5  --> fila 10 columna 5" << endl;
     cin.clear();
     cin.ignore(256, '\n');

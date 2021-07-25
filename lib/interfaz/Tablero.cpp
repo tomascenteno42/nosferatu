@@ -5,53 +5,55 @@ class Parser;
 
 Tablero::Tablero(const string &dir)
 {
-    fstream archivo(dir, ios::in);
+    fstream archivoObjetos(dir, ios::in);
+    ifstream archivoMapa("archivos/tablero.txt");
 
     diccionario = new ABB<int, Objeto *>();
+    mapa = new Grafo();
+
+    cargarCasillerosGrafo(mapa, archivoMapa);
 
     jugadores[0] = new Jugador(HUMANOS);
     jugadores[1] = new Jugador(MONSTRUOS);
 
-    if (!archivo)
+    if (!archivoObjetos)
     {
-        throw invalid_argument("Error: no se puede abrir el archivo");
+        throw invalid_argument("Error: no se puede abrir el archivoObjetos");
     }
     else
     {
         this->contador = new Contador();
 
-        string linea, s_filas, s_columnas;
+        string linea, filas, columnas;
 
         /* Lee la cantidad de filas */
-        getline(archivo, s_filas, ' ');
+        getline(archivoObjetos, filas, ' ');
 
         /* Lee la cantidad de columnas */
-        getline(archivo, s_columnas);
+        getline(archivoObjetos, columnas);
 
         /* Establece la cantidad de filas y columnas del tablero */
-        this->cant_filas = stoi(s_filas);
-        this->cant_columnas = stoi(s_columnas);
+        this->mapa->setFilas(stoi(filas));
+        this->mapa->setColumnas(stoi(columnas));
 
-        this->inicializarMatriz();
-
-        while (getline(archivo, linea))
+        while (getline(archivoObjetos, linea))
         {
             // El parser agarra la linea y mapea la data a sus atributos.
             Parser parser(linea);
 
-            Objeto *objeto = parser.obtenerObjeto();
-            string nombreEntidad = parser.obtener_nombre();
-            int claveEntidad = parser.getClave();
+            Objeto *objeto = parser.getObjeto();
+            string nombreEntidad = parser.getNombre();
+            int id = parser.getId();
 
             // Posicion donde se ubicara el objeto
-            int fila = parser.obtener_posicion()->getFila() - 1;
-            int columna = parser.obtener_posicion()->getColumna() - 1;
+            int fila = parser.getPosicion()->getFila();
+            int columna = parser.getPosicion()->getColumna();
 
             // Establecemos el objeto en la posicion indicada
-            this->objetos[fila][columna] = objeto;
+            this->mapa->agregarObjeto(objeto, Posicion(fila, columna));
 
             // Insertamos el objeto con su respectiva clave en el diccionario
-            diccionario->insertar(claveEntidad, objeto);
+            diccionario->insertar(id, objeto);
 
             // Almacenamos el objeto en el jugador de acuerdo a su bando.
             if (parsearTextoABando(nombreEntidad) == HUMANOS)
@@ -63,59 +65,32 @@ Tablero::Tablero(const string &dir)
     }
 }
 
-void Tablero::inicializarMatriz()
+void Tablero::darDeBaja(Posicion pos)
 {
+    if (this->mapa->coordenadaValida(pos))
+        this->mapa->getCasillero(pos)->setObjeto(NULL);
+}
 
-    this->objetos = new Objeto **[this->cantidadFilas()];
-    for (int i = 0; i < this->cantidadFilas(); i++)
+Objeto *Tablero::getElementoEnPosicion(Posicion pos)
+{
+    return this->mapa->getCasillero(pos)->getObjeto();
+}
+
+void Tablero::darDeAlta(Posicion pos, Objeto *nuevoObjeto)
+{
+    if (this->mapa->coordenadaValida(pos))
     {
-        this->objetos[i] = new Objeto *[this->cantidadColumnas()];
-        for (int j = 0; j < this->cantidadColumnas(); j++)
-        {
-            this->objetos[i][j] = NULL;
-        }
-    }
-}
+        this->mapa->agregarObjeto(nuevoObjeto, pos);
+        // if (this->objetos[fila][columna] == NULL)
+        // {
 
-bool Tablero::posicionValida(int fila, int columna)
-{
-    return (fila >= 0 && columna >= 0 && fila < this->cantidadFilas() && columna < this->cantidadColumnas());
-}
-
-void Tablero::darDeBaja(int fila, int columna)
-{
-    if (this->posicionValida(fila, columna))
-    {
-        delete this->objetos[fila][columna];
-        this->objetos[fila][columna] = NULL;
-    }
-}
-
-Objeto *Tablero::getElementoEnPosicion(int fila, int columna)
-{
-    return this->objetos[fila][columna];
-}
-
-int Tablero::cantidadFilas()
-{
-    return this->cant_filas;
-}
-
-int Tablero::cantidadColumnas()
-{
-    return this->cant_columnas;
-}
-
-void Tablero::darDeAlta(int fila, int columna, Objeto *nuevo_objeto)
-{
-    if (this->objetos[fila][columna] == NULL)
-    {
-        this->objetos[fila][columna] = nuevo_objeto;
-    }
-    else
-    {
-        delete this->objetos[fila][columna];
-        this->objetos[fila][columna] = nuevo_objeto;
+        //     this->objetos[fila][columna] = nuevoObjeto;
+        // }
+        // else
+        // {
+        //     delete this->objetos[fila][columna];
+        //     this->objetos[fila][columna] = nuevoObjeto;
+        // }
     }
 }
 
@@ -129,39 +104,43 @@ float Tablero::getPorcentaje(const string &nombre)
     return this->contador->obtener_porcentaje(nombre);
 }
 
-bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion pos_min, Posicion pos_max)
+bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion minPos, Posicion maxPos)
 {
-    bool objeto_hallado = false;
-    int i = pos_min.getFila() - 1;
-    int j = pos_min.getColumna() - 1;
-    while (!objeto_hallado && i < pos_max.getFila())
+    bool objetoEncontrado = false;
+
+    int i = minPos.getFila() - 1;
+    int j = minPos.getColumna() - 1;
+
+    while (!objetoEncontrado && i < maxPos.getFila())
     {
-        while (!objeto_hallado && j < pos_max.getColumna())
+        while (!objetoEncontrado && j < maxPos.getColumna())
         {
-            if (this->objetos[i][j] != NULL)
+
+            Objeto *obj = this->mapa->getCasillero(Posicion(i, j))->getObjeto();
+
+            if (obj != NULL)
             {
-                objeto_hallado = this->compararObjetos(buscado, this->objetos[i][j]->getNombre());
+                objetoEncontrado = buscado == obj->getNombre();
             }
+
             j++;
         }
         i++;
     }
-    return objeto_hallado;
+
+    return objetoEncontrado;
 }
 
 bool Tablero::compararObjetos(const string &buscado, const string &hallado)
 {
-    bool objeto_hallado = false;
-    objeto_hallado = buscado == hallado;
-    if (!objeto_hallado && buscado == S_VAMPIRO)
-    {
-        objeto_hallado = hallado == S_VAMPIRO || hallado == S_NOSFERATU;
-    }
-    else if (!objeto_hallado && buscado == S_HUMANO)
-    {
-        objeto_hallado = hallado == S_HUMANO_CV || hallado == S_VANESA;
-    }
-    return objeto_hallado;
+    bool objetoEncontrado = buscado == hallado;
+
+    if (!objetoEncontrado && buscado == S_VAMPIRO)
+        objetoEncontrado = hallado == S_VAMPIRO || hallado == S_NOSFERATU;
+    else if (!objetoEncontrado && buscado == S_HUMANO)
+        objetoEncontrado = hallado == S_HUMANO_CV || hallado == S_VANESA;
+
+    return objetoEncontrado;
 }
 
 Jugador *Tablero::getJugador(int idx)
@@ -177,20 +156,14 @@ ABB<int, Objeto *> *Tablero::getDiccionario()
     return this->diccionario;
 }
 
+Grafo *Tablero::getMapa()
+{
+    return this->mapa;
+}
+
 Tablero::~Tablero()
 {
-    for (int i = 0; i < this->cantidadFilas(); i++)
-    {
-        for (int j = 0; j < this->cantidadColumnas(); j++)
-        {
-            if (this->objetos[i][j] != NULL)
-            {
-                delete this->objetos[i][j];
-            }
-        }
-        delete[] objetos[i];
-    }
-    delete[] objetos;
+    delete mapa;
     delete contador;
     delete diccionario;
     delete jugadores[0];

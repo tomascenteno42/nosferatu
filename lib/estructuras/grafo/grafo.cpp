@@ -1,6 +1,6 @@
 #include "../../../src/main.h"
 
-/*Construye un objeto de tipo agrafo, inicializando sus atributos a valores nulos*/
+/*Construye un objeto de tipo grafo, inicializando sus atributos a valores nulos*/
 
 Grafo::Grafo()
 {
@@ -37,18 +37,17 @@ void Grafo::agregarCasillero(string terreno, int fila, int columna)
 Grafo::~Grafo()
 {
     liberarMatrizAdyacencia();
-    int tamanio = (int)casilleros.size();
-    for (int i = 0; i < tamanio; i++)
-    {
-        delete casilleros[i];
-    }
+
+    for (int i = 0; i < casilleros.size(); i++)
+        delete casilleros.at(i);
+
     casilleros.clear();
 }
 
 /* Pre: n debe ser un numero positivo
  * Pos: asigna n al atributo filas
  */
-void Grafo::setFila(int n)
+void Grafo::setFilas(int n)
 {
     filas = n;
 }
@@ -56,7 +55,7 @@ void Grafo::setFila(int n)
 /* Pre: n debe ser un numero positivo
  * Pos: asigna n al atributo columnas
  * */
-void Grafo::setColumna(int n)
+void Grafo::setColumnas(int n)
 {
     columnas = n;
 }
@@ -126,14 +125,44 @@ void Grafo::mostrarGrafo()
     mostrarMatriz();
 }
 
+void Grafo::mostrarMapa()
+{
+    int tamanio = (int)casilleros.size();
+    int contador = 0;
+    int i = 0;
+
+    while (i < tamanio && contador <= columnas)
+    {
+        cout << casilleros[i]->getColor();
+
+        if (casilleros[i]->getObjeto() != nullptr)
+        {
+            cout << setw(1) << " ";
+            cout << casilleros[i]->getObjeto()->getCaracter();
+            cout << setw(1) << " ";
+        }
+        else
+            cout << setw(3) << " ";
+
+        i++;
+        contador++;
+        if (contador == columnas)
+        {
+            contador = 0;
+            cout << SIN_COLOR << endl;
+        }
+    }
+    cout << SIN_COLOR << endl;
+}
+
 /* Pos: Muestra por pantalla los casilleros
 */
 void Grafo::mostrarCasilleros()
 {
-    int tamanio = (int)casilleros.size();
-    for (int i = 0; i < tamanio; i++)
+    size_t tamanio = casilleros.size();
+    for (size_t i = 0; i < tamanio; i++)
     {
-        cout << casilleros[i]->obtenerColor() << " ";
+        cout << casilleros[i]->getColor() << " ";
     }
     cout << SIN_COLOR;
     cout << endl;
@@ -169,7 +198,7 @@ void Grafo::mostrarMatriz()
  * Pos: Chequea si la posicion es valida, es decir que no se sale de los limites establecidos
  * por filas y columnas. Devuelve true si es valida, y false si no lo es
  * */
-bool Grafo::comprobarCoordenada(Posicion coordenada)
+bool Grafo::coordenadaValida(Posicion coordenada)
 {
     bool cumple_filas = ((coordenada.getFila() <= filas) && (coordenada.getFila() > 0));
     bool cumple_columnas = ((coordenada.getColumna() <= columnas) && (coordenada.getColumna() > 0));
@@ -191,7 +220,7 @@ int Grafo::buscarIndice(Posicion coordenada)
     bool fue_encontrado = false;
     while (!fue_encontrado && (i < tamanio))
     {
-        if ((casilleros[i]->obtenerFila() == fila) && (casilleros[i]->obtenerColumna() == columna))
+        if ((casilleros[i]->getFila() == fila) && (casilleros[i]->getColumna() == columna))
         {
             fue_encontrado = true;
             indice = i;
@@ -201,16 +230,15 @@ int Grafo::buscarIndice(Posicion coordenada)
     return indice;
 }
 
-
 /* Pre: la fila y la columna deben ser numeros positivos, el puntero a objeto no debe ser nullptr
  * Pos: Dado un puntero a un objeto y una posicion, agrega el puntero al casillero que se encuentra en esa posicion
  */
-void Grafo::agregarObjeto(Objeto *nuevoObjeto, int fila, int columna) {
-    Posicion aux(fila, columna);
-    bool valida = comprobarCoordenada(aux);
-    if(valida) {
-        int indice = buscarIndice(aux);
-        casilleros[indice]->agregarObjeto(nuevoObjeto);
+void Grafo::agregarObjeto(Objeto *nuevoObjeto, Posicion pos)
+{
+    if (coordenadaValida(pos))
+    {
+        int indice = buscarIndice(pos);
+        casilleros.at(indice)->setObjeto(nuevoObjeto);
     }
 }
 
@@ -233,18 +261,18 @@ void Grafo::establecerCaminos(string personaje)
     {
         casilleros[i]->ajustarCosto(personaje);
         if ((i + columnas) < tamanio) //ajusto el de abajo
-            agregarCamino(i, i + columnas, casilleros[i]->obtenerCosto());
+            agregarCamino(i, i + columnas, casilleros[i]->getCosto());
         if ((i - columnas) >= 0) //ajusto el de arriba
-            agregarCamino(i, i - columnas, casilleros[i]->obtenerCosto());
+            agregarCamino(i, i - columnas, casilleros[i]->getCosto());
         if ((i + 1) < tamanio)
         {
-            if (casilleros[i]->obtenerFila() == casilleros[i + 1]->obtenerFila()) //ajusto el de la derecha
-                agregarCamino(i, i + 1, casilleros[i]->obtenerCosto());
+            if (casilleros[i]->getFila() == casilleros[i + 1]->getFila()) //ajusto el de la derecha
+                agregarCamino(i, i + 1, casilleros[i]->getCosto());
         }
         if ((i - 1) >= 0)
         {
-            if (casilleros[i]->obtenerFila() == casilleros[i - 1]->obtenerFila()) //ajusto el de la izquierda
-                agregarCamino(i, i - 1, casilleros[i]->obtenerCosto());
+            if (casilleros[i]->getFila() == casilleros[i - 1]->getFila()) //ajusto el de la izquierda
+                agregarCamino(i, i - 1, casilleros[i]->getCosto());
         }
     }
 }
@@ -253,7 +281,7 @@ void Grafo::establecerCaminos(string personaje)
  */
 void Grafo::ocupar(Posicion coordenada)
 {
-    bool valida = comprobarCoordenada(coordenada);
+    bool valida = coordenadaValida(coordenada);
     if (valida)
     {
         int indice = buscarIndice(coordenada);
@@ -265,7 +293,7 @@ void Grafo::ocupar(Posicion coordenada)
  */
 void Grafo::desocupar(Posicion coordenada)
 {
-    bool valida = comprobarCoordenada(coordenada);
+    bool valida = coordenadaValida(coordenada);
     if (valida)
     {
         int indice = buscarIndice(coordenada);
@@ -275,9 +303,30 @@ void Grafo::desocupar(Posicion coordenada)
 
 /*Pos: Devuelve la cantidad de casilleros
  */
-int Grafo::obtenerCantidad()
+int Grafo::getCantidad()
 {
     return ((int)casilleros.size());
+}
+
+/*Devuelve el casillero en la coordenada
+*/
+Casillero *Grafo::getCasillero(Posicion coordenada)
+{
+    if (!coordenadaValida(coordenada))
+        return nullptr;
+
+    int idx = buscarIndice(coordenada);
+
+    return casilleros.at(idx);
+}
+int Grafo::getFilas()
+{
+    return this->filas;
+}
+
+int Grafo::getColumnas()
+{
+    return this->columnas;
 }
 
 /* Pre: Recibe un vector de distancias y uno de vertices visitados, ninguno vacio
@@ -318,8 +367,8 @@ void Grafo::ordenarCamino(int anteriores[], vector<int> *camino, int indiceDesti
  */
 vector<int> *Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje)
 {
-    bool origen_valido = comprobarCoordenada(origen);
-    bool destino_valido = comprobarCoordenada(destino);
+    bool origen_valido = coordenadaValida(origen);
+    bool destino_valido = coordenadaValida(destino);
     if (origen_valido && destino_valido)
     {
         int indice_origen = buscarIndice(origen);

@@ -94,7 +94,7 @@ int pedirCantidad();
  * @param objeto
  * @return string 
  */
-int pedirId(ENUM_OBJETOS objeto);
+int pedirId(ABB<int, Objeto *> *diccionario, ENUM_OBJETOS objeto);
 
 /**
  * @brief Solicita al usuario un cuadrante.
@@ -135,6 +135,6 @@ void procesarOpcionPasarTurno(MenuJuego *menu);
 
 /* MENU COMIENZO DE TURNO */
 void procesarGuardarJuego();
-void lectorCasilleros(Grafo *mapa, ifstream &datos);
+void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos);
 
 #endif

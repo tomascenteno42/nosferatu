@@ -8,11 +8,7 @@ Parser::Parser(const string &linea)
 
     istringstream linea_s(linea);
 
-    string especial;
-    string posicion_x;
-    string posicion_y;
-    string basura;
-    string id;
+    string especial, posicionX, posicionY, basura, id;
 
     // NOMBRE
     getline(linea_s, this->nombre, ' ');
@@ -24,11 +20,11 @@ Parser::Parser(const string &linea)
     if (!especial.empty())
         especial.erase(especial.find(' '));
 
-    getline(linea_s, posicion_x, ',');
+    getline(linea_s, posicionX, ',');
 
     getline(linea_s, basura, ' ');
 
-    getline(linea_s, posicion_y, ')');
+    getline(linea_s, posicionY, ')');
 
     getline(linea_s, id, '\n');
 
@@ -36,99 +32,99 @@ Parser::Parser(const string &linea)
 
     this->clave = stoi(id);
 
-    this->asignar_especial(especial);
+    this->setEspecial(especial);
 
-    this->pos = new Posicion(stoi(posicion_x, nullptr), stoi(posicion_y, nullptr));
+    this->pos = new Posicion(stoi(posicionX, nullptr), stoi(posicionY, nullptr));
 
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, this->pos->getFila(), this->pos->getColumna());
+    this->objeto = this->obtenerObjetoDelTexto(this->nombre, this->clave, this->pos->getFila(), this->pos->getColumna());
 }
 
-Objeto *Parser::obtenerObjeto()
+Objeto *Parser::getObjeto()
 {
-    return this->objeto_obtenido;
+    return this->objeto;
 }
 
-int Parser::getClave()
+int Parser::getId()
 {
     return this->clave;
 }
 
-Objeto *Parser::obtener_objeto_del_texto(string texto, int clave, int fila, int columna)
+Objeto *Parser::obtenerObjetoDelTexto(string texto, int clave, int fila, int columna)
 {
-    Objeto *nuevo_objeto;
+    Objeto *nuevoObjeto;
 
     transform(texto.begin(), texto.end(), texto.begin(), ::tolower);
 
     if (texto == S_HUMANO)
     {
-        nuevo_objeto = new Humano(clave, fila, columna);
+        nuevoObjeto = new Humano(clave, fila, columna);
     }
     else if (texto == S_HUMANO_CV)
     {
-        nuevo_objeto = new Humano_cazador(clave, fila, columna);
+        nuevoObjeto = new Humano_cazador(clave, fila, columna);
     }
     else if (texto == S_ZOMBI)
     {
-        nuevo_objeto = new Zombi(clave, fila, columna);
+        nuevoObjeto = new Zombi(clave, fila, columna);
     }
     else if (texto == S_VAMPIRO)
     {
-        nuevo_objeto = new Vampiro(clave, fila, columna);
+        nuevoObjeto = new Vampiro(clave, fila, columna);
     }
     else if (texto == S_VAMPIRELLA)
     {
-        nuevo_objeto = new Vampirella(fila, columna);
+        nuevoObjeto = new Vampirella(fila, columna);
     }
     else if (texto == S_NOSFERATU)
     {
-        nuevo_objeto = new Nosferatu(fila, columna);
+        nuevoObjeto = new Nosferatu(fila, columna);
     }
     else if (texto == S_VANESA)
     {
-        nuevo_objeto = new Vanesa(fila, columna);
+        nuevoObjeto = new Vanesa(fila, columna);
     }
     else if (texto == S_ESCOPETA)
     {
-        nuevo_objeto = new Escopeta(clave, fila, columna);
+        nuevoObjeto = new Escopeta(clave, fila, columna);
     }
     else if (texto == S_ESTACA)
     {
-        nuevo_objeto = new Estaca(clave, fila, columna);
+        nuevoObjeto = new Estaca(clave, fila, columna);
     }
     else if (texto == S_CRUZ)
     {
-        nuevo_objeto = new Cruz(clave, fila, columna);
+        nuevoObjeto = new Cruz(clave, fila, columna);
     }
     else if (texto == S_AGUA_BENDITA)
     {
-        nuevo_objeto = new Agua_bendita(this->cantidad, clave, fila, columna);
+        nuevoObjeto = new Agua_bendita(this->cantidad, clave, fila, columna);
     }
     else if (texto == S_BALA)
     {
-        nuevo_objeto = new Bala(this->cantidad, clave, fila, columna);
+        nuevoObjeto = new Bala(this->cantidad, clave, fila, columna);
     }
     else
     {
         throw Excepcion_error("No se pudo identificar un objeto en el archivo");
     }
 
-    return nuevo_objeto;
+    return nuevoObjeto;
 }
 
-void Parser::asignar_especial(const string &especial)
+void Parser::setEspecial(const string &especial)
 {
-    bool caza_vampiros = especial == "CV";
-    if (!caza_vampiros && !especial.empty())
+    bool cazaVampiros = especial == "CV";
+    if (!cazaVampiros && !especial.empty())
     {
         this->cantidad = stoi(especial);
     }
-    else if (caza_vampiros)
+    else if (cazaVampiros)
     {
         this->nombre += ESPACIO + especial;
     }
 }
 
-Posicion *Parser::obtener_posicion()
+Posicion *Parser::getPosicion()
 {
     return this->pos;
 }
@@ -193,11 +189,11 @@ Parser::Parser(ENUM_OBJETOS enum_objeto)
         throw invalid_argument("No se puede dar de alta nuevo objeto");
     }
     this->cantidad = 0;
-    this->objeto_obtenido = NULL;
+    this->objeto = NULL;
     this->pos = NULL;
 }
 
-string Parser::obtener_nombre()
+string Parser::getNombre()
 {
     return this->nombre;
 }
@@ -207,5 +203,5 @@ Parser::Parser(const string &nombre, int cantidad, int fila, int columna)
     this->cantidad = cantidad;
     this->nombre = nombre;
     this->pos = NULL;
-    this->objeto_obtenido = this->obtener_objeto_del_texto(this->nombre, this->clave, (fila + 1), (columna + 1));
+    this->objeto = this->obtenerObjetoDelTexto(this->nombre, this->clave, (fila + 1), (columna + 1));
 }

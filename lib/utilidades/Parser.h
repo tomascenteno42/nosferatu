@@ -6,7 +6,7 @@
 class Parser
 {
 private:
-    Objeto *objeto_obtenido;
+    Objeto *objeto;
     Posicion *pos;
     string nombre;
     int cantidad;
@@ -15,14 +15,14 @@ private:
     /*
      * post: Asigna la cantidad (si es que hay) o si es cazavampiros (caso humano)
      */
-    void asignar_especial(const string &especial);
+    void setEspecial(const string &especial);
 
     /* Pre: -
      * Post: Devuelve un objeto (humano, vampiro etc) dependiendo del texto pasado por parametro
      *       Si no hay texto que coincida con algun objeto se lanza un Excepcion_error
      * WARNING: Se crea el objeto en memoria dinamica
      */
-    Objeto *obtener_objeto_del_texto(string texto, int clave, int fila, int columna);
+    Objeto *obtenerObjetoDelTexto(string texto, int clave, int fila, int columna);
 
 public:
     /*
@@ -50,20 +50,20 @@ public:
     /*
      * Post: Devuelve el objeto creado en memoria dinamica
      */
-    Objeto *obtenerObjeto();
+    Objeto *getObjeto();
 
     /*
      * Pre: -
      * Post: Devuelve la posicion del objeto
      */
-    Posicion *obtener_posicion();
+    Posicion *getPosicion();
 
     /*
      * Post: devuelve el nombre del objeto
      */
-    string obtener_nombre();
+    string getNombre();
 
-    int getClave();
+    int getId();
     /*
      * Post: se libera los recursos (Posicion)
      */

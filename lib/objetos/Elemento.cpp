@@ -4,7 +4,7 @@ Elemento::Elemento(std::string nombre, char caracter, int id, int fila, int colu
 {
 }
 
-int Elemento::obtener_cantidad()
+int Elemento::getCantidad()
 {
     return this->cantidad;
 }

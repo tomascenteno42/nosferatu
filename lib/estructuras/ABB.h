@@ -212,10 +212,10 @@ NodoABB<K, T> *ABB<K, T>::getRaiz()
 template <class K, class T>
 NodoABB<K, T> *ABB<K, T>::buscar(NodoABB<K, T> *nodo, K clave)
 {
-    if (nodo && clave < nodo->getClave())
+    if (nodo && clave < nodo->getId())
         nodo = buscar(nodo->getIzquierdo(), clave);
 
-    if (nodo && clave > nodo->getClave())
+    if (nodo && clave > nodo->getId())
         nodo = buscar(nodo->getDerecho(), clave);
 
     return nodo;
@@ -242,7 +242,7 @@ K ABB<K, T>::buscarMinimo(NodoABB<K, T> *nodo)
         return buscarMinimo(nodoIzquierdo);
     }
 
-    return nodo->getClave();
+    return nodo->getId();
 }
 
 template <class K, class T>
@@ -266,7 +266,7 @@ K ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
         buscarMaximo(nodoDerecho);
     }
 
-    return nodo->getClave();
+    return nodo->getId();
 }
 
 template <class K, class T>
@@ -284,20 +284,20 @@ template <class K, class T>
 K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
 {
 
-    if (nodo->getClave() == buscarMinimo())
+    if (nodo->getId() == buscarMinimo())
         return -1;
 
     if (nodo->getIzquierdo())
         return buscarMaximo(nodo->getIzquierdo());
 
-    K clave = nodo->getClave();
+    K clave = nodo->getId();
 
     NodoABB<K, T> *ancestro = nodo->getPadre();
 
-    while (clave <= ancestro->getClave())
+    while (clave <= ancestro->getId())
         ancestro = ancestro->getPadre();
 
-    return ancestro->getClave();
+    return ancestro->getId();
 }
 
 template <class K, class T>
@@ -314,20 +314,20 @@ K ABB<K, T>::sucesor(K clave)
 template <class K, class T>
 K ABB<K, T>::sucesor(NodoABB<K, T> *nodo)
 {
-    if (nodo->getClave() == buscarMaximo())
+    if (nodo->getId() == buscarMaximo())
         return -1;
 
     if (nodo->getDerecho())
         return buscarMinimo(nodo->getDerecho());
 
-    K clave = nodo->getClave();
+    K clave = nodo->getId();
 
     NodoABB<K, T> *ancestro = nodo->getPadre();
 
-    while (clave >= ancestro->getClave())
+    while (clave >= ancestro->getId())
         ancestro = ancestro->getPadre();
 
-    return ancestro->getClave();
+    return ancestro->getId();
 }
 
 template <class K, class T>
@@ -347,7 +347,7 @@ NodoABB<K, T> *ABB<K, T>::insertar(K clave, T data, NodoABB<K, T> *nodo)
     {
         nodo = new NodoABB<K, T>(clave, data);
     }
-    else if (clave < nodo->getClave())
+    else if (clave < nodo->getId())
     {
         nodo->setIzquierdo(insertar(clave, data, nodo->getIzquierdo()));
     }
@@ -371,12 +371,12 @@ void ABB<K, T>::eliminar(K clave)
 template <class K, class T>
 NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
 {
-    if (clave < nodo->getClave())
+    if (clave < nodo->getId())
     {
         nodo->setIzquierdo(eliminar(nodo->getIzquierdo(), clave));
         cantidad--;
     }
-    else if (clave > nodo->getClave())
+    else if (clave > nodo->getId())
     {
         nodo->setDerecho(eliminar(nodo->getDerecho(), clave));
         cantidad--;
@@ -408,11 +408,11 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
 
             if (existe(sucesor(clave)))
             {
-                remplazo = buscar(raiz, sucesor(clave))->getClave();
+                remplazo = buscar(raiz, sucesor(clave))->getId();
             }
             else
             {
-                remplazo = buscar(raiz, predecesor(clave))->getClave();
+                remplazo = buscar(raiz, predecesor(clave))->getId();
             }
 
             T newData = getData(remplazo);
@@ -443,7 +443,7 @@ void ABB<K, T>::imprimirEnOrden(NodoABB<K, T> *nodo)
     if (nodo != NULL)
     {
         imprimirEnOrden(nodo->getIzquierdo());
-        cout << nodo->getClave() << ' ';
+        cout << nodo->getId() << ' ';
         imprimirEnOrden(nodo->getDerecho());
     }
 }
@@ -472,7 +472,7 @@ void ABB<K, T>::clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
     {
         clavesEnOrden(nodo->getIzquierdo(), claves);
 
-        claves.push_back(nodo->getClave());
+        claves.push_back(nodo->getId());
 
         clavesEnOrden(nodo->getDerecho(), claves);
     }

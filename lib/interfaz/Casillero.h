@@ -15,17 +15,19 @@ protected:
 public:
     explicit Casillero(string tipo, string color, int fila, int columna);
 
-    string obtenerTipo();
+    string getTipo();
 
-    string obtenerColor();
+    string getColor();
 
-    void agregarObjeto(Objeto* nuevoObjeto);
+    Objeto *getObjeto();
 
-    int obtenerFila();
+    void setObjeto(Objeto *nuevoObjeto);
 
-    int obtenerColumna();
+    int getFila();
 
-    int obtenerCosto();
+    int getColumna();
+
+    int getCosto();
 
     bool estaOcupado();
 
@@ -35,7 +37,7 @@ public:
 
     virtual void ajustarCosto(string personaje) = 0;
 
-    virtual ~Casillero(){};
+    virtual ~Casillero();
 };
 
 #endif //NOFERATU_LOCAL_CASILLERO_H
