@@ -46,6 +46,10 @@ public:
 
     int getColumna();
 
+    void setFila(int n);
+
+    void setColumna(int n);
+
     /*
      *
      */

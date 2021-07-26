@@ -92,10 +92,12 @@ void Ser::actualizarMapa(Grafo *mapa, Posicion origen, Posicion destino)
 {
     Objeto *aux;
     aux = mapa->getCasillero(origen)->getObjeto();
-    mapa->eliminarObjeto(origen);
     mapa->agregarObjeto(aux, destino);
+    mapa->eliminarObjeto(origen);
     mapa->getCasillero(origen)->desocupar();
     mapa->getCasillero(destino)->ocupar();
+    this->setFila(destino.getFila());
+    this->setColumna(destino.getColumna());
 }
 
 void Ser::chequearCamino(Grafo *mapa, vector<int> *camino, string nombre)
@@ -161,22 +163,50 @@ void Ser::chequearCamino(Grafo *mapa, vector<int> *camino, string nombre)
     }
 }
 
+void Ser::imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser)
+{
+    int tamanio = (int)posiciones->size();
+    Casillero* casillero;
+    Objeto* aux;
+    aux = dynamic_cast<Objeto*>(ser);
+    for(int i = 0; i < tamanio - 1; i++){
+        clearTerminal();
+        casillero = mapa->getCasillero(posiciones->at(i));
+        casillero->setObjeto(aux);
+        mapa->mostrarMapa();
+        Sleep(600)
+        casillero->eliminarObjeto();
+        casillero->desocupar();
+    }
+
+
+}
+
 bool Ser::mover(Grafo *mapa, Posicion destino) {
     bool seMovio = false;
-    mapa->establecerCaminos(this->getNombre());
     Posicion origen(this->getFila(), this->getColumna());
+
+    mapa->establecerCaminos(this->getNombre());
     vector<int> *camino = mapa->caminoMinimo(origen, destino, this->getEnergia());
+
     if (camino != nullptr) {
         int costoCamino = mapa->sumarCamino(camino);
         this->energia -= costoCamino;
+
         actualizarMapa(mapa, origen, destino);
-//        chequearCamino(mapa, camino, this->nombre);
+        chequearCamino(mapa, camino, this->nombre);
         vector <Posicion> *posiciones = new vector<Posicion>;
+
         posiciones = obtenerPosiciones(mapa, camino);
         reverse(posiciones->begin(), posiciones->end());
+        imprimirCamino(mapa, posiciones, this);
+        clearTerminal();
+        mapa->mostrarMapa();
         mostrarPosiciones(posiciones);
+
         delete posiciones;
         delete camino;
+
         seMovio = true;
         return seMovio;
     }

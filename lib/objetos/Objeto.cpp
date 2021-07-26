@@ -34,3 +34,13 @@ int Objeto::getColumna()
 {
     return this->columna;
 }
+
+void Objeto::setFila(int n)
+{
+    this->fila = n;
+}
+
+void Objeto::setColumna(int n)
+{
+    this->columna = n;
+}

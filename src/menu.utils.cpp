@@ -349,7 +349,7 @@ void procesarSeleccionBando(Juego *juego)
 
     juego->tablero->getMapa()->mostrarMapa();
     juego->cambiarMenu(menuComienzoDeTurno);
-    juego->personajeActual = juego->tablero->getJugadorActual()->getPersonajes().at(juego->tablero->idxJugadorActual);
+    juego->personajeActual = juego->tablero->getJugadorActual()->getPersonajes().at(0);
 }
 
 /* MENU TURNO */

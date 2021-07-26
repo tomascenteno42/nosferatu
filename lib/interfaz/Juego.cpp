@@ -54,8 +54,13 @@ void Juego::mostrar()
 
     this->tablero->getMapa()->mostrarMapa();
 
-    if (idxMenu >= menuComienzoDeTurno)
+    if (idxMenu >= menuComienzoDeTurno) {
         mostrarBando(this->tablero->getJugadorActual()->getBando());
+        this->personajeActual->mostrarInformacion();
+        cout << "Posicion: " << "(" <<  this->personajeActual->getFila() << "," << this->personajeActual->getColumna() << ")";
+        cout << endl;
+        cout << endl;
+    }
 
     mostrarOpciones();
 
@@ -245,7 +250,9 @@ void Juego::avanzar()
         personajesJugados = 0;
         this->tablero->idxJugadorActual = (this->tablero->idxJugadorActual + 1) % 2;
         cambiarMenu(menuComienzoDeTurno);
+        //TODO: update characters
     }
+
 
     personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
 

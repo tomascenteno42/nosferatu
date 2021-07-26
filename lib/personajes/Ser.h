@@ -11,10 +11,10 @@ private:
      */
     void actualizarMapa(Grafo* mapa, Posicion origen, Posicion destino);
 
-//    vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino);
-
 
     void chequearCamino(Grafo* mapa, vector<int>* camino, string nombre);
+
+    void imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser);
 
 protected:
     int energia;
@@ -45,6 +45,7 @@ public:
     /*Pre: destino debe ser una coordenada valida y ademas, estar desocupada. mapa no debe ser nullptr
      * Pos: mueve el ser desde su posicion actual hasta el destino si es posible, yendo por el camino
      * que consuma menos energia. La posicion actual la deja como desocupada y el destino como ocupado.
+     * Devuelve true si el ser se movio y false si no.
      */
     bool mover(Grafo *mapa, Posicion destino);
 
