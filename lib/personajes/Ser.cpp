@@ -84,4 +84,43 @@ void Ser::mostrarInformacion()
     cout << "Vida: " << vida << endl;
     cout << "Escudo: " << escudo << endl;
     cout << "Fuerza: " << fuerza << endl;
+    cout << "Energia: " << energia << endl;
+}
+
+
+void Ser::mostrarCamino(vector<int> *camino)
+{
+    int tamanio = (int)camino->size();
+    cout << "Camino tomado: " << endl;
+    for(int i = 0; i < tamanio; i++)
+        cout << camino->at(i) << "|";
+    cout << endl;
+}
+
+void Ser::actualizarMapa(Grafo *mapa, Posicion origen, Posicion destino)
+{
+    Objeto* aux;
+    aux = mapa->getCasillero(origen)->getObjeto();
+    mapa->eliminarObjeto(origen);
+    mapa->agregarObjeto(aux, destino);
+    mapa->getCasillero(origen)->desocupar();
+    mapa->getCasillero(destino)->ocupar();
+}
+
+
+void Ser::mover(Grafo *mapa, Posicion destino)
+{
+    mapa->establecerCaminos(this->getNombre());
+    Posicion origen(this->getFila(), this->getColumna());
+    vector<int>* camino = mapa->caminoMinimo(origen, destino, this->getEnergia());
+    if(camino != nullptr){
+        mostrarCamino(camino);
+        int costoCamino = mapa->sumarCamino(camino);
+        this->energia -= costoCamino;
+        actualizarMapa(mapa, origen, destino);
+        delete camino;
+    }
+    else
+        cout << "El personaje no tiene energia suficiente para llegar o todos los caminos estan bloqueados" << endl;
+
 }

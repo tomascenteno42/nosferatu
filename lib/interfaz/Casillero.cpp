@@ -66,6 +66,12 @@ void Casillero::setObjeto(Objeto *nuevoObjeto)
     if (idObjeto == ID_HUMANO || idObjeto == ID_HUMANO_CV || idObjeto == ID_VANESA || idObjeto == ID_NOSFERATU || idObjeto == ID_VAMPIRELLA || idObjeto == ID_VAMPIRO || idObjeto == ID_ZOMBIE)
         this->ocupado = true;
 }
+/* Pos: Asigna el puntero objeto a nullptr
+ */
+void Casillero::eliminarObjeto()
+{
+    this->objeto = nullptr;
+}
 
 /* Pos: Devuelve true si el casillero esta ocupado por un Ser o false si no lo esta
  * */

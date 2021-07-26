@@ -34,8 +34,10 @@ private:
 public:
     Grafo();
     bool coordenadaValida(Posicion coordenada);
+    bool estaOcupado(Posicion coordenada);
     void agregarCasillero(string terreno, int fila, int columna);
     void agregarObjeto(Objeto *nuevoObjeto, Posicion pos);
+    void eliminarObjeto(Posicion pos);
     void setFilas(int n);
     void setColumnas(int n);
     int getFilas();
@@ -43,6 +45,7 @@ public:
     void mostrarGrafo();
     void mostrarMapa();
     void establecerCaminos(string personaje);
+    int sumarCamino(vector<int>* camino);
     int getCantidad();
     void ocupar(Posicion coordenada);
     void desocupar(Posicion coordenada);
