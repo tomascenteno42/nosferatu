@@ -62,12 +62,17 @@ using namespace std;
 #include "../lib/interfaz/Vacio.h"
 #include "../lib/interfaz/Volcan.h"
 
-#include "../lib/interfaz/test.h"
+#include "../lib/interfaz/Menu.h"
 #include "../lib/interfaz/Juego.h"
-#include "../lib/interfaz/MenuJuego.h"
 
 // UTILS
+void clearTerminal();
+void mostrarBando(BANDO bando);
+
+string parsearBandoATexto(BANDO bando);
 BANDO parsearTextoABando(string texto);
+BANDO parseBando(string texto);
+
 ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
 ID parseId(int id);
@@ -103,6 +108,8 @@ int pedirId(ABB<int, Objeto *> *diccionario, ENUM_OBJETOS objeto);
  */
 CUADRANTE pedirCuadrante();
 
+BANDO pedirBando();
+
 /* IMPORTANTE: MIGRAR A OTRO LADO */
 bool buscarObjetoEnCuadrante(const string &nombreObjeto, CUADRANTE zona, Tablero *tablero);
 
@@ -114,24 +121,22 @@ bool posicionEstaEnTablero(string texto, int &fila, int &columna, Tablero *table
 void llenarMenu(Menu *menu, const char *nombre);
 int getCantidadOpcionesMenu(const char *nombre);
 
-void mostrarTablero(Tablero *tablero);
-
 /* MENU MAIN */
-void procesarAgregarObjeto(MenuJuego *menu);
-void procesarEliminarObjeto(MenuJuego *menu);
-void procesarBuscarPorCuadrante(MenuJuego *menu);
-void procesarMostrarEstadisticasPorId(MenuJuego *menu);
-void procesarComenzarSimulacion(MenuJuego *menu);
+void procesarAgregarObjeto(Juego *juego);
+void procesarEliminarObjeto(Juego *juego);
+void procesarBuscarPorCuadrante(Juego *juego);
+void procesarMostrarEstadisticasPorId(Juego *juego);
+void procesarComenzarSimulacion(Juego *juego);
 
 /* MENU SIMULACION */
-void mostrarCantidadPersonajesPorBando(MenuJuego *menu);
-void procesarSeleccionBando(MenuJuego *menu);
+void mostrarCantidadPersonajesPorBando(Juego *juego);
+void procesarSeleccionBando(Juego *juego);
 
 /* MENU TURNO */
-void procesarOpcionDefenderse(MenuJuego *menu);
-void procesarOpcionAtacar(MenuJuego *menu);
-void procesarOpcionMoverse(MenuJuego *menu);
-void procesarOpcionPasarTurno(MenuJuego *menu);
+void procesarOpcionDefenderse(Juego *juego);
+void procesarOpcionAtacar(Juego *juego);
+void procesarOpcionMoverse(Juego *juego);
+void procesarOpcionPasarTurno(Juego *juego);
 
 /* MENU COMIENZO DE TURNO */
 void procesarGuardarJuego();

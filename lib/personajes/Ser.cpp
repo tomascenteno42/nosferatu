@@ -1,6 +1,6 @@
 #include "../../src/main.h"
 
-Ser::Ser(std::string nombre, char caracter, int id, int fila, int columna) : Objeto(nombre, caracter, id, fila, columna)
+Ser::Ser(string nombre, char caracter, int id, int fila, int columna) : Objeto(nombre, caracter, id, fila, columna)
 {
     nombre = nombre;
     caracter = caracter;
@@ -8,7 +8,7 @@ Ser::Ser(std::string nombre, char caracter, int id, int fila, int columna) : Obj
     vida = rand() % 100 + 20;
     escudo = rand() % 2;
     fuerza = rand() % 30 + 10;
-
+    id = id;
 }
 
 /* GETTERS */
@@ -84,4 +84,5 @@ void Ser::mostrarInformacion()
     cout << "Vida: " << vida << endl;
     cout << "Escudo: " << escudo << endl;
     cout << "Fuerza: " << fuerza << endl;
+    cout << "ID: " << id << endl;
 }

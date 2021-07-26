@@ -10,7 +10,7 @@ public:
 
     void ajustarCosto(string personaje);
 
-    //std::string devolver_color();
+    // string devolver_color();
 };
 
 #endif //NOFERATU_LOCAL_LAGO_H

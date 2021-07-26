@@ -6,15 +6,18 @@
 class Jugador
 {
 private:
-    vector<Objeto *> personajes;
+    vector<Ser *> personajes;
     BANDO bando;
 
 public:
     Jugador(BANDO bando);
 
-    vector<Objeto *> getPersonajes();
+    vector<Ser *> getPersonajes();
+    int getCantidadPersonajes();
 
-    void agregarPersonaje(Objeto *personaje);
+    BANDO getBando();
+
+    void agregarPersonaje(Ser *personaje);
 
     /**
      * @brief Aplica las modificaciones correspondientes a cada personaje vivo
@@ -27,6 +30,12 @@ public:
      * @brief Perdio si la vida de sus personajes es 0. 
      */
     bool perdio();
+
+    /**
+     * @brief Devuelve cuantos personajes vivos tiene el jugador.
+     *  
+     */
+    int personajesVivos();
 
     ~Jugador();
 };

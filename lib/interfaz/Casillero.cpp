@@ -3,7 +3,7 @@
 /* Construye un objeto de tipo Casillero, asignando los valores pasados por parametros a sus atributos
  * Tanto fila como columna debenser numeros positivos
  */
-Casillero::Casillero(std::string tipo, std::string color, int fila, int columna)
+Casillero::Casillero(string tipo, string color, int fila, int columna)
 {
     this->tipo = tipo;
     this->color = color;
@@ -66,6 +66,12 @@ void Casillero::setObjeto(Objeto *nuevoObjeto)
     if (idObjeto == ID_HUMANO || idObjeto == ID_HUMANO_CV || idObjeto == ID_VANESA || idObjeto == ID_NOSFERATU || idObjeto == ID_VAMPIRELLA || idObjeto == ID_VAMPIRO || idObjeto == ID_ZOMBIE)
         this->ocupado = true;
 }
+
+void Casillero::vaciarObjeto()
+{
+    delete this->objeto;
+    this->objeto = nullptr;
+};
 
 /* Pos: Devuelve true si el casillero esta ocupado por un Ser o false si no lo esta
  * */

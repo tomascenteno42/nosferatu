@@ -26,6 +26,8 @@ private:
     ABB<int, Objeto *> *diccionario;
 
 public:
+    int idxJugadorActual;
+
     /*
      * Pre: La direccion (dir) es el directorio del archivo "estado.txt"
      * Post: Crea el tablero de tamanio pos_x y pos_y, ambos > 0
@@ -75,7 +77,20 @@ public:
      */
     bool existeObjetoEnCuadrante(const string &buscado, Posicion minPos, Posicion maxPos);
 
+    /**
+     * @brief Buscar el jugador en el indice pasado por parametro (0 o 1)
+     * 
+     * @param idx 
+     * @return Jugador* 
+     */
     Jugador *getJugador(int idx);
+
+    /**
+     * @brief Busca y devuelve el jugador en el idxJugadorActual
+     * 
+     * @return Jugador* 
+     */
+    Jugador *getJugadorActual();
 
     ABB<int, Objeto *> *getDiccionario();
     /*

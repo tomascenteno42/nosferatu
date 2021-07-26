@@ -14,6 +14,7 @@ protected:
     int columna;
 
 public:
+    Objeto();
     /* Pre: -
      * Post: Se crea el objeto con el nombre y caracter pasado por parametro
      */

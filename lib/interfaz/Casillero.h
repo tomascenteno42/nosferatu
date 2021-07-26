@@ -22,6 +22,7 @@ public:
     Objeto *getObjeto();
 
     void setObjeto(Objeto *nuevoObjeto);
+    void vaciarObjeto();
 
     int getFila();
 

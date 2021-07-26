@@ -7,7 +7,7 @@ Vampiro::Vampiro(int id, int fila, int columna) : Monstruo(S_VAMPIRO, C_VAMPIRO,
     Vampiro::contador++;
 }
 
-Vampiro::Vampiro(std::string nombre, char caracter, int id, int fila, int columna) : Monstruo(nombre, caracter, id, fila, columna)
+Vampiro::Vampiro(string nombre, char caracter, int id, int fila, int columna) : Monstruo(nombre, caracter, id, fila, columna)
 {
     Vampiro::contador++;
 }

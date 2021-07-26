@@ -5,14 +5,40 @@ Jugador::Jugador(BANDO bando)
     this->bando = bando;
 }
 
-vector<Objeto *> Jugador::getPersonajes()
+vector<Ser *> Jugador::getPersonajes()
 {
     return personajes;
 }
 
-void Jugador::agregarPersonaje(Objeto *personaje)
+int Jugador::getCantidadPersonajes()
+{
+    return personajes.size();
+}
+
+BANDO Jugador::getBando()
+{
+    return bando;
+}
+
+void Jugador::agregarPersonaje(Ser *personaje)
 {
     personajes.push_back(personaje);
+}
+
+int Jugador::personajesVivos()
+{
+    int personajesVivos = 0;
+
+    for (int i = 0; i < personajes.size(); i++)
+        if (!personajes.at(i)->estaMuerto())
+            personajesVivos++;
+
+    return personajesVivos;
+}
+
+bool Jugador::perdio()
+{
+    return personajesVivos() == 0;
 }
 
 Jugador::~Jugador()

@@ -12,6 +12,7 @@ protected:
     int fuerza;
 
 public:
+    Ser() : Objeto(){};
     /*
      * Post: Se crea el npc con la posicion Pos
      */

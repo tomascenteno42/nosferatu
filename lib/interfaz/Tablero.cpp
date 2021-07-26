@@ -50,17 +50,17 @@ Tablero::Tablero(const string &dir)
             int columna = parser.getPosicion()->getColumna();
 
             // Establecemos el objeto en la posicion indicada
-            this->mapa->agregarObjeto(objeto, Posicion(fila, columna));
+            this->darDeAlta(Posicion(fila, columna), objeto);
 
             // Insertamos el objeto con su respectiva clave en el diccionario
             diccionario->insertar(id, objeto);
 
             // Almacenamos el objeto en el jugador de acuerdo a su bando.
             if (parsearTextoABando(nombreEntidad) == HUMANOS)
-                jugadores[0]->agregarPersonaje(objeto);
+                jugadores[0]->agregarPersonaje(dynamic_cast<Ser *>(objeto));
 
-            else if (parsearTextoABando(nombreEntidad) == MONSTRUOS)
-                jugadores[1]->agregarPersonaje(objeto);
+            if (parsearTextoABando(nombreEntidad) == MONSTRUOS)
+                jugadores[1]->agregarPersonaje(dynamic_cast<Ser *>(objeto));
         }
     }
 }
@@ -68,7 +68,9 @@ Tablero::Tablero(const string &dir)
 void Tablero::darDeBaja(Posicion pos)
 {
     if (this->mapa->coordenadaValida(pos))
-        this->mapa->getCasillero(pos)->setObjeto(NULL);
+    {
+        this->mapa->getCasillero(pos)->vaciarObjeto();
+    }
 }
 
 Objeto *Tablero::getElementoEnPosicion(Posicion pos)
@@ -81,16 +83,6 @@ void Tablero::darDeAlta(Posicion pos, Objeto *nuevoObjeto)
     if (this->mapa->coordenadaValida(pos))
     {
         this->mapa->agregarObjeto(nuevoObjeto, pos);
-        // if (this->objetos[fila][columna] == NULL)
-        // {
-
-        //     this->objetos[fila][columna] = nuevoObjeto;
-        // }
-        // else
-        // {
-        //     delete this->objetos[fila][columna];
-        //     this->objetos[fila][columna] = nuevoObjeto;
-        // }
     }
 }
 
@@ -108,23 +100,21 @@ bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion minPos, Po
 {
     bool objetoEncontrado = false;
 
-    int i = minPos.getFila() - 1;
-    int j = minPos.getColumna() - 1;
+    int i = minPos.getFila();
+    int j = minPos.getColumna();
 
-    while (!objetoEncontrado && i < maxPos.getFila())
+    while (!objetoEncontrado && i <= maxPos.getFila())
     {
-        while (!objetoEncontrado && j < maxPos.getColumna())
+        while (!objetoEncontrado && j <= maxPos.getColumna())
         {
 
             Objeto *obj = this->mapa->getCasillero(Posicion(i, j))->getObjeto();
-
             if (obj != NULL)
-            {
                 objetoEncontrado = buscado == obj->getNombre();
-            }
 
             j++;
         }
+        j = minPos.getColumna();
         i++;
     }
 
@@ -149,6 +139,11 @@ Jugador *Tablero::getJugador(int idx)
         return nullptr;
 
     return jugadores[idx];
+}
+
+Jugador *Tablero::getJugadorActual()
+{
+    return jugadores[idxJugadorActual];
 }
 
 ABB<int, Objeto *> *Tablero::getDiccionario()

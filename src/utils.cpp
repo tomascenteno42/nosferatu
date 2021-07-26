@@ -1,5 +1,26 @@
 #include "main.h"
 
+void clearTerminal()
+{
+    cout << "\033[2J\033[1;1H";
+}
+
+void mostrarBando(BANDO bando)
+{
+    cout << parsearBandoATexto(bando) << endl
+         << endl;
+}
+
+string parsearBandoATexto(BANDO bando)
+{
+    if (bando == MONSTRUOS)
+        return "Monstruos";
+    else if (bando == HUMANOS)
+        return "Humanos";
+
+    return "OBJETOS";
+}
+
 BANDO parsearTextoABando(string texto)
 {
     toLower(texto);

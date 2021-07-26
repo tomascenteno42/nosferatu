@@ -7,7 +7,7 @@ Humano_cazador::Humano_cazador(int id, int fila, int columna) : Humano(S_HUMANO_
     Humano_cazador::contador++;
 }
 
-Humano_cazador::Humano_cazador(std::string nombre, char caracter, int id, int fila, int columna) : Humano(nombre, caracter, id, fila, columna)
+Humano_cazador::Humano_cazador(string nombre, char caracter, int id, int fila, int columna) : Humano(nombre, caracter, id, fila, columna)
 {
     Humano_cazador::contador++;
 }

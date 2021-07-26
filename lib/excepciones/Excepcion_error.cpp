@@ -17,7 +17,7 @@ unsigned int Excepcion_error::obtenerPosicionInvalida()
     return this->posicion;
 }
 
-std::string Excepcion_error::obtenerDescripcion()
+string Excepcion_error::obtenerDescripcion()
 {
     return this->descripcion;
 }

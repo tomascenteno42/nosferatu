@@ -86,7 +86,7 @@ private:
      * @param nodo 
      * @param claves 
      */
-    void clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves);
+    void idsEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves);
 
     /**
      * @brief Limpia el ABB.
@@ -175,7 +175,7 @@ public:
      * 
      * @return std::vector<K> 
      */
-    std::vector<K> clavesEnOrden();
+    std::vector<K> idsEnOrden();
 
     /**
      * @brief Elimina todos los nodos del ABB.
@@ -418,7 +418,7 @@ NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
             T newData = getData(remplazo);
             raiz = eliminar(raiz, remplazo);
             nodo->setData(newData);
-            nodo->setClave(remplazo);
+            nodo->setId(remplazo);
         }
         cantidad--;
     }
@@ -456,25 +456,25 @@ void ABB<K, T>::imprimirEnOrden()
 }
 
 template <class K, class T>
-std::vector<K> ABB<K, T>::clavesEnOrden()
+std::vector<K> ABB<K, T>::idsEnOrden()
 {
     std::vector<K> claves;
 
-    clavesEnOrden(raiz, claves);
+    idsEnOrden(raiz, claves);
 
     return claves;
 }
 
 template <class K, class T>
-void ABB<K, T>::clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
+void ABB<K, T>::idsEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
 {
     if (nodo != NULL)
     {
-        clavesEnOrden(nodo->getIzquierdo(), claves);
+        idsEnOrden(nodo->getIzquierdo(), claves);
 
         claves.push_back(nodo->getId());
 
-        clavesEnOrden(nodo->getDerecho(), claves);
+        idsEnOrden(nodo->getDerecho(), claves);
     }
 }
 

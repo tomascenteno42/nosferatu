@@ -8,7 +8,7 @@ Humano::Humano(int id, int fila, int columna) : Ser(S_HUMANO, C_HUMANO, id, fila
     Humano::contador++;
 }
 
-Humano::Humano(std::string nombre, char caracter, int id, int fila, int columna) : Ser(nombre, caracter, id, fila, columna)
+Humano::Humano(string nombre, char caracter, int id, int fila, int columna) : Ser(nombre, caracter, id, fila, columna)
 {
     Humano::contador++;
 }
@@ -70,7 +70,8 @@ void Humano::atacar(Tablero *tablero)
 
         cout << "Ingrese la columna" << endl;
         cin >> columna_enemigo;
-        Ser *enemigo = dynamic_cast<Ser *>(tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo)));
+
+        Ser *enemigo = dynamic_cast<Ser *>(tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo))); // works fine
         if (enemigo->getCaracter() == C_ZOMBI)
         {
             enemigo->setVida((enemigo->getVida() - personaje->getFuerza()));

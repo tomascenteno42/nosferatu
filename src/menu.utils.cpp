@@ -71,33 +71,6 @@ int getCantidadOpcionesMenu(const char *nombre)
     return cantidad;
 }
 
-void mostrarTablero(Tablero *tablero)
-{
-    // int espaciado = 3;
-    // cout << setfill(' ') << setw(espaciado) << "";
-    // for (int k = 0; k < tablero->cantidadColumnas(); k++)
-    // {
-    //     cout << setw(espaciado) << k + 1;
-    // }
-    // cout << endl;
-    // for (int i = 0; i < tablero->cantidadFilas(); i++)
-    // {
-    //     cout << setw(espaciado) << i + 1;
-    //     for (int j = 0; j < tablero->cantidadColumnas(); j++)
-    //     {
-    //         Objeto *objeto = tablero->getElementoEnPosicion(Posicion(i, j));
-
-    //         if (objeto != NULL)
-    //             cout << setw(espaciado) << objeto->getCaracter();
-    //         else
-    //             cout << setw(espaciado) << "*";
-    //     }
-    //     cout << endl;
-    // }
-    // cout << endl;
-    tablero->getMapa()->mostrarMapa();
-}
-
 int pedirId(ENUM_OBJETOS objeto)
 {
 
@@ -116,7 +89,7 @@ int pedirId(ENUM_OBJETOS objeto)
         else
             cout << "Solo ingrese numeros porfavor." << endl;
 
-        if (!esIdValido(clave, objeto))
+        if (esUnNumero(texto) && !esIdValido(clave, objeto))
             cout << "Clave invalida, ingrese nuevamente. " << endl
                  << "Puede ser porque la clave no pertenece a el objeto en cuestion o la clave esta fuera de los limites"
                  << "(" << ID_VANESA << " - " << ID_NO_VALIDO - 1 << ")" << endl;
@@ -124,6 +97,35 @@ int pedirId(ENUM_OBJETOS objeto)
     } while (!esIdValido(clave, objeto));
 
     return clave;
+}
+
+BANDO pedirBando()
+{
+    string texto;
+
+    do
+    {
+        cout << "Seleccione un bando(Humanos o Monstruos): " << endl;
+
+        cin.clear();
+        cin >> texto;
+
+        if (texto != "Humanos" && texto != "humanos" && texto != "Monstruos" && texto != "monstruos")
+            cout << "Bando invalido!" << endl;
+
+    } while (texto != "Humanos" && texto != "humanos" && texto != "Monstruos" && texto != "monstruos");
+
+    return parseBando(texto);
+}
+
+BANDO parseBando(string texto)
+{
+    if (texto == "Humanos" || texto == "humanos")
+        return HUMANOS;
+    else if (texto == "Monstruos" || texto == "monstruos")
+        return MONSTRUOS;
+    else
+        return OBJETO;
 }
 
 int pedirCantidad()
@@ -217,13 +219,13 @@ CUADRANTE pedirCuadrante()
 }
 
 /* MENU MAIN */
-void procesarAgregarObjeto(MenuJuego *menu)
+void procesarAgregarObjeto(Juego *juego)
 {
     int fila, columna;
     bool opcionAceptada = false;
 
     // Pedimos y modificamos fila/columna
-    menu->pedirPosicion(fila, columna);
+    juego->pedirPosicion(fila, columna);
 
     while (!opcionAceptada)
     {
@@ -239,7 +241,7 @@ void procesarAgregarObjeto(MenuJuego *menu)
 
                 int clave = pedirId(parsearTextoAObjeto(nombre));
 
-                if (menu->juego->tablero->getDiccionario()->existe(clave))
+                if (juego->tablero->getDiccionario()->existe(clave))
                 {
                     cout << "La clave ya existe, intente de nuevo luego." << endl;
                 }
@@ -247,8 +249,8 @@ void procesarAgregarObjeto(MenuJuego *menu)
                 {
                     Objeto *objeto = Parser(nombre, cantidad, fila, columna).getObjeto();
 
-                    menu->juego->tablero->darDeAlta(Posicion(fila, columna), objeto);
-                    menu->juego->tablero->getDiccionario()->insertar(clave, objeto);
+                    juego->tablero->darDeAlta(Posicion(fila, columna), objeto);
+                    juego->tablero->getDiccionario()->insertar(clave, objeto);
                 }
             }
             opcionAceptada = true;
@@ -260,36 +262,37 @@ void procesarAgregarObjeto(MenuJuego *menu)
         }
     }
 }
-void procesarEliminarObjeto(MenuJuego *menu)
+void procesarEliminarObjeto(Juego *juego)
 {
     int fila, columna;
 
-    menu->pedirPosicion(fila, columna);
+    juego->pedirPosicion(fila, columna);
 
-    Objeto *objeto = menu->juego->tablero->getElementoEnPosicion(Posicion(fila, columna));
+    Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(fila, columna));
 
     if (objeto != NULL)
     {
         objeto->mostrarInformacion();
-        menu->juego->tablero->getDiccionario()->eliminar(objeto->getId());
-        menu->juego->tablero->darDeBaja(Posicion(fila, columna));
+        int id = objeto->getId();
+        juego->tablero->getDiccionario()->eliminar(id);
+        juego->tablero->darDeBaja(Posicion(fila, columna));
     }
     else
     {
         cout << "No habia ningun elemento en la posicion ingresada" << endl;
     }
 }
-void procesarBuscarPorCuadrante(MenuJuego *menu)
+void procesarBuscarPorCuadrante(Juego *juego)
 {
     string nombreObjeto = pedirTipoObjeto();
 
     if (!nombreObjeto.empty())
     {
-        mostrarTablero(menu->juego->tablero);
+        juego->tablero->getMapa()->mostrarMapa();
 
         CUADRANTE zona = pedirCuadrante();
 
-        bool encontrado = buscarObjetoEnCuadrante(nombreObjeto, zona, menu->juego->tablero);
+        bool encontrado = buscarObjetoEnCuadrante(nombreObjeto, zona, juego->tablero);
 
         if (!encontrado)
             cout << "El objeto no se encontro en el cuadrante" << endl;
@@ -298,38 +301,65 @@ void procesarBuscarPorCuadrante(MenuJuego *menu)
     }
 }
 
-void procesarMostrarEstadisticasPorId(MenuJuego *menu)
+void procesarMostrarEstadisticasPorId(Juego *juego)
 {
     int id = pedirId(parsearTextoAObjeto(pedirTipoObjeto()));
 
-    if (menu->juego->tablero->getDiccionario()->existe(id))
-        menu->juego->tablero->getDiccionario()->getData(id)->mostrarInformacion();
+    if (juego->tablero->getDiccionario()->existe(id))
+        juego->tablero->getDiccionario()->getData(id)->mostrarInformacion();
     else
         cout << "El id no existe, intente de nuevo luego." << endl;
 }
 
-void procesarComenzarSimulacion(MenuJuego *menu)
+void procesarComenzarSimulacion(Juego *juego)
 {
-    menu->cambiarMenu(menuSimulacion);
+    juego->cambiarMenu(menuSimulacion);
 }
 
 /* MENU SIMULACION */
-void mostrarCantidadPersonajesPorBando(MenuJuego *menu) {}
-void procesarSeleccionBando(MenuJuego *menu)
+void mostrarCantidadPersonajesPorBando(Juego *juego)
 {
-    string bando;
+    BANDO bando = pedirBando();
+    vector<int> ids = juego->tablero->getDiccionario()->idsEnOrden();
+    int contador = 0;
 
-    cout << "Seleccion el bando(Humanos o Monstruos)";
-    cin >> bando;
+    if (bando == HUMANOS)
+    {
+        for (size_t i = 0; i < ids.size(); i++)
+            if (ids.at(i) < ID_ZOMBIE)
+                contador++;
+    }
+    else
+    {
+        for (size_t i = 0; i < ids.size(); i++)
+            if (ids.at(i) >= ID_ZOMBIE && ids.at(i) < ID_AGUA_BENDITA)
+                contador++;
+    }
 
-    menu->cambiarMenu(menuComienzoDeTurno);
+    cout << "La cantidad de personajes en el bando es: " << contador << endl;
+}
+void procesarSeleccionBando(Juego *juego)
+{
+    BANDO bando = pedirBando();
+
+    // Establecemos el jugador que arranca la partida de forma aleatoria
+    juego->tablero->idxJugadorActual = rand() % 2;
+
+    // clearTerminal();
+
+    mostrarBando(juego->tablero->getJugadorActual()->getBando());
+
+    juego->tablero->getMapa()->mostrarMapa();
+    juego->cambiarMenu(menuComienzoDeTurno);
 }
 
 /* MENU TURNO */
-void procesarOpcionDefenderse(MenuJuego *menu) {}
-void procesarOpcionAtacar(MenuJuego *menu) {}
-void procesarOpcionMoverse(MenuJuego *menu) {}
-void procesarOpcionPasarTurno(MenuJuego *menu) {}
+void procesarOpcionDefenderse(Juego *juego) {}
+void procesarOpcionAtacar(Juego *juego)
+{
+}
+void procesarOpcionMoverse(Juego *juego) {}
+void procesarOpcionPasarTurno(Juego *juego) {}
 
 /* MENU COMIENZO DE TURNO */
 void procesarGuardarJuego() {}

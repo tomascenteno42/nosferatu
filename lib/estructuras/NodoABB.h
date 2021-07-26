@@ -7,7 +7,7 @@ template <class K, class T>
 class NodoABB
 {
 private:
-    K clave;
+    K id;
     T data;
     NodoABB<K, T> *padre;
     NodoABB<K, T> *izquierdo;
@@ -17,7 +17,7 @@ public:
     /**
      * @brief Construye un nuevo nodo.
      * 
-     * @param k clave
+     * @param k id
      * @param d dato
      */
     NodoABB(K k, T d);
@@ -30,7 +30,7 @@ public:
     T getData();
 
     /**
-    * @brief Devuelve la clave del nodo.
+    * @brief Devuelve la id del nodo.
     * 
     * @return K
     */
@@ -65,11 +65,11 @@ public:
     void setData(T data);
 
     /**
-     * @brief Establece la clave del nodo.
+     * @brief Establece la id del nodo.
      * 
-     * @param clave 
+     * @param id 
      */
-    void setClave(K clave);
+    void setId(K id);
 
     /**
      * @brief Establece el nodo izquierdo
@@ -139,7 +139,7 @@ public:
 template <class K, class T>
 NodoABB<K, T>::NodoABB(K k, T d)
 {
-    clave = k;
+    id = k;
     data = d;
     izquierdo = NULL;
     derecho = NULL;
@@ -155,7 +155,7 @@ T NodoABB<K, T>::getData()
 template <class K, class T>
 K NodoABB<K, T>::getId()
 {
-    return clave;
+    return id;
 }
 
 template <class K, class T>
@@ -183,9 +183,9 @@ void NodoABB<K, T>::setData(T data)
 }
 
 template <class K, class T>
-void NodoABB<K, T>::setClave(K clave)
+void NodoABB<K, T>::setId(K id)
 {
-    clave = clave;
+    id = id;
 }
 
 template <class K, class T>
