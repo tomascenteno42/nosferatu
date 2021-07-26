@@ -107,6 +107,57 @@ void Ser::actualizarMapa(Grafo *mapa, Posicion origen, Posicion destino)
     mapa->getCasillero(destino)->ocupar();
 }
 
+void Ser::chequearCamino(Grafo *mapa, vector<int> *camino, string nombre)
+{
+    int tamanio = (int)camino->size();
+    Objeto *objetoLeido;
+    string tipoLeido;
+    Ser *ser = this;
+    if (nombre == S_HUMANO || nombre == S_HUMANO_CV || nombre == S_VANESA)
+    {
+        Humano *humano = dynamic_cast<Humano *>(ser);
+
+        Casillero *casillero;
+        for (int i = 0; i < tamanio; i++)
+        {
+            casillero = mapa->getCasillero(camino->at(i));
+            objetoLeido = casillero->getObjeto();
+            if (objetoLeido != nullptr)
+            {
+                tipoLeido = objetoLeido->getNombre();
+                if (tipoLeido == S_AGUA_BENDITA || tipoLeido == S_BALA || tipoLeido == S_CRUZ || tipoLeido == S_ESCOPETA || tipoLeido == S_ESTACA)
+                {
+                    Elemento *elemento = dynamic_cast<Elemento *>(objetoLeido);
+                    humano->agarrarObjeto(elemento);
+                    casillero->eliminarObjeto();
+                }
+            }
+        }
+    }
+    else if (nombre == S_ZOMBI)
+    {
+        Casillero *casillero;
+        for (int i = 0; i < tamanio; i++)
+        {
+            casillero = mapa->getCasillero(camino->at(i));
+            objetoLeido = casillero->getObjeto();
+            if (objetoLeido != nullptr)
+            {
+                tipoLeido = objetoLeido->getNombre();
+                if (tipoLeido == S_AGUA_BENDITA)
+                {
+                    Agua_bendita *agua = dynamic_cast<Agua_bendita *>(objetoLeido);
+                    Zombi *zombi = dynamic_cast<Zombi *>(ser);
+                    int cantidadAguas = agua->getCantidad();
+                    for (int j = 0; j < cantidadAguas; j++)
+                        zombi->agarrarObjeto();
+                }
+            }
+        }
+    }
+    else if (nombre ==)
+}
+
 void Ser::mover(Grafo *mapa, Posicion destino)
 {
     mapa->establecerCaminos(this->getNombre());
@@ -118,6 +169,7 @@ void Ser::mover(Grafo *mapa, Posicion destino)
         int costoCamino = mapa->sumarCamino(camino);
         this->energia -= costoCamino;
         actualizarMapa(mapa, origen, destino);
+        chequearCamino(mapa, camino, this->nombre);
         delete camino;
     }
     else

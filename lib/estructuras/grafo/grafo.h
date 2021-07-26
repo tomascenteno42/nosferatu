@@ -42,14 +42,15 @@ public:
     void setColumnas(int n);
     int getFilas();
     int getColumnas();
+    int getCantidad();
     void mostrarGrafo();
     void mostrarMapa();
     void establecerCaminos(string personaje);
     int sumarCamino(vector<int>* camino);
-    int getCantidad();
     void ocupar(Posicion coordenada);
     void desocupar(Posicion coordenada);
     Casillero *getCasillero(Posicion coordenada);
+    Casillero *getCasillero(int indice);
     vector<int> *caminoMinimo(Posicion origen, Posicion destino, int energiaPersonaje);
     ~Grafo();
 };

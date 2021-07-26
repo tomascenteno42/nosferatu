@@ -15,6 +15,9 @@ private:
      * Pos: actualiza el mapa, dando de alta el objeto movido en el destino y dandolo de baja en el origen
      */
     void actualizarMapa(Grafo* mapa, Posicion origen, Posicion destino);
+
+
+    void chequearCamino(Grafo* mapa, vector<int>* camino, string nombre);
 protected:
     int energia;
     int vida;
