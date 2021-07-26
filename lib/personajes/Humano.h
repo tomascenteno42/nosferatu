@@ -37,6 +37,16 @@ public:
      */
     static int obtener_existentes();
 
+
+    /* Pos: Devuelve true si el inventario esta vacio o false si no lo esta
+     */
+    bool inventarioVacio();
+
+
+    /* Pos: Muestra por pantalla el inventario del humano
+     */
+    void mostrarInventario();
+
     /*
      * Post: decrece en 1 la cantidad existentes de humanos
      */

@@ -1,11 +1,12 @@
 10 10
-zombi (2, 2) 101
+zombi (1, 1) 101
 agua 20 (4, 4) 300
 Vanesa (7, 7) 000
 agua 10 (8, 8) 305
-Nosferatu (9, 9) 200
+Nosferatu (10, 8) 200
 bala 20 (10, 10) 370
 cruz (3, 2) 330
+estaca (9, 7) 832
 escopeta (7, 9) 350
-Vampirella (2, 9) 201
+Vampirella (3, 5) 201
 estaca (5, 4) 400

@@ -31,6 +31,20 @@ void Humano::agarrarObjeto(Elemento *objeto)
     }
 }
 
+bool Humano::inventarioVacio()
+{
+    return ((int)inventario.size() == 0);
+}
+
+void Humano::mostrarInventario()
+{
+    int tamanio = (int)inventario.size();
+    for(int i = 0; i < tamanio - 1; i++)
+        cout << inventario.at(i)->getNombre() << "|";
+    cout << inventario.at(tamanio - 1)->getNombre() << endl;
+    cout << endl;
+}
+
 void Humano::atacar(Tablero *tablero)
 {
     int fila_enemigo, columna_enemigo;

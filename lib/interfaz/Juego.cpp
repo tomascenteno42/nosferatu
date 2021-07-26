@@ -60,6 +60,17 @@ void Juego::mostrar()
         cout << "Posicion: " << "(" <<  this->personajeActual->getFila() << "," << this->personajeActual->getColumna() << ")";
         cout << endl;
         cout << endl;
+
+        string nombre = this->personajeActual->getNombre();
+        if(nombre == S_HUMANO_CV || nombre == S_VANESA || nombre == S_HUMANO){
+            Ser* ser = this->personajeActual;
+            Humano* humano = dynamic_cast<Humano*>(ser);
+
+            if(!humano->inventarioVacio()){
+                humano->mostrarInventario();
+                cout << endl;
+            }
+        }
     }
 
     mostrarOpciones();

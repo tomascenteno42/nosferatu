@@ -167,16 +167,22 @@ void Ser::imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser)
 {
     int tamanio = (int)posiciones->size();
     Casillero* casillero;
-    Objeto* aux;
-    aux = dynamic_cast<Objeto*>(ser);
+    Objeto* personaje;
+    Objeto* anterior;                       // objeto que estaba antes en el casillero
+    personaje = dynamic_cast<Objeto*>(ser);
     for(int i = 0; i < tamanio - 1; i++){
         clearTerminal();
         casillero = mapa->getCasillero(posiciones->at(i));
-        casillero->setObjeto(aux);
+        anterior = casillero->getObjeto();
+        casillero->setObjeto(personaje);
         mapa->mostrarMapa();
         Sleep(600)
         casillero->eliminarObjeto();
         casillero->desocupar();
+
+        if(anterior != nullptr){
+            casillero->setObjeto(anterior);
+        }
     }
 
 
@@ -195,7 +201,7 @@ bool Ser::mover(Grafo *mapa, Posicion destino) {
 
         actualizarMapa(mapa, origen, destino);
         chequearCamino(mapa, camino, this->nombre);
-        vector <Posicion> *posiciones = new vector<Posicion>;
+        vector <Posicion> *posiciones;
 
         posiciones = obtenerPosiciones(mapa, camino);
         reverse(posiciones->begin(), posiciones->end());
