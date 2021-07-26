@@ -86,6 +86,8 @@ ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
 ID parseId(int id);
 bool esIdValido(int id, ENUM_OBJETOS objeto);
+vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino);
+void mostrarPosiciones(vector<Posicion>* posiciones);
 
 // Solicitudes al usuario
 /**

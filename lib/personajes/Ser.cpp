@@ -88,15 +88,6 @@ void Ser::mostrarInformacion()
     cout << "Energia: " << energia << endl;
 }
 
-void Ser::mostrarCamino(vector<int> *camino)
-{
-    int tamanio = (int)camino->size();
-    cout << "Camino tomado: " << endl;
-    for (int i = 0; i < tamanio; i++)
-        cout << camino->at(i) << "|";
-    cout << endl;
-}
-
 void Ser::actualizarMapa(Grafo *mapa, Posicion origen, Posicion destino)
 {
     Objeto *aux;
@@ -155,23 +146,39 @@ void Ser::chequearCamino(Grafo *mapa, vector<int> *camino, string nombre)
             }
         }
     }
-    else if (nombre ==)
+    else if (nombre == S_VAMPIRELLA || nombre == S_NOSFERATU || nombre == S_VAMPIRO){
+        Casillero* casillero;
+        for (int i = 0; i < tamanio; i++){
+            casillero = mapa->getCasillero(camino->at(i));
+            objetoLeido = casillero->getObjeto();
+            if(objetoLeido != nullptr){
+                tipoLeido = objetoLeido->getNombre();
+                if(tipoLeido == S_ESTACA)
+                    casillero->eliminarObjeto();
+            }
+
+        }
+    }
 }
 
-void Ser::mover(Grafo *mapa, Posicion destino)
-{
+bool Ser::mover(Grafo *mapa, Posicion destino) {
+    bool seMovio = false;
     mapa->establecerCaminos(this->getNombre());
     Posicion origen(this->getFila(), this->getColumna());
     vector<int> *camino = mapa->caminoMinimo(origen, destino, this->getEnergia());
-    if (camino != nullptr)
-    {
-        mostrarCamino(camino);
+    if (camino != nullptr) {
         int costoCamino = mapa->sumarCamino(camino);
         this->energia -= costoCamino;
         actualizarMapa(mapa, origen, destino);
-        chequearCamino(mapa, camino, this->nombre);
+//        chequearCamino(mapa, camino, this->nombre);
+        vector <Posicion> *posiciones = new vector<Posicion>;
+        posiciones = obtenerPosiciones(mapa, camino);
+        reverse(posiciones->begin(), posiciones->end());
+        mostrarPosiciones(posiciones);
+        delete posiciones;
         delete camino;
+        seMovio = true;
+        return seMovio;
     }
-    else
-        cout << "El personaje no tiene energia suficiente para llegar o todos los caminos estan bloqueados" << endl;
+    return seMovio;
 }

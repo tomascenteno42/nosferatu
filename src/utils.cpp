@@ -174,3 +174,40 @@ void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos)
         contador++;
     }
 }
+
+vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino)
+{
+    int tamanio = (int)camino->size();
+    int fila, columna;
+    Posicion aux;
+    Casillero* casillero;
+    vector<Posicion>* posiciones = new vector<Posicion>;
+
+    for(int i = 0; i < tamanio; i++){
+        casillero = mapa->getCasillero(camino->at(i));
+        fila = casillero->getFila();
+        columna = casillero->getColumna();
+        aux.cambiarFila(fila);
+        aux.cambiarColumna(columna);
+        posiciones->push_back(aux);
+    }
+    reverse(posiciones->begin(), posiciones->end());
+    return posiciones;
+}
+
+void mostrarPosiciones(vector<Posicion>* posiciones)
+{
+    int tamanio = (int)posiciones->size();
+    int fila, columna;
+
+    cout << "Camino tomado: " << endl;
+
+    for(int i = 0; i < tamanio - 1; i++){
+        fila = posiciones->at(i).getFila();
+        columna = posiciones->at(i).getColumna();
+        cout << "(" << fila << "," << columna << ")" << "->";
+    }
+    fila = posiciones->at(tamanio - 1).getFila();
+    columna = posiciones->at(tamanio - 1).getColumna();
+    cout << "(" << fila << "," << columna << ")" << endl;
+}

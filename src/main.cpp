@@ -4,9 +4,9 @@ int main()
 {
     srand(time(NULL));
     Juego *juego = new Juego();
-    ABB<int, Objeto *> *diccionario = juego->tablero->getDiccionario();
+    //ABB<int, Objeto *> *diccionario = juego->tablero->getDiccionario();
 
-    juego->tablero->getMapa()->mostrarMapa();
+    //juego->tablero->getMapa()->mostrarMapa();
 
     while (!juego->gameOver() && !juego->cerrarMenu())
     {
@@ -14,13 +14,9 @@ int main()
         juego->mostrar();
     }
 
-    delete juego;
+    cout << endl;
 
-    // for (size_t i = 0; i < 5; i++)
-    // {
-    //     cout << "HOLA PERRI" << endl;
-    //     Sleep(1000);
-    // }
+    delete juego;
 
     return 0;
 }

@@ -349,6 +349,7 @@ void procesarSeleccionBando(Juego *juego)
 
     juego->tablero->getMapa()->mostrarMapa();
     juego->cambiarMenu(menuComienzoDeTurno);
+    juego->personajeActual = juego->tablero->getJugadorActual()->getPersonajes().at(juego->tablero->idxJugadorActual);
 }
 
 /* MENU TURNO */
@@ -362,7 +363,25 @@ void procesarOpcionMoverse(Juego *juego)
 {
     int fila, columna;
     juego->pedirPosicion(fila, columna);
-    juego->personajeActual->mover(juego->tablero->getMapa(), Posicion(fila, columna));
+    Grafo* mapa = juego->tablero->getMapa();
+    Posicion pos(fila, columna);
+    bool seMovio;
+
+    while(!mapa->coordenadaValida(pos) || mapa->estaOcupado(pos)) {
+        juego->pedirPosicion(fila, columna);
+    }
+
+    if(juego->personajeActual != nullptr) {
+        int energiaAntes = juego->personajeActual->getEnergia();
+        juego->personajeActual->mostrarInformacion();
+        seMovio = juego->personajeActual->mover(mapa, pos);
+        int energiaFinal = juego->personajeActual->getEnergia();
+
+        if(seMovio)
+            cout << "Energia : " << energiaAntes << " --> " << energiaFinal << endl;
+        else
+            cout << "No tiene energia suficiente para completar el movimiento" << endl;
+    }
 }
 void procesarOpcionPasarTurno(Juego *juego)
 {
