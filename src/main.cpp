@@ -32,10 +32,10 @@ int main()
     }
     cargarCasillerosGrafo(mapa, datos);
 
-    Objeto* vampiro = new Vampiro(1, 1,3);
+    Objeto* humano = new Humano(1, 1,3);
     Posicion origen(1,3);
     Posicion destino(3, 1);
-    mapa->agregarObjeto(vampiro, origen);
+    mapa->agregarObjeto(humano, origen);
 
     Objeto* personaje = mapa->getCasillero(origen)->getObjeto();
     Ser* nuevo = dynamic_cast<Ser *>(personaje);

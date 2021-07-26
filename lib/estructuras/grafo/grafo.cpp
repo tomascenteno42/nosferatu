@@ -340,6 +340,12 @@ Casillero *Grafo::getCasillero(Posicion coordenada)
 
     return casilleros.at(idx);
 }
+
+Casillero* Grafo::getCasillero(int indice)
+{
+    return casilleros.at(indice);
+}
+
 int Grafo::getFilas()
 {
     return this->filas;
