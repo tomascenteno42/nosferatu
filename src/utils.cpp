@@ -175,6 +175,9 @@ void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos)
     }
 }
 
+/* Pre: Los punteros mapa y camino no son nullptr
+ * Pos: Dado el camino tomado, transforma la secuencia de casilleros en Posiciones
+ * */
 vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino)
 {
     int tamanio = (int)camino->size();
@@ -195,6 +198,9 @@ vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino)
     return posiciones;
 }
 
+/* Pre: El puntero posiciones no es nullptr
+ * Pos: Imprime por pantalla la secuencia de posiciones por las que paso el personaje
+ */
 void mostrarPosiciones(vector<Posicion>* posiciones)
 {
     int tamanio = (int)posiciones->size();

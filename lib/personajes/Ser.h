@@ -11,9 +11,15 @@ private:
      */
     void actualizarMapa(Grafo* mapa, Posicion origen, Posicion destino);
 
-
+    /* Pre: mapa y camino no deben ser nullptr, nombre debe ser un nombre valido
+     * Pos: Dado un camino, analiza casillero por casillero que hacer con el objeto que habia alli, dependiendo del personaje
+     */
     void chequearCamino(Grafo* mapa, vector<int>* camino, string nombre);
 
+
+    /* Pre: mapa, posiciones y ser no deben ser nullptr
+     * Pos: Imprime por pantalla el camino tomado por el personaje
+     * */
     void imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser);
 
 protected:
@@ -29,14 +35,40 @@ public:
      */
     explicit Ser(string nombre, char caracter, int id, int fila, int columna);
 
+    /* Pos: Devuelve la energia
+     */
     int getEnergia();
+
+    /* Pos: Devuelve la vida
+     */
     int getVida();
+
+    /* Pos: Devuelve el escudo
+     */
     int getEscudo();
+
+    /* Pos: Devuelve la fuerza
+     */
     int getFuerza();
 
+    /* Pre: e debe ser un numero positivo dentro del rango
+     * Pos: establece la energia como e
+     */
     void setEnergia(int e);
+
+    /* Pre: v debe ser un numero positivo dentro del rango
+     * Pos: establece la vida como v
+     */
     void setVida(int v);
+
+    /* Pre: e debe ser un numero positivo dentro del rango
+     * Pos: establece el escudo como e
+     */
     void setEscudo(int e);
+
+    /* Pre: f debe ser un numero positivo dentro del rango
+     * Pos: establece la fuerza como f
+     */
     void setFuerza(int f);
 
     //virtual void atacar(Tablero *tablero) = 0;
