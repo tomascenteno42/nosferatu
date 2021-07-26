@@ -84,6 +84,10 @@ void Zombi::atacar(Tablero *tablero)
     }
 }
 
+void Zombi::actualizar() {
+    this->energia += 5;
+}
+
 Zombi::~Zombi()
 {
     Zombi::contador--;

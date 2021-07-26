@@ -265,6 +265,11 @@ void Vanesa::atacarEstaca(Tablero *tablero) {
     }
 }
 
+void Vanesa::actualizar() {
+    this->energia += 10;
+}
+
+
 Vanesa::~Vanesa()
 {
     Vanesa::contador--;

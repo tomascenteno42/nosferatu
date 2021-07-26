@@ -106,6 +106,10 @@ void Vampirella::atacar(Tablero *tablero)
     }
 }
 
+void Vampirella::actualizar() {
+    this->energia += 6;
+}
+
 Vampirella::~Vampirella()
 {
     Vampirella::contador--;

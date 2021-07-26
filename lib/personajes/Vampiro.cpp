@@ -1,3 +1,4 @@
+
 #include "../../src/main.h"
 
 int Vampiro::contador = 0;

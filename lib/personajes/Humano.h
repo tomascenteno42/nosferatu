@@ -57,6 +57,9 @@ public:
      */
     void mostrarInventario();
 
+
+    void actualizar() override;
+
     /*
      * Post: decrece en 1 la cantidad existentes de humanos
      */

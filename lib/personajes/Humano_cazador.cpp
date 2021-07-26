@@ -267,6 +267,10 @@ void Humano_cazador::atacarEstaca(Tablero *tablero) {
     }
 }
 
+void Humano_cazador::actualizar() {
+    this->energia += 8;
+}
+
 Humano_cazador::~Humano_cazador()
 {
     Humano_cazador::contador--;

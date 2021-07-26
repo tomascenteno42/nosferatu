@@ -136,6 +136,10 @@ int Humano::obtener_existentes()
     return Humano::contador;
 }
 
+void Humano::actualizar() {
+    this->energia += 5;
+}
+
 Humano::~Humano()
 {
     Humano::contador--;
