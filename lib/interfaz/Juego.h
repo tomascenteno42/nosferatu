@@ -83,11 +83,18 @@ public:
     void renderizarOpcion(ABB<int, Objeto *> *diccionario);
 
     /**
-     * @brief Muestra las opciones del menuActual
+     * @brief Muestra el menu junto con el tablero.
      */
-    void mostrarMenu();
+    void mostrar();
 
     /**
+     * @brief Muestra las opciones del menu actual
+     * 
+     */
+    void mostrarOpciones();
+
+    /**
+     * 
      * @brief Solicita un ingreso por terminal de parte del usuario y la retorna.
      * 
      * @return string Ingreso del usuario

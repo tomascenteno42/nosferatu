@@ -39,13 +39,31 @@ void Juego::llenarMenues()
     cambiarMenu(menuMain);
 }
 
-void Juego::mostrarMenu()
+void Juego::mostrarOpciones()
 {
 
     for (size_t i = 0; i < menuActual->getCantidad(); i++)
         cout << i + 1 << ") " + menuActual->getOpcion(i) << endl;
 
     cout << "Ingrese una opcion: " << endl;
+}
+
+void Juego::mostrar()
+{
+    clearTerminal();
+
+    this->tablero->getMapa()->mostrarMapa();
+
+    if (idxMenu >= menuComienzoDeTurno)
+        mostrarBando(this->tablero->getJugadorActual()->getBando());
+
+    mostrarOpciones();
+
+    renderizarOpcion(this->tablero->getDiccionario());
+
+    cout << "Presione enter para continuar...";
+
+    getchar();
 }
 
 void Juego::renderizarOpcion(ABB<int, Objeto *> *diccionario)
@@ -70,7 +88,6 @@ string Juego::solicitarOpcion()
 void Juego::procesarOpcion(int opcion, ABB<int, Objeto *> *diccionario)
 {
 
-    // clearTerminal();
     switch (getIdxMenuActual())
     {
     case menuMain:
@@ -82,17 +99,10 @@ void Juego::procesarOpcion(int opcion, ABB<int, Objeto *> *diccionario)
 
     //TODO: MIGRAR ESTE COUT HORRIBLE
     case menuComienzoDeTurno:
-        cout << parsearBandoATexto(this->tablero->getJugadorActual()->getBando()) << endl
-             << endl;
         procesarOpcionMenuComienzoTurno(opcion);
-        avanzar();
-
         break;
     case menuTurno:
-        cout << parsearBandoATexto(this->tablero->getJugadorActual()->getBando()) << endl
-             << endl;
         procesarOpcionMenuTurno(opcion);
-        avanzar();
         break;
     }
 }
@@ -108,18 +118,15 @@ void Juego::procesarOpcionMenuMain(int opcion)
         procesarEliminarObjeto(this);
         break;
     case 3:
-        this->tablero->getMapa()->mostrarMapa();
-        break;
-    case 4:
         procesarBuscarPorCuadrante(this);
         break;
-    case 5:
+    case 4:
         procesarMostrarEstadisticasPorId(this);
         break;
-    case 6:
+    case 5:
         procesarComenzarSimulacion(this);
         break;
-    case 7:
+    case 6:
         salir = true;
         break;
     default:
@@ -135,15 +142,12 @@ void Juego::procesarOpcionMenuSimulacion(int opcion)
         procesarMostrarEstadisticasPorId(this);
         break;
     case 2:
-        this->tablero->getMapa()->mostrarMapa();
-        break;
-    case 3:
         mostrarCantidadPersonajesPorBando(this);
         break;
-    case 4:
+    case 3:
         procesarSeleccionBando(this);
         break;
-    case 5:
+    case 4:
         cambiarMenu(menuMain);
         break;
     default:
@@ -153,23 +157,33 @@ void Juego::procesarOpcionMenuSimulacion(int opcion)
 
 void Juego::procesarOpcionMenuComienzoTurno(int opcion)
 {
+
     switch (opcion)
     {
     case 1:
-        this->tablero->getMapa()->mostrarMapa();
-        procesarGuardarJuego();
+        procesarGuardarJuego(this);
         break;
+    case 2:
+        procesarOpcionDefenderse(this);
+        break;
+    case 3:
+        procesarOpcionAtacar(this);
+        break;
+    case 4:
+        procesarOpcionMoverse(this);
+        break;
+    case 5:
+        procesarOpcionPasarTurno(this);
     default:
-        procesarOpcionMenuTurno(opcion);
         break;
     }
 
     cambiarMenu(menuTurno);
+    avanzar();
 }
 
 void Juego::procesarOpcionMenuTurno(int opcion)
 {
-    this->tablero->getMapa()->mostrarMapa();
 
     switch (opcion)
     {
@@ -187,6 +201,8 @@ void Juego::procesarOpcionMenuTurno(int opcion)
     default:
         break;
     }
+
+    avanzar();
 }
 
 void Juego::pedirPosicion(int &fila, int &columna)
@@ -221,9 +237,6 @@ enumMenu Juego::getIdxMenuActual()
 void Juego::avanzar()
 {
     personajesJugados++;
-
-    cout << "personajesJugados: " << personajesJugados;
-    cout << "cantidad: " << this->tablero->getJugadorActual()->getCantidadPersonajes();
 
     // Termino el turno
     if (personajesJugados == this->tablero->getJugadorActual()->getCantidadPersonajes())

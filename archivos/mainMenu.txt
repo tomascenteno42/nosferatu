@@ -1,6 +1,5 @@
 Agregar un nuevo personaje u objeto en una posición determinada.
 Eliminar un personaje u objeto.
-Mostrar el tablero
 Buscar por cuadrante un personaje u objeto.
 Buscar por ID los detalles de un personaje u objeto en particular.
 Comenzar simulación.

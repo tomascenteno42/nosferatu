@@ -345,21 +345,30 @@ void procesarSeleccionBando(Juego *juego)
     // Establecemos el jugador que arranca la partida de forma aleatoria
     juego->tablero->idxJugadorActual = rand() % 2;
 
-    // clearTerminal();
-
-    mostrarBando(juego->tablero->getJugadorActual()->getBando());
+    clearTerminal();
 
     juego->tablero->getMapa()->mostrarMapa();
     juego->cambiarMenu(menuComienzoDeTurno);
 }
 
 /* MENU TURNO */
-void procesarOpcionDefenderse(Juego *juego) {}
+void procesarOpcionDefenderse(Juego *juego)
+{
+}
 void procesarOpcionAtacar(Juego *juego)
 {
 }
-void procesarOpcionMoverse(Juego *juego) {}
-void procesarOpcionPasarTurno(Juego *juego) {}
+void procesarOpcionMoverse(Juego *juego)
+{
+    int fila, columna;
+    juego->pedirPosicion(fila, columna);
+    juego->personajeActual->mover(juego->tablero->getMapa(), Posicion(fila, columna));
+}
+void procesarOpcionPasarTurno(Juego *juego)
+{
+}
 
 /* MENU COMIENZO DE TURNO */
-void procesarGuardarJuego() {}
+void procesarGuardarJuego(Juego *juego)
+{
+}

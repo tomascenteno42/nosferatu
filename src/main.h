@@ -3,6 +3,15 @@
 
 using namespace std;
 
+#ifdef __linux__
+#include <unistd.h>
+#include <chrono>
+#include <thread>
+#define Sleep(x) std::this_thread::sleep_for(std::chrono::milliseconds(x));
+#elif _WIN32
+#include <windows.h>
+#endif
+
 #include <vector>
 #include <exception>
 #include <iomanip>
@@ -139,7 +148,7 @@ void procesarOpcionMoverse(Juego *juego);
 void procesarOpcionPasarTurno(Juego *juego);
 
 /* MENU COMIENZO DE TURNO */
-void procesarGuardarJuego();
+void procesarGuardarJuego(Juego *juego);
 void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos);
 
 #endif
