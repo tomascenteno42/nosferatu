@@ -41,13 +41,13 @@ void Humano::mostrarInventario()
 
     int tamanio = (int)inventario.size();
 
-    cout << "Inventario: " << endl
-         << endl;
+    cout << "Inventario: " << endl;
 
     for (int i = 0; i < tamanio - 1; i++)
         cout << inventario.at(i)->getNombre() << "|";
-    cout << inventario.at(tamanio - 1)->getNombre() << endl;
-    cout << endl;
+
+    cout << inventario.at(tamanio - 1)->getNombre() << endl
+         << endl;
 }
 
 void Humano::atacar(Tablero *tablero)
@@ -136,7 +136,8 @@ int Humano::obtener_existentes()
     return Humano::contador;
 }
 
-void Humano::actualizar() {
+void Humano::actualizar()
+{
     this->energia += 5;
 }
 

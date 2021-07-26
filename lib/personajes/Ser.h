@@ -1,7 +1,10 @@
 #ifndef NOSFERATUV2_SER_H
 #define NOSFERATUV2_SER_H
 
-#include "../estructuras/grafo/grafo.h"
+#include "../../src/main.h"
+
+class Grafo;
+class Tablero;
 
 class Ser : public Objeto
 {

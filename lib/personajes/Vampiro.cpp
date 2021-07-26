@@ -110,6 +110,11 @@ void Vampiro::atacar(Tablero *tablero)
     }
 }
 
+void Vampiro::actualizar()
+{
+    cout << "ACTUALIZAR";
+}
+
 Vampiro::~Vampiro()
 {
     Vampiro::contador--;
