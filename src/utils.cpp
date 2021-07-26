@@ -7,7 +7,7 @@ void clearTerminal()
 
 void mostrarBando(BANDO bando)
 {
-    cout << parsearBandoATexto(bando) << endl
+    cout << "BANDO: " << parsearBandoATexto(bando) << endl
          << endl;
 }
 
@@ -178,15 +178,16 @@ void cargarCasillerosGrafo(Grafo *mapa, ifstream &datos)
 /* Pre: Los punteros mapa y camino no son nullptr
  * Pos: Dado el camino tomado, transforma la secuencia de casilleros en Posiciones
  * */
-vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino)
+vector<Posicion> *obtenerPosiciones(Grafo *mapa, vector<int> *camino)
 {
     int tamanio = (int)camino->size();
     int fila, columna;
     Posicion aux;
-    Casillero* casillero;
-    vector<Posicion>* posiciones = new vector<Posicion>;
+    Casillero *casillero;
+    vector<Posicion> *posiciones = new vector<Posicion>;
 
-    for(int i = 0; i < tamanio; i++){
+    for (int i = 0; i < tamanio; i++)
+    {
         casillero = mapa->getCasillero(camino->at(i));
         fila = casillero->getFila();
         columna = casillero->getColumna();
@@ -201,17 +202,19 @@ vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino)
 /* Pre: El puntero posiciones no es nullptr
  * Pos: Imprime por pantalla la secuencia de posiciones por las que paso el personaje
  */
-void mostrarPosiciones(vector<Posicion>* posiciones)
+void mostrarPosiciones(vector<Posicion> *posiciones)
 {
     int tamanio = (int)posiciones->size();
     int fila, columna;
 
     cout << "Camino tomado: " << endl;
 
-    for(int i = 0; i < tamanio - 1; i++){
+    for (int i = 0; i < tamanio - 1; i++)
+    {
         fila = posiciones->at(i).getFila();
         columna = posiciones->at(i).getColumna();
-        cout << "(" << fila << "," << columna << ")" << "->";
+        cout << "(" << fila << "," << columna << ")"
+             << "->";
     }
     fila = posiciones->at(tamanio - 1).getFila();
     columna = posiciones->at(tamanio - 1).getColumna();

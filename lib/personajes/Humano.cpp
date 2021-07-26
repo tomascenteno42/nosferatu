@@ -38,8 +38,13 @@ bool Humano::inventarioVacio()
 
 void Humano::mostrarInventario()
 {
+
     int tamanio = (int)inventario.size();
-    for(int i = 0; i < tamanio - 1; i++)
+
+    cout << "Inventario: " << endl
+         << endl;
+
+    for (int i = 0; i < tamanio - 1; i++)
         cout << inventario.at(i)->getNombre() << "|";
     cout << inventario.at(tamanio - 1)->getNombre() << endl;
     cout << endl;
@@ -54,10 +59,12 @@ void Humano::atacar(Tablero *tablero)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
-    while (i < inventario.size() && this->getEnergia() >= 5) {
+    while (i < inventario.size() && this->getEnergia() >= 5)
+    {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() > 2) {
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() > 2)
+        {
             contieneBalas = true;
             posicion_balas = i;
         }
@@ -75,19 +82,23 @@ void Humano::atacar(Tablero *tablero)
             for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
             {
                 Objeto *objeto_encontrado = tablero->getElementoEnPosicion(Posicion(i, j));
-                if (objeto_encontrado){
-                    if(objeto_encontrado->getCaracter() == C_ZOMBI || objeto_encontrado->getCaracter() == C_VAMPIRO && (objeto_encontrado!= this)) {
+                if (objeto_encontrado)
+                {
+                    if (objeto_encontrado->getCaracter() == C_ZOMBI || objeto_encontrado->getCaracter() == C_VAMPIRO && (objeto_encontrado != this))
+                    {
                         objeto_encontrado->mostrarInformacion();
                         puedeAtacar = true;
                         cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                             << "\n" << endl;
+                             << "\n"
+                             << endl;
                     }
                 }
             }
         }
-        if(!puedeAtacar)
+        if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else if(puedeAtacar) {
+        else if (puedeAtacar)
+        {
             cout << "Ingrese la fila" << endl;
             cin >> fila_enemigo;
             cout << "Ingrese la columna" << endl;
@@ -96,16 +107,19 @@ void Humano::atacar(Tablero *tablero)
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
             int danio, escudo;
             escudo = enemigo->getEscudo();
-            if (enemigo->getCaracter() == C_ZOMBI) {
+            if (enemigo->getCaracter() == C_ZOMBI)
+            {
                 danio = (this->getFuerza());
                 ajustarDanio(danio, escudo);
                 enemigo->setVida(enemigo->getVida() - danio);
-            } else if (enemigo->getCaracter() == C_VAMPIRO) {
+            }
+            else if (enemigo->getCaracter() == C_VAMPIRO)
+            {
                 danio = (((this->getFuerza()) * 0.20));
                 ajustarDanio(danio, escudo);
                 enemigo->setVida(enemigo->getVida() - danio);
             }
-            this->setEnergia((this->getEnergia())-5);
+            this->setEnergia((this->getEnergia()) - 5);
             //this->inventario.at(posicion_balas)->setCantidad() -= 2;
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio

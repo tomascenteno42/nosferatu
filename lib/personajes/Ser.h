@@ -9,18 +9,17 @@ private:
     /* Pre: mapa no debe ser nullptr, origen y destino deben ser coordenadas validas
      * Pos: actualiza el mapa, dando de alta el objeto movido en el destino y dandolo de baja en el origen
      */
-    void actualizarMapa(Grafo* mapa, Posicion origen, Posicion destino);
+    void actualizarMapa(Grafo *mapa, Posicion origen, Posicion destino);
 
     /* Pre: mapa y camino no deben ser nullptr, nombre debe ser un nombre valido
      * Pos: Dado un camino, analiza casillero por casillero que hacer con el objeto que habia alli, dependiendo del personaje
      */
-    void chequearCamino(Grafo* mapa, vector<int>* camino, string nombre);
-
+    void chequearCamino(Grafo *mapa, vector<int> *camino, string nombre);
 
     /* Pre: mapa, posiciones y ser no deben ser nullptr
      * Pos: Imprime por pantalla el camino tomado por el personaje
      * */
-    void imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser);
+    void imprimirCamino(Grafo *mapa, vector<Posicion> *posiciones, Ser *ser);
 
 protected:
     int energia;
@@ -80,6 +79,8 @@ public:
      * Devuelve true si el ser se movio y false si no.
      */
     bool mover(Grafo *mapa, Posicion destino);
+
+    void atacar(Tablero *tablero);
 
     /**
      * @brief Ajusta el danio pasado por referencia segun la cantidad de escudo del ser.
