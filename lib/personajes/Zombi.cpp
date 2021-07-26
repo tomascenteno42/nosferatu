@@ -18,48 +18,60 @@ int Zombi::obtener_existentes()
     return Zombi::contador;
 }
 
-void Zombi::atacar(Tablero *tablero){
+void Zombi::atacar(Tablero *tablero)
+{
     bool humanoSup, humanoInf, humanoIzq, humanoDer;
     if (this->getEnergia() < 5)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
-    if (this->getEnergia() >= 5) {
+    if (this->getEnergia() >= 5)
+    {
         int filaEnemigo, columna_enemigo;
         Posicion arriba((this->getFila() - 1), this->getColumna());
         Objeto *objeto_encontrado = tablero->getElementoEnPosicion(arriba);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
+        if (objeto_encontrado)
+        {
+            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            {
                 humanoSup = true;
             }
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
         objeto_encontrado = tablero->getElementoEnPosicion(abajo);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
+        if (objeto_encontrado)
+        {
+            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            {
                 humanoInf = true;
             }
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
         objeto_encontrado = tablero->getElementoEnPosicion(izquierda);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
+        if (objeto_encontrado)
+        {
+            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            {
                 humanoIzq = true;
             }
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
         objeto_encontrado = tablero->getElementoEnPosicion(derecha);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
+        if (objeto_encontrado)
+        {
+            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            {
                 humanoDer = true;
             }
         }
-        if(!puedeAtacar)
-        cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else if(puedeAtacar) {
+        bool puedeAtacar = false;
+        if (!puedeAtacar)
+            cout << "No tenes enemigos cerca para atacarlos" << endl;
+        else
+        {
             cout << "Ingrese la fila" << endl;
             cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;

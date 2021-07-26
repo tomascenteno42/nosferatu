@@ -12,62 +12,77 @@ int Vampirella::obtener_existentes()
     return Vampirella::contador;
 }
 
-void Vampirella::atacar(Tablero *tablero){
+void Vampirella::atacar(Tablero *tablero)
+{
     if (this->getEnergia() < 4)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
-    if (this->getEnergia() >= 4) {
+    if (this->getEnergia() >= 4)
+    {
         int filaEnemigo, columnaEnemigo;
         bool puedeAtacar = false;
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objeto_encontrado = tablero->getElementoEnPosicion(arriba);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
-                objeto_encontrado->mostrarInformacion();
+        Objeto *objetoEncontrado = tablero->getElementoEnPosicion(arriba);
+        if (objetoEncontrado)
+        {
+            if (objetoEncontrado->getCaracter() == C_HUMANO)
+            {
+                objetoEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                     << "\n" << endl;
+                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                     << "\n"
+                     << endl;
             }
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objeto_encontrado = tablero->getElementoEnPosicion(abajo);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
-                objeto_encontrado->mostrarInformacion();
+        objetoEncontrado = tablero->getElementoEnPosicion(abajo);
+        if (objetoEncontrado)
+        {
+            if (objetoEncontrado->getCaracter() == C_HUMANO)
+            {
+                objetoEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                     << "\n" << endl;
+                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                     << "\n"
+                     << endl;
             }
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(izquierda);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
-                objeto_encontrado->mostrarInformacion();
+        objetoEncontrado = tablero->getElementoEnPosicion(izquierda);
+        if (objetoEncontrado)
+        {
+            if (objetoEncontrado->getCaracter() == C_HUMANO)
+            {
+                objetoEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                     << "\n" << endl;
+                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                     << "\n"
+                     << endl;
             }
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(derecha);
-        if (objeto_encontrado) {
-            if (objeto_encontrado->getCaracter() == C_HUMANO) {
-                objeto_encontrado->mostrarInformacion();
+        objetoEncontrado = tablero->getElementoEnPosicion(derecha);
+        if (objetoEncontrado)
+        {
+            if (objetoEncontrado->getCaracter() == C_HUMANO)
+            {
+                objetoEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                     << "\n" << endl;
+                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                     << "\n"
+                     << endl;
             }
         }
-        if(!puedeAtacar)
+        if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else if(puedeAtacar){
+        else if (puedeAtacar)
+        {
             cout << "Ingrese la fila" << endl;
             cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;
@@ -79,9 +94,9 @@ void Vampirella::atacar(Tablero *tablero){
             danio = (this->getFuerza());
             ajustarDanio(danio, escudo);
             enemigo->setVida(enemigo->getVida() - danio);
-            if(escudo != 0)
-                enemigo->setEscudo((enemigo->getEscudo())-1);
-            this->setEnergia((this->getEnergia())-4);
+            if (escudo != 0)
+                enemigo->setEscudo((enemigo->getEscudo()) - 1);
+            this->setEnergia((this->getEnergia()) - 4);
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
             objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
@@ -89,7 +104,6 @@ void Vampirella::atacar(Tablero *tablero){
             enemigo->mostrarInformacion();
         }
     }
-}
 }
 
 void Vampirella::actualizar() {

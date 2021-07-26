@@ -87,17 +87,14 @@ void Vampiro::atacar(Tablero *tablero){
             this->setEnergia((this->getEnergia()) - 2);
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
-            objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            objeto = tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo));
             enemigo = dynamic_cast<Ser *>(objeto);
             enemigo->mostrarInformacion();
-        }
+            }
         }
     }
 }
 
-void Vampiro::actualizar() {
-    this->energia += 4;
-}
 
 Vampiro::~Vampiro()
 {
