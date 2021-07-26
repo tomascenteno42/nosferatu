@@ -203,5 +203,5 @@ Parser::Parser(const string &nombre, int cantidad, int fila, int columna)
     this->cantidad = cantidad;
     this->nombre = nombre;
     this->pos = NULL;
-    this->objeto = this->obtenerObjetoDelTexto(this->nombre, this->clave, (fila + 1), (columna + 1));
+    this->objeto = this->obtenerObjetoDelTexto(this->nombre, this->clave, (fila), (columna));
 }

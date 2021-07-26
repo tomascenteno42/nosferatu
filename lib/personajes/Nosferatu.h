@@ -20,6 +20,8 @@ public:
      */
     static int obtener_existentes();
 
+    void atacar(Tablero *tablero);
+
     /*
      * Post: decrece en 1 la cantidad de Nosferatu existentes
      */

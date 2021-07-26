@@ -20,6 +20,14 @@ public:
      */
     static int getContador();
 
+    void atacar(Tablero *tablero);
+
+    void atacarEscopeta(Tablero *tablero);
+
+    void atacarAgua(Tablero *tablero);
+
+    void atacarEstaca(Tablero *tablero);
+
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes
      */

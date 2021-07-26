@@ -8,6 +8,7 @@ class Humano_cazador : public Humano
 private:
     static int contador;
 
+
 public:
     /*
      * Post: Se crea el objeto listo para usarse
@@ -20,6 +21,16 @@ public:
      *       Aumenta en 1 la cantidad de humanos cazadores existentes
      */
     Humano_cazador(string nombre, char caracter, int id, int fila, int columna);
+
+
+    void atacar(Tablero *tablero);
+
+    void atacarEscopeta(Tablero *tablero);
+
+    void atacarAgua(Tablero *tablero);
+
+    void atacarEstaca(Tablero *tablero);
+
 
     /*
      * Post: obtiene la cantidad de humanos cazadores existentes

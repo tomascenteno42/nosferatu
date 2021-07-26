@@ -22,6 +22,8 @@ public:
      */
     void agarrarObjeto();
 
+    void atacar(Tablero *tablero);
+
     /*
      * Post: obtiene la cantidad de objetos Zombi existentes
      */

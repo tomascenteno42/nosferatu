@@ -55,21 +55,21 @@ void Ser::setFuerza(int f)
     fuerza = f;
 }
 
-void Ser::ajustarDanio(int &danio)
+void Ser::ajustarDanio(int &danio, int escudo)
 {
-    switch (getEscudo())
+    switch (escudo)
     {
-    case 0:
-        break;
-    case 1:
-        danio *= 0.9;
-        break;
-    case 2:
-        danio *= 0.8;
-        break;
-    default:
-        danio *= 0.2;
-        break;
+        case 0:
+            break;
+        case 1:
+            danio *= 0.9;
+            break;
+        case 2:
+            danio *= 0.8;
+            break;
+        default:
+            danio *= 0.2;
+            break;
     }
 }
 

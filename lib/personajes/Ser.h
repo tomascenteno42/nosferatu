@@ -54,7 +54,7 @@ public:
      * 
      * @param danio 
      */
-    void ajustarDanio(int &danio);
+    void ajustarDanio(int &danio, int escudo);
 
     /**
      * @brief Retorna true si el ser tiene 0 de vida.

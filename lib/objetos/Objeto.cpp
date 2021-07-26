@@ -6,8 +6,8 @@ Objeto::Objeto(string nombre, char caracter, int id, int fila, int columna)
     this->nombre = nombre;
     this->caracter = caracter;
     this->id = id;
-    this->fila = fila;
-    this->columna = columna;
+    this->fila = (fila);
+    this->columna = (columna);
 }
 
 char Objeto::getCaracter()

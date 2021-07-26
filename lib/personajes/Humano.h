@@ -7,6 +7,12 @@ class Humano : public Ser
 {
 private:
     static int contador;
+
+protected:
+    bool contieneEscopeta = false;
+    bool contieneAguas = false;
+    bool contieneBalas = false;
+    bool contieneEstaca = false;
     vector<Elemento *> inventario;
 
 public:
@@ -31,6 +37,10 @@ public:
 
 
     void atacar(Tablero *tablero);
+
+    bool enUnNumero(std::string texto);
+
+    void pedirPosicion(int &fila, int &columna);
 
     /*
      * Post: obtiene la cantidad de humanos (normales) existentes
