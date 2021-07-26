@@ -1,7 +1,7 @@
 10 10
 M,M,V,M,M,V,L,L,O,V
 V,P,O,M,M,V,L,P,P,V
-V,P,O,V,P,O,M,M,L,P
+V,C,O,V,P,O,M,M,L,P
 O,C,O,O,C,O,M,L,P,O
 M,M,V,M,M,V,L,L,O,V
 V,P,O,M,M,V,L,P,P,V

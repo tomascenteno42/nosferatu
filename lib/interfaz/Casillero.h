@@ -24,6 +24,8 @@ public:
     void setObjeto(Objeto *nuevoObjeto);
     void vaciarObjeto();
 
+    void eliminarObjeto();
+
     int getFila();
 
     int getColumna();

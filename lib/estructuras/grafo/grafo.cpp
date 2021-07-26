@@ -230,6 +230,19 @@ int Grafo::buscarIndice(Posicion coordenada)
     return indice;
 }
 
+int Grafo::sumarCamino(vector<int> *camino) {
+    int tamanio = (int)camino->size();
+    int total = 0;
+    int parcial;
+    int indice;
+    for(int i = 0; (i + 1) < tamanio; i++){
+        indice = camino->at(i);
+        parcial = matriz_adyacencia[indice][camino->at(i + 1)];
+        total += parcial;
+    }
+    return total;
+}
+
 /* Pre: la fila y la columna deben ser numeros positivos, el puntero a objeto no debe ser nullptr
  * Pos: Dado un puntero a un objeto y una posicion, agrega el puntero al casillero que se encuentra en esa posicion
  */
@@ -239,6 +252,14 @@ void Grafo::agregarObjeto(Objeto *nuevoObjeto, Posicion pos)
     {
         int indice = buscarIndice(pos);
         casilleros.at(indice)->setObjeto(nuevoObjeto);
+    }
+}
+
+void Grafo::eliminarObjeto(Posicion pos) {
+    if(coordenadaValida(pos))
+    {
+        int indice = buscarIndice(pos);
+        casilleros.at(indice)->eliminarObjeto();
     }
 }
 
@@ -410,4 +431,11 @@ vector<int> *Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaP
         delete camino;
     }
     return nullptr;
+}
+
+
+bool Grafo::estaOcupado(Posicion coordenada) {
+    int indice = buscarIndice(coordenada);
+    return casilleros[indice]->estaOcupado();
+
 }
