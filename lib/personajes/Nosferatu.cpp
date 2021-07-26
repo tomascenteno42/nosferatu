@@ -78,6 +78,10 @@ void Nosferatu::atacar(Tablero *tablero) {
 }
 
 
+void Nosferatu::actualizar() {
+    this->energia += 10;
+}
+
 Nosferatu::~Nosferatu()
 {
     Nosferatu::contador--;

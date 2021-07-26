@@ -22,6 +22,8 @@ public:
 
     void atacar(Tablero *tablero);
 
+    void actualizar() override;
+
     /*
      * Post: decrece en 1 la cantidad de Nosferatu existentes
      */

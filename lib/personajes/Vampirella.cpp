@@ -84,12 +84,16 @@ void Vampirella::atacar(Tablero *tablero){
             this->setEnergia((this->getEnergia())-4);
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
-            objeto = tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo));
+            objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             enemigo = dynamic_cast<Ser *>(objeto);
             enemigo->mostrarInformacion();
         }
     }
 }
+}
+
+void Vampirella::actualizar() {
+    this->energia += 6;
 }
 
 Vampirella::~Vampirella()

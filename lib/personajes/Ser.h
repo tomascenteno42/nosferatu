@@ -74,6 +74,8 @@ public:
     //virtual void atacar(Tablero *tablero) = 0;
     // virtual void defender(Tablero *tablero);
 
+    virtual void actualizar() = 0;
+
     /*Pre: destino debe ser una coordenada valida y ademas, estar desocupada. mapa no debe ser nullptr
      * Pos: mueve el ser desde su posicion actual hasta el destino si es posible, yendo por el camino
      * que consuma menos energia. La posicion actual la deja como desocupada y el destino como ocupado.

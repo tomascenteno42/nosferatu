@@ -37,6 +37,8 @@ public:
      */
     static int obtener_existentes();
 
+    void actualizar() override;
+
     /*
      * Post: decrece en 1 la cantidad de humanos cazadores existentes
      */

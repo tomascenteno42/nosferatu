@@ -28,6 +28,8 @@ public:
 
     void atacarEstaca(Tablero *tablero);
 
+    void actualizar() override;
+
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes
      */
