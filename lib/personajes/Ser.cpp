@@ -10,6 +10,7 @@ Ser::Ser(string nombre, char caracter, int id, int fila, int columna) : Objeto(n
     fuerza = rand() % (MAX_FUERZA - 10 + 1) + 10;
     id = id;
     defendiendo = false;
+    contadorTurnos = 0;
 }
 
 /* GETTERS */
