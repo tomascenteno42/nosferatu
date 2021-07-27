@@ -24,6 +24,8 @@ public:
 
     void actualizar() override;
 
+    void defender(Juego* juego) override;
+
     /*
      * Post: decrece en 1 la cantidad de objetos Vampiro existentes
      */

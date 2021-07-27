@@ -20,13 +20,15 @@ public:
      */
     Humano_cazador(string nombre, char caracter, int id, int fila, int columna);
 
-    void atacar(Juego *juego);
+    void atacar(Juego *juego) override;
 
     void atacarEscopeta(Tablero *tablero);
 
     void atacarAgua(Tablero *tablero);
 
     void atacarEstaca(Tablero *tablero);
+
+    void defender(Juego* juego) override;
 
     void actualizar() override;
 
