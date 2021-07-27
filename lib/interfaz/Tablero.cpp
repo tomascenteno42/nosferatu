@@ -67,14 +67,22 @@ Tablero::Tablero(const string &dir)
 
 void Tablero::darDeBaja(Posicion pos)
 {
+
     if (this->mapa->coordenadaValida(pos))
-    {
         this->mapa->getCasillero(pos)->vaciarObjeto();
-    }
+}
+
+void Tablero::matarPersonaje(Posicion pos)
+{
+    getMapa()->eliminarObjeto(pos);
+    getJugadorActual()->eliminarPersonaje(getElementoEnPosicion(pos)->getId());
 }
 
 Objeto *Tablero::getElementoEnPosicion(Posicion pos)
 {
+    if (!this->mapa->coordenadaValida(pos))
+        return nullptr;
+
     return this->mapa->getCasillero(pos)->getObjeto();
 }
 

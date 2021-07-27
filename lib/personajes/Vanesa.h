@@ -2,6 +2,8 @@
 #define NOSFERATUV2_VANESA_H
 
 #include "../../src/main.h"
+class Juego;
+class Tablero;
 
 class Vanesa : public Humano_cazador
 {
@@ -20,13 +22,13 @@ public:
      */
     static int getContador();
 
-    void atacar(Tablero *tablero);
+    void atacar(Juego *juego);
 
-    void atacarEscopeta(Tablero *tablero);
+    void atacarEscopeta(Juego *juego);
 
-    void atacarAgua(Tablero *tablero);
+    void atacarAgua(Juego *juego, int idxAgua);
 
-    void atacarEstaca(Tablero *tablero);
+    void atacarEstaca(Juego *juego);
 
     void actualizar() override;
 

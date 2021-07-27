@@ -2,12 +2,13 @@
 #define NOSFERATUV2_HUMANO_CAZADOR_H
 
 #include "../../src/main.h"
+class Juego;
+class Tablero;
 
 class Humano_cazador : public Humano
 {
 private:
     static int contador;
-
 
 public:
     /*
@@ -22,15 +23,13 @@ public:
      */
     Humano_cazador(string nombre, char caracter, int id, int fila, int columna);
 
-
-    void atacar(Tablero *tablero);
+    void atacar(Juego *juego);
 
     void atacarEscopeta(Tablero *tablero);
 
     void atacarAgua(Tablero *tablero);
 
     void atacarEstaca(Tablero *tablero);
-
 
     /*
      * Post: obtiene la cantidad de humanos cazadores existentes

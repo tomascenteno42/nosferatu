@@ -50,11 +50,12 @@ void Humano::mostrarInventario()
          << endl;
 }
 
-void Humano::atacar(Tablero *tablero)
+void Humano::atacar(Juego *juego)
 {
-    int fila_enemigo, columna_enemigo, posicion_balas;
+    int filaEnemigo, columnaEnemigo, posBalas;
     size_t i = 0;
     bool puedeAtacar = false;
+
     if (this->getEnergia() < 5)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
@@ -63,33 +64,34 @@ void Humano::atacar(Tablero *tablero)
     {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() > 2)
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2)
         {
             contieneBalas = true;
-            posicion_balas = i;
+            posBalas = i;
         }
         i++;
     }
     if (!contieneBalas && contieneEscopeta && this->getEnergia() >= 5)
         cout << "No podes hacer eso, te faltan balas ლ(ಠ_ಠლ)" << endl;
+
     else if (contieneEscopeta && contieneBalas && this->getEnergia() >= 6)
     {
-        Ser *personaje = dynamic_cast<Ser *>(tablero->getElementoEnPosicion(Posicion(fila, columna)));
+        Ser *personaje = dynamic_cast<Ser *>(juego->tablero->getElementoEnPosicion(Posicion(fila, columna)));
         cout << "Indique a que posicion quiere atacar" << endl;
-        cout << "A su alrededor hay: " << endl;
+        cout << "A su alrededor hay los siguiente personajes: " << endl;
         for (int i = (this->fila - 1); i <= (this->fila + 1); i++)
         {
             for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
             {
-                Objeto *objeto_encontrado = tablero->getElementoEnPosicion(Posicion(i, j));
-                if (objeto_encontrado)
+                Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
+                if (objetoEncontrado)
                 {
-                    if (objeto_encontrado->getCaracter() == C_ZOMBI || objeto_encontrado->getCaracter() == C_VAMPIRO && (objeto_encontrado != this))
+                    if (objetoEncontrado->getCaracter() == C_ZOMBI || objetoEncontrado->getCaracter() == C_VAMPIRO && (objetoEncontrado != this))
                     {
-                        objeto_encontrado->mostrarInformacion();
+                        objetoEncontrado->mostrarInformacion();
                         puedeAtacar = true;
-                        cout << "en la posicion: " << objeto_encontrado->getFila() << "," << objeto_encontrado->getColumna()
-                             << "\n"
+                        cout << "En la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna();
+                        cout << endl
                              << endl;
                     }
                 }
@@ -97,16 +99,19 @@ void Humano::atacar(Tablero *tablero)
         }
         if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else if (puedeAtacar)
+        else
         {
             cout << "Ingrese la fila" << endl;
-            cin >> fila_enemigo;
+            cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;
-            cin >> columna_enemigo;
-            Objeto *objeto = tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo));
+            cin >> columnaEnemigo;
+
+            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
-            int danio, escudo;
-            escudo = enemigo->getEscudo();
+
+            int danio;
+            int escudo = enemigo->getEscudo();
+
             if (enemigo->getCaracter() == C_ZOMBI)
             {
                 danio = (this->getFuerza());
@@ -120,11 +125,11 @@ void Humano::atacar(Tablero *tablero)
                 enemigo->setVida(enemigo->getVida() - danio);
             }
             this->setEnergia((this->getEnergia()) - 5);
-            //this->inventario.at(posicion_balas)->setCantidad() -= 2;
+            //this->inventario.at(posBalas)->setCantidad() -= 2;
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
                  << endl;
-            objeto = tablero->getElementoEnPosicion(Posicion(fila_enemigo, columna_enemigo));
+            objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             enemigo = dynamic_cast<Ser *>(objeto);
             enemigo->mostrarInformacion();
         }

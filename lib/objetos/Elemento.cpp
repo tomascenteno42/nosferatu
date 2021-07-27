@@ -4,6 +4,11 @@ Elemento::Elemento(string nombre, char caracter, int id, int fila, int columna) 
 {
 }
 
+void Elemento::setCantidad(int cant)
+{
+    this->cantidad = cant;
+}
+
 int Elemento::getCantidad()
 {
     return this->cantidad;

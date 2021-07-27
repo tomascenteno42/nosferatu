@@ -358,26 +358,29 @@ void procesarOpcionDefenderse(Juego *juego)
 }
 void procesarOpcionAtacar(Juego *juego)
 {
+    juego->personajeActual->atacar(juego);
 }
 void procesarOpcionMoverse(Juego *juego)
 {
     int fila, columna;
     juego->pedirPosicion(fila, columna);
-    Grafo* mapa = juego->tablero->getMapa();
+    Grafo *mapa = juego->tablero->getMapa();
     Posicion pos(fila, columna);
     bool seMovio;
 
-    while(!mapa->coordenadaValida(pos) || mapa->estaOcupado(pos)) {
+    while (!mapa->coordenadaValida(pos) || mapa->estaOcupado(pos))
+    {
         juego->pedirPosicion(fila, columna);
     }
 
-    if(juego->personajeActual != nullptr) {
+    if (juego->personajeActual != nullptr)
+    {
         int energiaAntes = juego->personajeActual->getEnergia();
         juego->personajeActual->mostrarInformacion();
         seMovio = juego->personajeActual->mover(mapa, pos);
         int energiaFinal = juego->personajeActual->getEnergia();
 
-        if(seMovio)
+        if (seMovio)
             cout << "Energia : " << energiaAntes << " --> " << energiaFinal << endl;
         else
             cout << "No tiene energia suficiente para completar el movimiento" << endl;

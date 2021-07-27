@@ -17,7 +17,19 @@ public:
 
     BANDO getBando();
 
+    /**
+     * @brief Agrega el personaje al vector de personajes del jugador
+     * 
+     * @param personaje 
+     */
     void agregarPersonaje(Ser *personaje);
+
+    /**
+     * @brief Elimina el personaje del vector de personajes con el id.
+     * 
+     * @param id 
+     */
+    void eliminarPersonaje(int id);
 
     /**
      * @brief Aplica las modificaciones correspondientes a cada personaje vivo

@@ -18,7 +18,7 @@ int Vampiro::obtener_existentes()
     return Vampiro::contador;
 }
 
-void Vampiro::atacar(Tablero *tablero)
+void Vampiro::atacar(Juego *juego)
 {
     if (this->getEnergia() < 2)
     {
@@ -31,7 +31,7 @@ void Vampiro::atacar(Tablero *tablero)
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objeto_encontrado = tablero->getElementoEnPosicion(arriba);
+        Objeto *objeto_encontrado = juego->tablero->getElementoEnPosicion(arriba);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -45,7 +45,7 @@ void Vampiro::atacar(Tablero *tablero)
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objeto_encontrado = tablero->getElementoEnPosicion(abajo);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(abajo);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -59,7 +59,7 @@ void Vampiro::atacar(Tablero *tablero)
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(izquierda);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(izquierda);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -73,7 +73,7 @@ void Vampiro::atacar(Tablero *tablero)
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(derecha);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(derecha);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -93,7 +93,7 @@ void Vampiro::atacar(Tablero *tablero)
             cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;
             cin >> columnaEnemigo;
-            Objeto *objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
             int danio, escudo;
             escudo = enemigo->getEscudo();
@@ -103,7 +103,7 @@ void Vampiro::atacar(Tablero *tablero)
             this->setEnergia((this->getEnergia()) - 2);
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
-            objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             enemigo = dynamic_cast<Ser *>(objeto);
             enemigo->mostrarInformacion();
         }

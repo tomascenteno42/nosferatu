@@ -54,19 +54,23 @@ void Juego::mostrar()
 
     this->tablero->getMapa()->mostrarMapa();
 
-    if (idxMenu >= menuComienzoDeTurno) {
+    if (idxMenu >= menuComienzoDeTurno)
+    {
         mostrarBando(this->tablero->getJugadorActual()->getBando());
         this->personajeActual->mostrarInformacion();
-        cout << "Posicion: " << "(" <<  this->personajeActual->getFila() << "," << this->personajeActual->getColumna() << ")";
+        cout << "Posicion: "
+             << "(" << this->personajeActual->getFila() << "," << this->personajeActual->getColumna() << ")";
         cout << endl;
         cout << endl;
 
         string nombre = this->personajeActual->getNombre();
-        if(nombre == S_HUMANO_CV || nombre == S_VANESA || nombre == S_HUMANO){
-            Ser* ser = this->personajeActual;
-            Humano* humano = dynamic_cast<Humano*>(ser);
+        if (nombre == S_HUMANO_CV || nombre == S_VANESA || nombre == S_HUMANO)
+        {
+            Ser *ser = this->personajeActual;
+            Humano *humano = dynamic_cast<Humano *>(ser);
 
-            if(!humano->inventarioVacio()){
+            if (!humano->inventarioVacio())
+            {
                 humano->mostrarInventario();
                 cout << endl;
             }
@@ -252,31 +256,32 @@ enumMenu Juego::getIdxMenuActual()
 
 void Juego::avanzar()
 {
+    cout << "AVANZAR" << endl;
     personajesJugados++;
 
     // Termino el turno
     if (personajesJugados == this->tablero->getJugadorActual()->getCantidadPersonajes())
     {
+        cout << "TERMINO EL TURNO";
         //TODO: DONT KNOW IF I HAVE TO CHECK FOR GAMEOVER?
         personajesJugados = 0;
         this->tablero->idxJugadorActual = (this->tablero->idxJugadorActual + 1) % 2;
         cambiarMenu(menuComienzoDeTurno);
 
-        vector<Ser*> personajes = this->tablero->getJugador(0)->getPersonajes();
+        vector<Ser *> personajes = this->tablero->getJugador(0)->getPersonajes();
         int cantidadVivos = this->tablero->getJugador(0)->personajesVivos();
 
-        for(int i = 0; i < cantidadVivos; i++)
-            personajes.at(i)->actualizar();
+        for (int i = 0; i < cantidadVivos; i++)
+            if (!personajes.at(i)->estaMuerto())
+                personajes.at(i)->actualizar();
 
         personajes = this->tablero->getJugador(1)->getPersonajes();
         cantidadVivos = this->tablero->getJugador(1)->personajesVivos();
 
-        for(int j = 0; j < cantidadVivos; j++)
-            personajes.at(j)->actualizar();
-
-
+        for (int j = 0; j < cantidadVivos; j++)
+            if (!personajes.at(j)->estaMuerto())
+                personajes.at(j)->actualizar();
     }
-
 
     personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
 

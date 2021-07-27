@@ -2,6 +2,7 @@
 #define NOSFERATUV2_ZOMBI_H
 
 #include "../../src/main.h"
+class Juego;
 
 class Zombi : public Monstruo
 {
@@ -22,7 +23,7 @@ public:
      */
     void agarrarObjeto();
 
-    void atacar(Tablero *tablero);
+    void atacar(Juego *juego);
 
     /*
      * Post: obtiene la cantidad de objetos Zombi existentes

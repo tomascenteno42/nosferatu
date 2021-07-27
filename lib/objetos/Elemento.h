@@ -7,7 +7,7 @@ class Elemento : public Objeto
 {
 
 protected:
-    int cantidad;
+    int cantidad = 0;
 
 public:
     /* Pre:
@@ -21,6 +21,8 @@ public:
      *
      */
     int getCantidad();
+
+    void setCantidad(int cant);
 };
 
 #endif //NOSFERATUV2

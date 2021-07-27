@@ -3,6 +3,9 @@
 
 #include "../../src/main.h"
 
+class Juego;
+class Tablero;
+
 class Humano : public Ser
 {
 private:
@@ -35,8 +38,7 @@ public:
      */
     void agarrarObjeto(Elemento *objeto);
 
-
-    void atacar(Tablero *tablero);
+    void atacar(Juego *juego);
 
     bool enUnNumero(std::string texto);
 
@@ -47,16 +49,13 @@ public:
      */
     static int obtener_existentes();
 
-
     /* Pos: Devuelve true si el inventario esta vacio o false si no lo esta
      */
     bool inventarioVacio();
 
-
     /* Pos: Muestra por pantalla el inventario del humano
      */
     void mostrarInventario();
-
 
     void actualizar() override;
 

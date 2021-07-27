@@ -5,6 +5,7 @@
 
 class Grafo;
 class Tablero;
+class Juego;
 
 class Ser : public Objeto
 {
@@ -77,6 +78,7 @@ public:
     // virtual void defender(Tablero *tablero);
 
     virtual void actualizar() = 0;
+    virtual void atacar(Juego *juego){};
 
     /*Pre: destino debe ser una coordenada valida y ademas, estar desocupada. mapa no debe ser nullptr
      * Pos: mueve el ser desde su posicion actual hasta el destino si es posible, yendo por el camino
@@ -84,8 +86,6 @@ public:
      * Devuelve true si el ser se movio y false si no.
      */
     bool mover(Grafo *mapa, Posicion destino);
-
-    void atacar(Tablero *tablero);
 
     /**
      * @brief Ajusta el danio pasado por referencia segun la cantidad de escudo del ser.

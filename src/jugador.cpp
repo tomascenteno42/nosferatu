@@ -25,6 +25,13 @@ void Jugador::agregarPersonaje(Ser *personaje)
     personajes.push_back(personaje);
 }
 
+void Jugador::eliminarPersonaje(int id)
+{
+    for (size_t i = 0; i < personajes.size(); i++)
+        if (personajes.at(i)->getId() == id)
+            personajes.erase(personajes.begin() + i);
+}
+
 int Jugador::personajesVivos()
 {
     int personajesVivos = 0;

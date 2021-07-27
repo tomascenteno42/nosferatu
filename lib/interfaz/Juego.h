@@ -110,6 +110,9 @@ public:
      */
     void pedirPosicion(int &fila, int &columna);
 
+    /**
+     * @brief Nucleo de la logica para pasar de turno.
+     */
     void avanzar();
 
     /**

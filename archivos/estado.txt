@@ -6,7 +6,7 @@ agua 10 (8, 8) 305
 Nosferatu (10, 8) 200
 bala 20 (10, 10) 370
 cruz (3, 2) 330
-estaca (9, 7) 832
+agua 2 (9, 7) 301
 escopeta (7, 9) 350
 Vampirella (3, 5) 201
 estaca (5, 4) 400

@@ -12,7 +12,7 @@ int Vampirella::obtener_existentes()
     return Vampirella::contador;
 }
 
-void Vampirella::atacar(Tablero *tablero)
+void Vampirella::atacar(Juego *juego)
 {
     if (this->getEnergia() < 4)
     {
@@ -25,7 +25,7 @@ void Vampirella::atacar(Tablero *tablero)
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objetoEncontrado = tablero->getElementoEnPosicion(arriba);
+        Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
         if (objetoEncontrado)
         {
             if (objetoEncontrado->getCaracter() == C_HUMANO)
@@ -39,7 +39,7 @@ void Vampirella::atacar(Tablero *tablero)
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objetoEncontrado = tablero->getElementoEnPosicion(abajo);
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
         if (objetoEncontrado)
         {
             if (objetoEncontrado->getCaracter() == C_HUMANO)
@@ -53,7 +53,7 @@ void Vampirella::atacar(Tablero *tablero)
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objetoEncontrado = tablero->getElementoEnPosicion(izquierda);
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
         if (objetoEncontrado)
         {
             if (objetoEncontrado->getCaracter() == C_HUMANO)
@@ -67,7 +67,7 @@ void Vampirella::atacar(Tablero *tablero)
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objetoEncontrado = tablero->getElementoEnPosicion(derecha);
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
         if (objetoEncontrado)
         {
             if (objetoEncontrado->getCaracter() == C_HUMANO)
@@ -87,7 +87,7 @@ void Vampirella::atacar(Tablero *tablero)
             cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;
             cin >> columnaEnemigo;
-            Objeto *objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
             int danio, escudo;
             escudo = enemigo->getEscudo();
@@ -99,14 +99,15 @@ void Vampirella::atacar(Tablero *tablero)
             this->setEnergia((this->getEnergia()) - 4);
             cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
             cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
-            objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             enemigo = dynamic_cast<Ser *>(objeto);
             enemigo->mostrarInformacion();
         }
     }
 }
 
-void Vampirella::actualizar() {
+void Vampirella::actualizar()
+{
     this->energia += 6;
 }
 

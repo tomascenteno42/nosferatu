@@ -47,6 +47,8 @@ public:
      */
     void darDeBaja(Posicion pos);
 
+    void matarPersonaje(Posicion pos);
+
     /*
      * Pre: en la posicion no hay ningun objeto (NULL)
      * Post: Se asigna un objeto en la posicion indicada por parametro

@@ -2,6 +2,7 @@
 #define NOSFERATUV2_VAMPIRO_H
 
 #include "../../src/main.h"
+class Juego;
 
 class Vampiro : public Monstruo
 {
@@ -26,7 +27,7 @@ public:
      */
     static int obtener_existentes();
 
-    void atacar(Tablero *tablero);
+    void atacar(Juego *juego);
 
     void actualizar() override;
 

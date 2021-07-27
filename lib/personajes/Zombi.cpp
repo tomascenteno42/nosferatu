@@ -18,7 +18,7 @@ int Zombi::obtener_existentes()
     return Zombi::contador;
 }
 
-void Zombi::atacar(Tablero *tablero)
+void Zombi::atacar(Juego *juego)
 {
     bool humanoSup, humanoInf, humanoIzq, humanoDer;
     if (this->getEnergia() < 5)
@@ -29,7 +29,7 @@ void Zombi::atacar(Tablero *tablero)
     {
         int filaEnemigo, columna_enemigo;
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objeto_encontrado = tablero->getElementoEnPosicion(arriba);
+        Objeto *objeto_encontrado = juego->tablero->getElementoEnPosicion(arriba);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -39,7 +39,7 @@ void Zombi::atacar(Tablero *tablero)
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objeto_encontrado = tablero->getElementoEnPosicion(abajo);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(abajo);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -49,7 +49,7 @@ void Zombi::atacar(Tablero *tablero)
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(izquierda);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(izquierda);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -59,7 +59,7 @@ void Zombi::atacar(Tablero *tablero)
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objeto_encontrado = tablero->getElementoEnPosicion(derecha);
+        objeto_encontrado = juego->tablero->getElementoEnPosicion(derecha);
         if (objeto_encontrado)
         {
             if (objeto_encontrado->getCaracter() == C_HUMANO)
@@ -76,7 +76,7 @@ void Zombi::atacar(Tablero *tablero)
             cin >> filaEnemigo;
             cout << "Ingrese la columna" << endl;
             cin >> columna_enemigo;
-            Objeto *objeto = tablero->getElementoEnPosicion(Posicion(filaEnemigo, columna_enemigo));
+            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columna_enemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
 
             this->setEnergia((this->getEnergia()) - 5);
@@ -84,7 +84,8 @@ void Zombi::atacar(Tablero *tablero)
     }
 }
 
-void Zombi::actualizar() {
+void Zombi::actualizar()
+{
     this->energia += 5;
 }
 
