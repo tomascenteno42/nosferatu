@@ -262,19 +262,11 @@ void Juego::avanzar()
         this->tablero->idxJugadorActual = (this->tablero->idxJugadorActual + 1) % 2;
         cambiarMenu(menuComienzoDeTurno);
 
-        vector<Ser*> personajes = this->tablero->getJugador(0)->getPersonajes();
-        int cantidadVivos = this->tablero->getJugador(0)->personajesVivos();
+        vector<Ser*> personajes = this->tablero->getJugadorActual()->getPersonajes();
+        int cantidadPersonajes = this->tablero->getJugadorActual()->personajesVivos();
 
-        for(int i = 0; i < cantidadVivos; i++)
+        for(int i = 0; i < cantidadPersonajes; i++)
             personajes.at(i)->actualizar();
-
-        personajes = this->tablero->getJugador(1)->getPersonajes();
-        cantidadVivos = this->tablero->getJugador(1)->personajesVivos();
-
-        for(int j = 0; j < cantidadVivos; j++)
-            personajes.at(j)->actualizar();
-
-
     }
 
 

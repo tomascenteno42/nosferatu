@@ -455,5 +455,4 @@ vector<int> *Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaP
 bool Grafo::estaOcupado(Posicion coordenada) {
     int indice = buscarIndice(coordenada);
     return casilleros[indice]->estaOcupado();
-
 }

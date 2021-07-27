@@ -84,8 +84,14 @@ void Zombi::atacar(Tablero *tablero)
     }
 }
 
-void Zombi::actualizar() {
-    this->energia += 5;
+void Zombi::actualizar()
+{
+    int nuevaEnergia = this->energia + 5;
+
+    if(nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Zombi::~Zombi()

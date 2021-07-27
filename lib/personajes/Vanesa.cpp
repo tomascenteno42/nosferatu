@@ -265,8 +265,14 @@ void Vanesa::atacarEstaca(Tablero *tablero) {
     }
 }
 
-void Vanesa::actualizar() {
-    this->energia += 10;
+void Vanesa::actualizar()
+{
+    int nuevaEnergia = this->energia + 10;
+
+    if(nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 

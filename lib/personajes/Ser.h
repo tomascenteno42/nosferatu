@@ -30,6 +30,8 @@ protected:
     int escudo;
     int fuerza;
 
+    bool defendiendo;
+
 public:
     Ser() : Objeto(){};
     /*
@@ -74,7 +76,8 @@ public:
     void setFuerza(int f);
 
     //virtual void atacar(Tablero *tablero) = 0;
-    // virtual void defender(Tablero *tablero);
+
+//    virtual void defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
 
@@ -98,6 +101,11 @@ public:
      * @brief Retorna true si el ser tiene 0 de vida.
      */
     bool estaMuerto();
+
+
+    /* Pre: Devuelve true si el ser se esta defendiendo o false si no lo esta
+     * */
+    bool seEstaDefendiendo();
 
     /*
      * Post: Se muestra por pantalla la informacion del objeto: nombre

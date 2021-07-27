@@ -138,7 +138,12 @@ int Humano::obtener_existentes()
 
 void Humano::actualizar()
 {
-    this->energia += 5;
+    int nuevaEnergia = this->energia + 5;
+
+    if(nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Humano::~Humano()

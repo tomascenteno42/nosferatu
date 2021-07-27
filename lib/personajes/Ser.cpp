@@ -4,11 +4,12 @@ Ser::Ser(string nombre, char caracter, int id, int fila, int columna) : Objeto(n
 {
     nombre = nombre;
     caracter = caracter;
-    energia = rand() % 20;
-    vida = rand() % 100 + 20;
-    escudo = rand() % 2;
-    fuerza = rand() % 30 + 10;
+    energia = rand() % (MAX_ENERGIA + 1);
+    vida = rand() % (MAX_VIDA + 1);
+    escudo = rand() % (MAX_ESCUDO + 1);
+    fuerza = rand() % (MAX_FUERZA - 10 + 1) + 10;
     id = id;
+    defendiendo = false;
 }
 
 /* GETTERS */
@@ -76,6 +77,11 @@ void Ser::ajustarDanio(int &danio, int escudo)
 bool Ser::estaMuerto()
 {
     return getVida() == 0;
+}
+
+bool Ser::seEstaDefendiendo()
+{
+    return defendiendo;
 }
 
 void Ser::mostrarInformacion()
@@ -199,8 +205,8 @@ bool Ser::mover(Grafo *mapa, Posicion destino) {
         int costoCamino = mapa->sumarCamino(camino);
         this->energia -= costoCamino;
 
-        actualizarMapa(mapa, origen, destino);
         chequearCamino(mapa, camino, this->nombre);
+        actualizarMapa(mapa, origen, destino);
         vector <Posicion> *posiciones;
 
         posiciones = obtenerPosiciones(mapa, camino);
