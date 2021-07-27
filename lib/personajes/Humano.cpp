@@ -141,6 +141,62 @@ void Humano::actualizar()
         this->energia = MAX_ENERGIA;
     else
         this->energia = nuevaEnergia;
+
+//    if(contadorTurnos == 1) {
+//        this->escudo--;
+//        defendiendo = false;
+//        contadorTurnos = 0;
+//    }
+//
+//    if(defendiendo){
+//        contadorTurnos++;
+//    }
+}
+
+void Humano::defender(Juego *juego) {
+//    int tamanio = (int) inventario.size();
+//    string leido;
+//    bool tieneAgua = false;
+//    int i = 0;
+//    Elemento *aux;
+//
+//    while (!tieneAgua && i < tamanio) {
+//        leido = inventario.at(i)->getNombre();
+//        if (leido == S_AGUA_BENDITA) {
+//            tieneAgua = true;
+//            aux = inventario.at(i);
+//        }
+//        i++;
+//    }
+//    if (tieneAgua) {
+//        cout << "Tiene agua bendita en su inventario, desea usarla?" << endl;
+//        cout << "0 - Si" << endl;
+//        cout << "1 - No" << endl;
+//        leido = juego->solicitarOpcion();
+//
+//        while (!esUnNumero(leido) || stoi(leido) < 0 || stoi(leido) > 1) {
+//            cout << "Por favor ingrese un numero valido" << endl;
+//            leido = juego->solicitarOpcion();
+//        }
+//        int respuesta = stoi(leido);
+//
+//        if (respuesta == 1) {
+//            if (this->escudo < MAX_ESCUDO) {
+//                this->escudo++;
+//                this->defendiendo = true;
+//            }
+//            else {
+//                cout << "Ya tenes el maximo escudo posible" << endl;
+//                this->energia += 3;
+//            }
+//        }
+//        else if(respuesta == 0){
+//            this->energia = MAX_ENERGIA;
+//            aux->setCantidad(aux->getCantidad() - 1);
+//        }
+//    }
+//    else
+//        this->energia += 3;
 }
 
 Humano::~Humano()

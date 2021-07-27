@@ -52,7 +52,8 @@ public:
      */
     void mostrarInventario();
 
-    //    void defender(Juego* juego);
+
+    void defender(Juego* juego);
 
     void actualizar() override;
 

@@ -30,6 +30,7 @@ protected:
     int vida;
     int escudo;
     int fuerza;
+    int contadorTurnos;
 
     bool defendiendo;
 
@@ -78,9 +79,10 @@ public:
 
     //virtual void atacar(Tablero *tablero) = 0;
 
-//    virtual void defender(Juego *juego) = 0;
+    virtual void defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
+
     virtual void atacar(Juego *juego){};
 
     /*Pre: destino debe ser una coordenada valida y ademas, estar desocupada. mapa no debe ser nullptr
