@@ -79,7 +79,7 @@ public:
 
     //virtual void atacar(Tablero *tablero) = 0;
 
-    virtual void defender(Juego *juego) = 0;
+//    virtual void defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
 
