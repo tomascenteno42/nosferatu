@@ -355,6 +355,7 @@ void procesarSeleccionBando(Juego *juego)
 /* MENU TURNO */
 void procesarOpcionDefenderse(Juego *juego)
 {
+    juego->personajeActual->defender(juego);
 }
 void procesarOpcionAtacar(Juego *juego)
 {

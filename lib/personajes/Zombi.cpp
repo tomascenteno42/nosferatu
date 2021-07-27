@@ -86,6 +86,10 @@ void Zombi::actualizar()
         this->energia = nuevaEnergia;
 }
 
+void Zombi::defender(Juego *juego) {
+
+}
+
 Zombi::~Zombi()
 {
 }

@@ -310,6 +310,48 @@ void Humano_cazador::actualizar()
         this->energia = nuevaEnergia;
 }
 
+void Humano_cazador::defender(Juego *juego){
+    if(this->energia >= 5){
+        string leido;
+
+        cout << "Ingrese la opcion deseada:" << endl;
+        cout << "1 - Curarse 50 puntos de vida" << endl;
+        cout << "2 - Curar a todos los aliados 20 puntos de vida" << endl;
+        leido = juego->solicitarOpcion();
+
+        while(!esUnNumero(leido) || stoi(leido) < 1 || stoi(leido) > 2){
+            cout << "Ingrese un numero valido" << endl;
+            leido = juego->solicitarOpcion();
+        }
+
+        int respuesta = stoi(leido);
+
+        if(respuesta == 1){
+            if((this->vida + 50) > MAX_VIDA)
+                this->vida = MAX_VIDA;
+            else
+                this->vida += 50;
+        }
+        else if(respuesta == 2) {
+            int personajesVivos = juego->tablero->getJugadorActual()->personajesVivos();
+            vector<Ser *> personajes = juego->tablero->getJugadorActual()->getPersonajes();
+
+            for(int i = 0; i < personajesVivos; i++){
+                if((personajes.at(i)->getVida() + 20) > MAX_VIDA)
+                    personajes.at(i)->setVida(MAX_VIDA);
+                else{
+                    int nuevaVida = personajes.at(i)->getVida() + 20;
+                    personajes.at(i)->setVida(nuevaVida);
+                    this->vida -= 20;
+                }
+            }
+        }
+        this->energia -= 5;
+    }
+    else
+        cout << "No tiene suficiente energia :(" << endl;
+}
+
 Humano_cazador::~Humano_cazador()
 {
 }

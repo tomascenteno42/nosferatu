@@ -32,7 +32,7 @@ protected:
     int fuerza;
     int contadorTurnos;
 
-    bool defendiendo;
+    bool seDefendio;
 
 public:
     Ser() : Objeto(){};
@@ -79,11 +79,11 @@ public:
 
     //virtual void atacar(Tablero *tablero) = 0;
 
-//    virtual void defender(Juego *juego) = 0;
+    virtual void defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
 
-    virtual void atacar(Juego *juego){};
+    virtual void atacar(Juego *juego) = 0;
 
     /*Pre: destino debe ser una coordenada valida y ademas, estar desocupada. mapa no debe ser nullptr
      * Pos: mueve el ser desde su posicion actual hasta el destino si es posible, yendo por el camino

@@ -16,7 +16,9 @@ public:
     */
     explicit Nosferatu(int fila, int columna);
 
-    void atacar(Juego *juego);
+    void atacar(Juego *juego) override;
+
+    void defender(Juego* juego) override;
 
     void actualizar() override;
 

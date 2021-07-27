@@ -10,3 +10,4 @@ agua 2 (9, 7) 301
 escopeta (7, 9) 350
 Vampirella (3, 5) 201
 estaca (5, 4) 400
+humano CV (10, 7) 067

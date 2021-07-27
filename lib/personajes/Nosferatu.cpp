@@ -93,6 +93,9 @@ void Nosferatu::actualizar()
         this->energia = nuevaEnergia;
 }
 
+void Nosferatu::defender(Juego *juego) {
+}
+
 Nosferatu::~Nosferatu()
 {
     Nosferatu::contador--;

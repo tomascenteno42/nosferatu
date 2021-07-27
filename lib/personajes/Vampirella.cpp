@@ -108,6 +108,10 @@ void Vampirella::actualizar()
         this->energia = nuevaEnergia;
 }
 
+void Vampirella::defender(Juego *juego) {
+
+}
+
 Vampirella::~Vampirella()
 {
 }

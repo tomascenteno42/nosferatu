@@ -10,6 +10,10 @@ class Vanesa : public Humano_cazador
 private:
     static int contador;
 
+    void defenderConAgua(Juego* juego);
+
+    bool posicionValida(vector<Posicion> posiciones, int fila, int columna);
+
 public:
     /*
      * Post: se crea el objeto listo para usarse
@@ -31,6 +35,8 @@ public:
     void atacarEstaca(Juego *juego);
 
     void actualizar() override;
+
+    void defender(Juego* juego) override;
 
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes

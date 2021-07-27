@@ -111,6 +111,10 @@ void Vampiro::actualizar()
         this->energia = nuevaEnergia;
 }
 
+void Vampiro::defender(Juego *juego) {
+
+}
+
 Vampiro::~Vampiro()
 {
 }
