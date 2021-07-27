@@ -22,7 +22,6 @@ Tablero::Tablero(const string &dir)
     }
     else
     {
-        this->contador = new Contador();
 
         string linea, filas, columnas;
 
@@ -94,16 +93,6 @@ void Tablero::darDeAlta(Posicion pos, Objeto *nuevoObjeto)
     }
 }
 
-int Tablero::getExistentes(const string &nombre)
-{
-    return contador->obtener_cantidad_existentes(nombre);
-}
-
-float Tablero::getPorcentaje(const string &nombre)
-{
-    return this->contador->obtener_porcentaje(nombre);
-}
-
 bool Tablero::existeObjetoEnCuadrante(const string &buscado, Posicion minPos, Posicion maxPos)
 {
     bool objetoEncontrado = false;
@@ -167,7 +156,6 @@ Grafo *Tablero::getMapa()
 Tablero::~Tablero()
 {
     delete mapa;
-    delete contador;
     delete diccionario;
     delete jugadores[0];
     delete jugadores[1];

@@ -5,9 +5,6 @@
 
 class Cruz : public Elemento
 {
-private:
-    static int contador;
-
 public:
     /*
      * Post: Se crea el objeto Cruz con nombre "Cruz" y caracter "c" y cantidad 1
@@ -19,11 +16,6 @@ public:
      * Post: Muestra por pantalla la informacion del objeto : nombre
      */
     void mostrarInformacion() override;
-
-    /*
-     * Post: Obtiene la cantidad de cruces existentes
-     */
-    static int obtener_existentes();
 
     /*
      * Post: Decrece la cantidad de cruces existentes en 1

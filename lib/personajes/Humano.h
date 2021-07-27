@@ -44,11 +44,6 @@ public:
 
     void pedirPosicion(int &fila, int &columna);
 
-    /*
-     * Post: obtiene la cantidad de humanos (normales) existentes
-     */
-    static int obtener_existentes();
-
     /* Pos: Devuelve true si el inventario esta vacio o false si no lo esta
      */
     bool inventarioVacio();

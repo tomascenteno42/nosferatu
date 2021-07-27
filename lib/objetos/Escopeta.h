@@ -5,9 +5,6 @@
 
 class Escopeta : public Elemento
 {
-private:
-    static int contador;
-
 public:
     /*
      * Post: Se crea el objeto listo para usarse
@@ -19,12 +16,7 @@ public:
      */
     void mostrarInformacion() override;
 
-    /*
-    * Post: Aumenta la cantidad de escopetas existentes en 1
-    */
-    static int obtener_existentes();
-
-    /*
+      /*
      * Post: Decrece la cantidad de escopetas existentes en 1
      */
     ~Escopeta() override;

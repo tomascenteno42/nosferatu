@@ -1,7 +1,5 @@
 #include "../../src/main.h"
 
-int Agua_bendita::contador = 0;
-
 Agua_bendita::Agua_bendita(int cantidad, int id, int fila, int columna) : Elemento(S_AGUA_BENDITA, C_AGUA_BENDITA, id, fila, columna)
 {
     if (cantidad <= 0)
@@ -11,7 +9,6 @@ Agua_bendita::Agua_bendita(int cantidad, int id, int fila, int columna) : Elemen
     else
     {
         this->cantidad = cantidad;
-        Agua_bendita::contador += cantidad;
     }
 }
 
@@ -20,12 +17,6 @@ void Agua_bendita::mostrarInformacion()
     cout << this->nombre << ", " << this->cantidad << endl;
 }
 
-int Agua_bendita::obtener_existentes()
-{
-    return Agua_bendita::contador;
-}
-
 Agua_bendita::~Agua_bendita()
 {
-    Agua_bendita::contador -= cantidad;
 }

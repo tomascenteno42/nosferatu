@@ -1,16 +1,13 @@
 #include "../../src/main.h"
 
-int Humano::contador = 0;
 bool contieneEscopeta = false;
 
 Humano::Humano(int id, int fila, int columna) : Ser(S_HUMANO, C_HUMANO, id, fila, columna)
 {
-    Humano::contador++;
 }
 
 Humano::Humano(string nombre, char caracter, int id, int fila, int columna) : Ser(nombre, caracter, id, fila, columna)
 {
-    Humano::contador++;
 }
 
 void Humano::agarrarObjeto(Elemento *objeto)
@@ -136,16 +133,11 @@ void Humano::atacar(Juego *juego)
     }
 }
 
-int Humano::obtener_existentes()
-{
-    return Humano::contador;
-}
-
 void Humano::actualizar()
 {
     int nuevaEnergia = this->energia + 5;
 
-    if(nuevaEnergia > MAX_ENERGIA)
+    if (nuevaEnergia > MAX_ENERGIA)
         this->energia = MAX_ENERGIA;
     else
         this->energia = nuevaEnergia;
@@ -153,5 +145,4 @@ void Humano::actualizar()
 
 Humano::~Humano()
 {
-    Humano::contador--;
 }

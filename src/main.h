@@ -60,7 +60,6 @@ using namespace std;
 
 #include "../lib/estructuras/grafo/grafo.h"
 
-#include "../lib/utilidades/Contador.h"
 #include "../lib/utilidades/Parser.h"
 
 #include "../lib/interfaz/Casillero.h"
@@ -86,8 +85,8 @@ ENUM_OBJETOS parsearTextoAObjeto(string texto);
 void toLower(string &str);
 ID parseId(int id);
 bool esIdValido(int id, ENUM_OBJETOS objeto);
-vector<Posicion>* obtenerPosiciones(Grafo* mapa, vector<int>* camino);
-void mostrarPosiciones(vector<Posicion>* posiciones);
+vector<Posicion> *obtenerPosiciones(Grafo *mapa, vector<int> *camino);
+void mostrarPosiciones(vector<Posicion> *posiciones);
 
 // Solicitudes al usuario
 /**

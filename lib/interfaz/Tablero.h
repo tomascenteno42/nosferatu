@@ -3,7 +3,6 @@
 
 #include "../../src/main.h"
 
-class Contador;
 class Jugador;
 
 template <class K, class T>
@@ -16,8 +15,6 @@ class Tablero
 private:
     //atributos
     Grafo *mapa;
-
-    Contador *contador;
 
     // jugadores[0] -> HUMANOS
     // jugadores[1] -> MONSTRUOS
@@ -54,18 +51,6 @@ public:
      * Post: Se asigna un objeto en la posicion indicada por parametro
      */
     void darDeAlta(Posicion pos, Objeto *nuevo_objeto);
-
-    /*
-     *
-     * Post: obtiene la cantidad de
-     */
-    int getExistentes(const string &nombre);
-
-    /*
-    *
-    * Post: Se obtiene el porcentaje del objeto en referencia al nombre en el mapa
-    */
-    float getPorcentaje(const string &nombre);
 
     /*
     *

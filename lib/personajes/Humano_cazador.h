@@ -7,9 +7,6 @@ class Tablero;
 
 class Humano_cazador : public Humano
 {
-private:
-    static int contador;
-
 public:
     /*
      * Post: Se crea el objeto listo para usarse
@@ -30,11 +27,6 @@ public:
     void atacarAgua(Tablero *tablero);
 
     void atacarEstaca(Tablero *tablero);
-
-    /*
-     * Post: obtiene la cantidad de humanos cazadores existentes
-     */
-    static int obtener_existentes();
 
     void actualizar() override;
 

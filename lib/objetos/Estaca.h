@@ -5,8 +5,6 @@
 
 class Estaca : public Elemento
 {
-private:
-    static int contador;
 
 public:
     /*
@@ -19,11 +17,6 @@ public:
      *  Post: Muestra por pantalla la informacion. En este caso el nombre.
      */
     void mostrarInformacion() override;
-
-    /*
-     * Post: Obtiene la cantidad de cruces existentes
-     */
-    static int obtener_existentes();
 
     /*
      * Post: decrece en 1 la cantidad existentes de estacas

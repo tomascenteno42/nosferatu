@@ -16,11 +16,6 @@ public:
     */
     explicit Nosferatu(int fila, int columna);
 
-    /*
-     * Post: obtiene la cantidad de Nosferatu existentes
-     */
-    static int obtener_existentes();
-
     void atacar(Juego *juego);
 
     void actualizar() override;

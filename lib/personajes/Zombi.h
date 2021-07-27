@@ -7,8 +7,6 @@ class Juego;
 class Zombi : public Monstruo
 {
 private:
-    static int contador;
-
     int cantidadDeAguaBenditas;
 
 public:
@@ -24,11 +22,6 @@ public:
     void agarrarObjeto();
 
     void atacar(Juego *juego);
-
-    /*
-     * Post: obtiene la cantidad de objetos Zombi existentes
-     */
-    static int obtener_existentes();
 
     void actualizar() override;
 

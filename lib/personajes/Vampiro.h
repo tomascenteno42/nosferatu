@@ -7,8 +7,6 @@ class Juego;
 class Vampiro : public Monstruo
 {
 private:
-    static int contador;
-
 public:
     /*
      * Post: Se crea el objeto vampiro listo para usarse
@@ -21,11 +19,6 @@ public:
      *       Aumenta en 1 la cantidad de objetos Vampiro existentes
      */
     Vampiro(string nombre, char caracter, int id, int fila, int columna);
-
-    /*
-     * Post: aumenta en 1 la cantidad de objetos Vampiro existentes
-     */
-    static int obtener_existentes();
 
     void atacar(Juego *juego);
 

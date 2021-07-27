@@ -1,21 +1,12 @@
 
 #include "../../src/main.h"
 
-int Vampiro::contador = 0;
-
 Vampiro::Vampiro(int id, int fila, int columna) : Monstruo(S_VAMPIRO, C_VAMPIRO, id, fila, columna)
 {
-    Vampiro::contador++;
 }
 
 Vampiro::Vampiro(string nombre, char caracter, int id, int fila, int columna) : Monstruo(nombre, caracter, id, fila, columna)
 {
-    Vampiro::contador++;
-}
-
-int Vampiro::obtener_existentes()
-{
-    return Vampiro::contador;
 }
 
 void Vampiro::atacar(Juego *juego)
@@ -114,7 +105,7 @@ void Vampiro::actualizar()
 {
     int nuevaEnergia = this->energia + 4;
 
-    if(nuevaEnergia > MAX_ENERGIA)
+    if (nuevaEnergia > MAX_ENERGIA)
         this->energia = MAX_ENERGIA;
     else
         this->energia = nuevaEnergia;
@@ -122,5 +113,4 @@ void Vampiro::actualizar()
 
 Vampiro::~Vampiro()
 {
-    Vampiro::contador--;
 }

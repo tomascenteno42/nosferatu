@@ -7,9 +7,6 @@ class Agua_bendita : public Elemento
 {
 
 private:
-    int cantidad;
-    static int contador;
-
 public:
     /* Pre: cantidad > 0
      * Post: item agua_bendita listo para usarse con la cantidad pasada por parametro
@@ -21,11 +18,6 @@ public:
      * Post: Se muestra por pantalla la informacion del objeto: Nombre y cantidad
      */
     void mostrarInformacion() override;
-
-    /*
-     * Post: Obtiene la cantidad de agua benditas existentes
-     */
-    static int obtener_existentes();
 
     /*
      * Post: Decrece la cantidad de existentes en 1
