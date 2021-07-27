@@ -83,6 +83,18 @@ void Nosferatu::atacar(Juego *juego)
     }
 }
 
+bool Nosferatu::posicionValida(vector <Posicion> posiciones, int fila, int columna) {
+    bool valida = false;
+    int i = 0;
+
+    while(!valida && i < posiciones.size()){
+        if(posiciones.at(i).getFila() == fila && posiciones.at(i).getColumna() == columna)
+            valida = true;
+        i++;
+    }
+    return valida;
+}
+
 void Nosferatu::actualizar()
 {
     int nuevaEnergia = this->energia + 10;
@@ -94,6 +106,49 @@ void Nosferatu::actualizar()
 }
 
 void Nosferatu::defender(Juego *juego) {
+    vector<Posicion> posiciones;
+    Objeto* objetoEncontrado;
+    bool puedeCambiar = false;
+    if(this->energia >= 10){
+        for (int i = (this->fila - 2); i <= (this->fila + 2); i++){
+            for (int j = (this->columna - 2); j <= (this->columna + 2); j++){
+                objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
+
+                if (objetoEncontrado){
+                    string nombre = objetoEncontrado->getNombre();
+                    if (nombre == S_VAMPIRO){
+                        objetoEncontrado->mostrarInformacion();
+                        puedeCambiar = true;
+                        posiciones.push_back(Posicion(i, j));
+                        cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                        << endl
+                        << endl;
+                    }
+                }
+            }
+        }
+        if(!puedeCambiar)
+            cout << "No hay vampiros para cambiar vida a tu alrededor" << endl;
+        else{
+            int filaVampiro, columnaVampiro;
+            juego->pedirPosicion(filaVampiro, columnaVampiro);
+
+            while(!this->posicionValida(posiciones, filaVampiro, columnaVampiro)){
+                cout << "Ingrese una posicion valida" << endl;
+                juego->pedirPosicion(filaVampiro, columnaVampiro);
+            }
+            objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(filaVampiro, columnaVampiro));
+            int aux;
+            Vampiro* vampiro;
+            vampiro = dynamic_cast<Vampiro*>(objetoEncontrado);
+
+            aux = vampiro->getVida();
+            vampiro->setVida(this->vida);
+            this->vida = aux;
+        }
+    }
+    else
+        cout << "No tenes suficiente energia para defender" << endl;
 }
 
 Nosferatu::~Nosferatu()
