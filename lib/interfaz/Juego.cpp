@@ -81,7 +81,8 @@ void Juego::mostrar()
 
     renderizarOpcion(this->tablero->getDiccionario());
 
-    cout << "Presione enter para continuar...";
+    cout << endl
+         << "Presione enter para continuar..." << endl;
 
     getchar();
 }
@@ -256,13 +257,11 @@ enumMenu Juego::getIdxMenuActual()
 
 void Juego::avanzar()
 {
-    cout << "AVANZAR" << endl;
     personajesJugados++;
 
     // Termino el turno
     if (personajesJugados == this->tablero->getJugadorActual()->getCantidadPersonajes())
     {
-        cout << "TERMINO EL TURNO";
         //TODO: DONT KNOW IF I HAVE TO CHECK FOR GAMEOVER?
         personajesJugados = 0;
         this->tablero->idxJugadorActual = (this->tablero->idxJugadorActual + 1) % 2;
