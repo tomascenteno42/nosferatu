@@ -86,7 +86,12 @@ void Zombi::atacar(Juego *juego)
 
 void Zombi::actualizar()
 {
-    this->energia += 5;
+    int nuevaEnergia = this->energia + 5;
+
+    if (nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Zombi::~Zombi()

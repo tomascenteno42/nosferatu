@@ -91,7 +91,12 @@ void Nosferatu::atacar(Juego *juego)
 
 void Nosferatu::actualizar()
 {
-    this->energia += 10;
+    int nuevaEnergia = this->energia + 10;
+
+    if (nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Nosferatu::~Nosferatu()

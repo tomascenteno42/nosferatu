@@ -108,7 +108,12 @@ void Vampirella::atacar(Juego *juego)
 
 void Vampirella::actualizar()
 {
-    this->energia += 6;
+    int nuevaEnergia = this->energia + 6;
+
+    if (nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Vampirella::~Vampirella()

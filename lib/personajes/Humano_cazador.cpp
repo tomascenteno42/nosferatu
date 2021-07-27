@@ -311,7 +311,12 @@ void Humano_cazador::atacarEstaca(Tablero *tablero)
 
 void Humano_cazador::actualizar()
 {
-    this->energia += 8;
+    int nuevaEnergia = this->energia + 8;
+
+    if (nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Humano_cazador::~Humano_cazador()

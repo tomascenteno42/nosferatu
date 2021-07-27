@@ -59,6 +59,11 @@ const int MAX_OBJETOS = 12;
 const int MAX_ID = 999;
 const int CANTIDAD_MENUES = 4;
 
+const int MAX_ENERGIA = 20;
+const int MAX_VIDA = 100;
+const int MAX_ESCUDO = 2;
+const int MAX_FUERZA = 40;
+
 enum ENUM_OBJETOS
 {
     HUMANO = 1,

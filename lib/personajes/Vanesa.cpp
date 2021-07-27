@@ -350,7 +350,12 @@ void Vanesa::atacarEstaca(Juego *juego)
 
 void Vanesa::actualizar()
 {
-    this->energia += 10;
+    int nuevaEnergia = this->energia + 10;
+
+    if (nuevaEnergia > MAX_ENERGIA)
+        this->energia = MAX_ENERGIA;
+    else
+        this->energia = nuevaEnergia;
 }
 
 Vanesa::~Vanesa()
