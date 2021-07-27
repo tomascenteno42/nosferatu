@@ -109,10 +109,30 @@ void Vampiro::actualizar()
         this->energia = MAX_ENERGIA;
     else
         this->energia = nuevaEnergia;
+
+    if(this->contadorTurnos == 1){
+        this->escudo--;
+        this->seDefendio = false;
+        contadorTurnos = 0;
+    }
+    if(this->seDefendio)
+        this->contadorTurnos = 1;
 }
 
 void Vampiro::defender(Juego *juego) {
-
+    if(this->energia >= 4){
+        if(seDefendio)
+            this->contadorTurnos = 0;
+        else if(this->escudo < MAX_ESCUDO){
+                int anterior = this->escudo;
+                this->escudo++;
+                this->seDefendio = true;
+                cout << "Escudo:" << anterior << "--> " << this->escudo << endl;
+        }
+        this->energia -= 4;
+    }
+    else
+        cout << "Ya tenes el maximo escudo posible" << endl;
 }
 
 Vampiro::~Vampiro()

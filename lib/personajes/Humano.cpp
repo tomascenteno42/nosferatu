@@ -155,8 +155,8 @@ void Humano::actualizar()
 
     if(contadorTurnos == 1) {
         this->escudo--;
-        seDefendio = false;
-        contadorTurnos = 0;
+        this->seDefendio = false;
+        this->contadorTurnos = 0;
     }
 
     if(seDefendio){
@@ -192,16 +192,13 @@ void Humano::defender(Juego *juego) {
         int respuesta = stoi(leido);
 
         if (respuesta == 2) { // Si tiene pero prefiere no usarla
-            if (this->escudo < MAX_ESCUDO){         // Solo se le aumenta el escudo si no tiene lo maximo posible
-                if(seDefendio){                     //Si ya se habia defendido, dejo el escudo como esta, pero por un turno mas
-                    contadorTurnos = 0;
-                }
-                else {
+            if(seDefendio)      //Si ya se habia defendido, dejo el escudo como esta, pero por un turno mas
+                contadorTurnos = 0;
+            else if (this->escudo < MAX_ESCUDO){         // Solo se le aumenta el escudo si no tiene lo maximo posible
                     int anterior = this->escudo;
                     this->escudo++;
                     this->seDefendio = true;
                     cout << "Escudo:" << anterior << "--> " << this->escudo << endl;
-                }
             }
             else {                      //  Si ya no se puede agregar mas escudo
                 int anterior = this->energia;

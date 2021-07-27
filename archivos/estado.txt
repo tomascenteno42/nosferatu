@@ -11,3 +11,4 @@ escopeta (7, 9) 350
 Vampirella (3, 5) 201
 estaca (5, 4) 400
 humano CV (10, 7) 067
+vampiro (5, 7) 270

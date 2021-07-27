@@ -443,9 +443,12 @@ void Vanesa::defender(Juego *juego)
             else if(nombre == S_CRUZ)
                 tieneCruz = true;
         }
-        if(!tieneAgua && !tieneCruz)
-            this->vida += 10;
-
+        if(!tieneAgua && !tieneCruz) {
+            if(this->vida + 10 > MAX_VIDA)
+                this->vida = MAX_VIDA;
+            else
+                this->vida += 10;
+        }
         else if (!tieneAgua && tieneCruz)
             this->seDefendio = true;
 
