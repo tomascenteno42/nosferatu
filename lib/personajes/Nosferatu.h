@@ -9,6 +9,8 @@ class Nosferatu : public Vampiro
 private:
     static int contador;
 
+    bool posicionValida(vector<Posicion> posiciones, int filaVampiro, int columnaVampiro);
+
 public:
     /*
     * Post: Se crea nosferatu listo para usarse
@@ -16,7 +18,9 @@ public:
     */
     explicit Nosferatu(int fila, int columna);
 
-    void atacar(Juego *juego);
+    void atacar(Juego *juego) override;
+
+    bool defender(Juego* juego) override;
 
     void actualizar() override;
 

@@ -21,9 +21,11 @@ public:
      */
     void agarrarObjeto();
 
-    void atacar(Juego *juego);
+    void atacar(Juego *juego) override;
 
     void actualizar() override;
+
+    bool defender(Juego* juego) override;
 
     /*
      * Post: decrece en 1 la cantidad de objetos Zombi existentes
