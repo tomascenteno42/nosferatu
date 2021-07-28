@@ -73,8 +73,9 @@ void Tablero::darDeBaja(Posicion pos)
 
 void Tablero::matarPersonaje(Posicion pos)
 {
+    int id = getElementoEnPosicion(pos)->getId();
     getMapa()->eliminarObjeto(pos);
-    getJugadorActual()->eliminarPersonaje(getElementoEnPosicion(pos)->getId());
+    getJugadorActual()->eliminarPersonaje(id);
 }
 
 Objeto *Tablero::getElementoEnPosicion(Posicion pos)

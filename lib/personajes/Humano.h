@@ -10,12 +10,10 @@ class Humano : public Ser
 {
 private:
     static int contador;
+    int contadorTransformacion;
 
 protected:
-    bool contieneEscopeta = false;
-    bool contieneAguas = false;
-    bool contieneBalas = false;
-    bool contieneEstaca = false;
+    bool transformando = false;
     vector<Elemento *> inventario;
 
 public:
@@ -38,7 +36,9 @@ public:
      */
     void agarrarObjeto(Elemento *objeto);
 
-    void atacar(Juego *juego);
+    void atacar(Juego *juego) override;
+
+    void atacarEscopeta(Juego *juego, int idxBalas);
 
     bool enUnNumero(std::string texto);
 
@@ -52,8 +52,11 @@ public:
      */
     void mostrarInventario();
 
+    bool defender(Juego* juego) override;
 
-    void defender(Juego* juego);
+    void modificarTransformacion(bool estado);
+
+    bool seEstaTransformando();
 
     void actualizar() override;
 

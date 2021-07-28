@@ -4,7 +4,6 @@
 #include "../../src/main.h"
 
 class Tablero;
-
 class Juego
 {
 private:
