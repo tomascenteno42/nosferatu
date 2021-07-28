@@ -93,7 +93,9 @@ void Zombi::actualizar()
         this->contadorTurnos = 1;
 }
 
-void Zombi::defender(Juego *juego) {
+bool Zombi::defender(Juego *juego) {
+    bool puedeDefender = false;
+
     if(this->energia >= 2){
         if(this->vida + 20 > MAX_VIDA)
             this->vida = MAX_VIDA;
@@ -102,9 +104,9 @@ void Zombi::defender(Juego *juego) {
 
         this->seDefendio = true;
         this->energia -= 2;
+        puedeDefender = true;
     }
-    else
-        cout << "No tienes suficiente energia :(" << endl;
+    return puedeDefender;
 }
 
 Zombi::~Zombi()

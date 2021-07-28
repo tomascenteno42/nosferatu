@@ -116,13 +116,15 @@ void Vampirella::actualizar()
         contadorTurnos = 1;
 }
 
-void Vampirella::defender(Juego *juego) {
+bool Vampirella::defender(Juego *juego) {
+    bool puedeDefender = false;
+
     if(this->energia >= 5){
         this->seDefendio = true;
         this->energia -= 5;
+        puedeDefender = true;
     }
-    else
-        cout << "No tenes enegia suficiente para defender" << endl;
+    return puedeDefender;
 }
 
 Vampirella::~Vampirella()

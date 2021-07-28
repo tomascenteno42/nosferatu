@@ -310,7 +310,9 @@ void Humano_cazador::actualizar()
         this->energia = nuevaEnergia;
 }
 
-void Humano_cazador::defender(Juego *juego){
+bool Humano_cazador::defender(Juego *juego){
+    bool puedeDefender = false;
+
     if(this->energia >= 5){
         string leido;
 
@@ -347,9 +349,9 @@ void Humano_cazador::defender(Juego *juego){
             }
         }
         this->energia -= 5;
+        puedeDefender = true;
     }
-    else
-        cout << "No tiene suficiente energia :(" << endl;
+    return puedeDefender;
 }
 
 Humano_cazador::~Humano_cazador()
