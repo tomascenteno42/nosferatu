@@ -5,7 +5,7 @@ Ser::Ser(string nombre, char caracter, int id, int fila, int columna) : Objeto(n
     nombre = nombre;
     caracter = caracter;
     energia = rand() % (MAX_ENERGIA + 1);
-    vida = rand() % (MAX_VIDA + 1);
+    vida = rand() % (MAX_VIDA + 1) + 20;
     escudo = rand() % (MAX_ESCUDO + 1);
     fuerza = rand() % (MAX_FUERZA - 10 + 1) + 10;
     id = id;
@@ -77,7 +77,7 @@ void Ser::ajustarDanio(int &danio, int escudo)
 
 bool Ser::estaMuerto()
 {
-    return getVida() == 0;
+    return getVida() <= 0;
 }
 
 bool Ser::seEstaDefendiendo()

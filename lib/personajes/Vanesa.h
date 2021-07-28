@@ -28,7 +28,7 @@ public:
 
     void atacar(Juego *juego);
 
-    void atacarEscopeta(Juego *juego);
+    void atacarEscopeta(Juego *juego, int idxBalas);
 
     void atacarAgua(Juego *juego, int idxAgua);
 

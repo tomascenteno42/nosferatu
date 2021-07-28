@@ -18,9 +18,11 @@ void Humano::agarrarObjeto(Elemento *objeto)
     {
         size_t i = 0;
 
-        while (!contieneEscopeta && i < inventario.size())
+        while (!contieneEscopeta && i < inventario.size()) {
             if (inventario.at(i)->getCaracter() == C_ESCOPETA)
                 contieneEscopeta = true;
+            i++;
+        }
     }
 
     if (!contieneEscopeta)
@@ -56,87 +58,99 @@ void Humano::modificarTransformacion(bool estado) {
 
 void Humano::atacar(Juego *juego)
 {
-    int filaEnemigo, columnaEnemigo, posBalas;
+    bool contieneEscopeta = false, contieneBalas = false;
     size_t i = 0;
-    bool puedeAtacar = false;
-
+    int idxBalas = -1;
     if (this->getEnergia() < 5)
-    {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
-    }
     while (i < inventario.size() && this->getEnergia() >= 5)
     {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2)
-        {
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2){
+            idxBalas = i;
             contieneBalas = true;
-            posBalas = i;
         }
         i++;
     }
     if (!contieneBalas && contieneEscopeta && this->getEnergia() >= 5)
         cout << "No podes hacer eso, te faltan balas ლ(ಠ_ಠლ)" << endl;
-
-    else if (contieneEscopeta && contieneBalas && this->getEnergia() >= 6)
+    else if (!contieneBalas && !contieneEscopeta && this->getEnergia() >= 5)
+        cout << "No tenes nada en tu inventario que te sirva ¯\\(°_o)/¯" << endl;
+    else if (contieneEscopeta && contieneBalas && this->getEnergia() >= 5)
     {
-        Ser *personaje = dynamic_cast<Ser *>(juego->tablero->getElementoEnPosicion(Posicion(fila, columna)));
-        cout << "Indique a que posicion quiere atacar" << endl;
-        cout << "A su alrededor hay los siguiente personajes: " << endl;
-        for (int i = (this->fila - 1); i <= (this->fila + 1); i++)
+        atacarEscopeta(juego, idxBalas);
+    }
+}
+
+void Humano::atacarEscopeta(Juego *juego, int idxBalas)
+{
+    int filaEnemigo, columnaEnemigo;
+    bool puedeAtacar = false;
+    cout << "Indique a que posicion quiere atacar" << endl;
+    cout << "A su alrededor hay: " << endl;
+    for (int i = (this->fila - 1); i <= (this->fila + 1); i++)
+    {
+        for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
         {
-            for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
+            Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
+            if (objetoEncontrado)
             {
-                Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
-                if (objetoEncontrado)
+                int id = objetoEncontrado->getId();
+                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (objetoEncontrado != this))
                 {
-                    if (objetoEncontrado->getCaracter() == C_ZOMBI || objetoEncontrado->getCaracter() == C_VAMPIRO && (objetoEncontrado != this))
-                    {
-                        objetoEncontrado->mostrarInformacion();
-                        puedeAtacar = true;
-                        cout << "En la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna();
-                        cout << endl
-                             << endl;
-                    }
+                    objetoEncontrado->mostrarInformacion();
+                    puedeAtacar = true;
+                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                         << "\n"
+                         << endl;
                 }
             }
         }
-        if (!puedeAtacar)
-            cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else
+    }
+    if (!puedeAtacar)
+        cout << "No tenes enemigos cerca para atacarlos" << endl;
+    else if (puedeAtacar)
+    {
+        cout << "Ingrese la fila" << endl;
+        cin >> filaEnemigo;
+        cout << "Ingrese la columna" << endl;
+        cin >> columnaEnemigo;
+        Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+        Ser *enemigo = dynamic_cast<Ser *>(objeto);
+        int danio, escudo;
+        escudo = enemigo->getEscudo();
+        if (enemigo->getId() >= ID_ZOMBIE && enemigo->getId() < ID_NOSFERATU)
         {
-            cout << "Ingrese la fila" << endl;
-            cin >> filaEnemigo;
-            cout << "Ingrese la columna" << endl;
-            cin >> columnaEnemigo;
-
-            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-            Ser *enemigo = dynamic_cast<Ser *>(objeto);
-
-            int danio;
-            int escudo = enemigo->getEscudo();
-
-            if (enemigo->getCaracter() == C_ZOMBI)
+            danio = (this->getFuerza());
+            ajustarDanio(danio, escudo);
+            enemigo->setVida(enemigo->getVida() - danio);
+            if (enemigo->estaMuerto())
             {
-                danio = (this->getFuerza());
-                ajustarDanio(danio, escudo);
-                enemigo->setVida(enemigo->getVida() - danio);
+                juego->tablero->matarPersonaje(Posicion(filaEnemigo, columnaEnemigo));
+                cout << "El enemigo ha muerto." << endl;
             }
-            else if (enemigo->getCaracter() == C_VAMPIRO)
-            {
-                danio = (((this->getFuerza()) * 0.20));
-                ajustarDanio(danio, escudo);
-                enemigo->setVida(enemigo->getVida() - danio);
-            }
-            this->setEnergia((this->getEnergia()) - 5);
-            //this->inventario.at(posBalas)->setCantidad() -= 2;
-            cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
-            cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-                 << endl;
-            objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-            enemigo = dynamic_cast<Ser *>(objeto);
-            enemigo->mostrarInformacion();
         }
+        else if (enemigo->getId() >= ID_NOSFERATU && enemigo->getId() < ID_AGUA_BENDITA)
+        {
+            danio = (((this->getFuerza()) * 0.20));
+            ajustarDanio(danio, escudo);
+            enemigo->setVida(enemigo->getVida() - danio);
+            if (enemigo->estaMuerto())
+            {
+                juego->tablero->matarPersonaje(Posicion(filaEnemigo, columnaEnemigo));
+                cout << "El enemigo ha muerto." << endl;
+            }
+        }
+        this->setEnergia((this->getEnergia()) - 5);
+        Elemento *balas = inventario.at(idxBalas);
+        balas->setCantidad(balas->getCantidad() - 2);
+        cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
+        cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
+             << endl;
+        objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+        enemigo = dynamic_cast<Ser *>(objeto);
+        enemigo->mostrarInformacion();
     }
 }
 

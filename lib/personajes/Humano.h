@@ -13,10 +13,6 @@ private:
     int contadorTransformacion;
 
 protected:
-    bool contieneEscopeta = false;
-    bool contieneAguas = false;
-    bool contieneBalas = false;
-    bool contieneEstaca = false;
     bool transformando = false;
     vector<Elemento *> inventario;
 
@@ -41,6 +37,8 @@ public:
     void agarrarObjeto(Elemento *objeto);
 
     void atacar(Juego *juego) override;
+
+    void atacarEscopeta(Juego *juego, int idxBalas);
 
     bool enUnNumero(std::string texto);
 
