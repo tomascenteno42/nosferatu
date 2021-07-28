@@ -20,7 +20,7 @@ public:
 
     void atacar(Juego *juego) override;
 
-    void defender(Juego* juego) override;
+    bool defender(Juego* juego) override;
 
     void actualizar() override;
 

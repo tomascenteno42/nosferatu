@@ -28,7 +28,7 @@ public:
 
     void atacarEstaca(Tablero *tablero);
 
-    void defender(Juego* juego) override;
+    bool defender(Juego* juego) override;
 
     void actualizar() override;
 

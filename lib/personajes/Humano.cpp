@@ -164,7 +164,7 @@ void Humano::actualizar()
     }
 }
 
-void Humano::defender(Juego *juego) {
+bool Humano::defender(Juego *juego) {
     int tamanio = (int) inventario.size();
     string leido;
     bool tieneAgua = false;
@@ -223,6 +223,7 @@ void Humano::defender(Juego *juego) {
         else
             this->energia = MAX_ENERGIA;
     }
+    return true;
 }
 
 Humano::~Humano()

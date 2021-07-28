@@ -10,7 +10,7 @@ class Vanesa : public Humano_cazador
 private:
     static int contador;
 
-    void defenderConAgua(Juego* juego);
+    bool defenderConAgua(Juego* juego);
 
     bool posicionValida(vector<Posicion> posiciones, int fila, int columna);
 
@@ -36,7 +36,7 @@ public:
 
     void actualizar() override;
 
-    void defender(Juego* juego) override;
+    bool defender(Juego* juego) override;
 
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes

@@ -105,10 +105,12 @@ void Nosferatu::actualizar()
         this->energia = nuevaEnergia;
 }
 
-void Nosferatu::defender(Juego *juego) {
+bool Nosferatu::defender(Juego *juego) {
     vector<Posicion> posiciones;
     Objeto* objetoEncontrado;
     bool puedeCambiar = false;
+    bool puedeDefender = false;
+
     if(this->energia >= 10){
         for (int i = (this->fila - 2); i <= (this->fila + 2); i++){
             for (int j = (this->columna - 2); j <= (this->columna + 2); j++){
@@ -130,6 +132,7 @@ void Nosferatu::defender(Juego *juego) {
         if(!puedeCambiar)
             cout << "No hay vampiros para cambiar vida a tu alrededor" << endl;
         else{
+            puedeDefender = true;
             int filaVampiro, columnaVampiro;
             juego->pedirPosicion(filaVampiro, columnaVampiro);
 
@@ -145,10 +148,12 @@ void Nosferatu::defender(Juego *juego) {
             aux = vampiro->getVida();
             vampiro->setVida(this->vida);
             this->vida = aux;
+
+            cout << "Vida: " << vampiro->getVida() << "-->" << this->vida << endl;
+            Sleep(750)
         }
     }
-    else
-        cout << "No tenes suficiente energia para defender" << endl;
+    return puedeDefender;
 }
 
 Nosferatu::~Nosferatu()

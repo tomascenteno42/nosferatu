@@ -355,7 +355,12 @@ void procesarSeleccionBando(Juego *juego)
 /* MENU TURNO */
 void procesarOpcionDefenderse(Juego *juego)
 {
-    juego->personajeActual->defender(juego);
+    bool pudoDefender = juego->personajeActual->defender(juego);
+
+    if(!pudoDefender){
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
 }
 void procesarOpcionAtacar(Juego *juego)
 {

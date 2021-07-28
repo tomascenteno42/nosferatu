@@ -377,7 +377,7 @@ bool Vanesa::posicionValida(vector <Posicion> posiciones, int fila, int columna)
     return valida;
 }
 
-void Vanesa::defenderConAgua(Juego *juego) {
+bool Vanesa::defenderConAgua(Juego *juego) {
     Objeto *objetoEncontrado;
     bool puedeCurar = false;
     vector<Posicion> posiciones;
@@ -422,12 +422,16 @@ void Vanesa::defenderConAgua(Juego *juego) {
 
         humano->modificarTransformacion(false);
     }
+    return puedeCurar;
 
 }
 
-void Vanesa::defender(Juego *juego)
+bool Vanesa::defender(Juego *juego)
 {
+    bool puedeDefender = false;
+
     if(this->energia >= 10){
+        puedeDefender = true;
         bool tieneAgua = false;
         bool tieneCruz = false;
         int tamanio = (int)inventario.size();
@@ -453,8 +457,9 @@ void Vanesa::defender(Juego *juego)
             this->seDefendio = true;
 
         else if(tieneAgua && !tieneCruz){
-            defenderConAgua(juego);
-            agua->setCantidad(agua->getCantidad() - 1);
+            puedeDefender = this->defenderConAgua(juego);
+            if(puedeDefender)
+                agua->setCantidad(agua->getCantidad() - 1);
         }
         else if(tieneAgua && tieneCruz){
             string ingreso;
@@ -470,16 +475,18 @@ void Vanesa::defender(Juego *juego)
             int respuesta = stoi(ingreso);
 
             if(respuesta == 1) {
-                this->defenderConAgua(juego);
-                agua->setCantidad(agua->getCantidad() - 1);
+                puedeDefender = this->defenderConAgua(juego);
+                if(puedeDefender)
+                    agua->setCantidad(agua->getCantidad() - 1);
             }
             else
                 this->seDefendio = true;
         }
-        this->energia -= 10;
     }
-    else
-        cout << "No tiene energia suficiente :(" << endl;
+    if(puedeDefender)
+        this->energia -= 10;
+
+    return puedeDefender;
 }
 
 Vanesa::~Vanesa()

@@ -55,7 +55,7 @@ public:
     void mostrarInventario();
 
 
-    void defender(Juego* juego) override;
+    bool defender(Juego* juego) override;
 
     void modificarTransformacion(bool estado);
 
