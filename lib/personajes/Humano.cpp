@@ -158,6 +158,10 @@ bool Humano::seEstaTransformando() {
     return transformando;
 }
 
+bool Humano::yaSeTransformo() {
+    return seTransformo;
+}
+
 void Humano::actualizar()
 {
     int nuevaEnergia = this->energia + 5;
@@ -173,9 +177,14 @@ void Humano::actualizar()
         this->contadorTurnos = 0;
     }
 
-    if(seDefendio){
-        contadorTurnos = 1;
-    }
+    if(contadorTransformacion == 2)
+        this->seTransformo = true;
+
+    if(seDefendio)
+        this->contadorTurnos = 1;
+
+    if(transformando)
+        this->contadorTransformacion++;
 }
 
 bool Humano::defender(Juego *juego) {
