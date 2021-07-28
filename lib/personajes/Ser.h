@@ -77,8 +77,6 @@ public:
      */
     void setFuerza(int f);
 
-    //virtual void atacar(Juego *juego) = 0;
-
     virtual bool defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
