@@ -12,65 +12,69 @@ void Zombi::agarrarObjeto()
 
 void Zombi::atacar(Juego *juego)
 {
-    bool humanoSup, humanoInf, humanoIzq, humanoDer;
+    vector<Posicion > posicionesPosibles;
+    bool puedeAtacar = false;
     if (this->getEnergia() < 5)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
     if (this->getEnergia() >= 5)
     {
-        int filaEnemigo, columna_enemigo;
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objeto_encontrado = juego->tablero->getElementoEnPosicion(arriba);
-        if (objeto_encontrado)
+        Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
+        if (objetoEncontrado)
         {
-            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            int id = objetoEncontrado->getId();
+            if (id >= ID_VANESA && id < ID_ZOMBIE)
             {
-                humanoSup = true;
+                posicionesPosibles.push_back(arriba);
+                puedeAtacar = true;
             }
         }
 
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objeto_encontrado = juego->tablero->getElementoEnPosicion(abajo);
-        if (objeto_encontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
+        if (objetoEncontrado)
         {
-            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            int id = objetoEncontrado->getId();
+            if (id >= ID_VANESA && id < ID_ZOMBIE)
             {
-                humanoInf = true;
+                posicionesPosibles.push_back(abajo);
+                puedeAtacar = true;
             }
         }
 
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objeto_encontrado = juego->tablero->getElementoEnPosicion(izquierda);
-        if (objeto_encontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
+        if (objetoEncontrado)
         {
-            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            int id = objetoEncontrado->getId();
+            if (id >= ID_VANESA && id < ID_ZOMBIE)
             {
-                humanoIzq = true;
+                posicionesPosibles.push_back(izquierda);
+                puedeAtacar = true;
             }
         }
 
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objeto_encontrado = juego->tablero->getElementoEnPosicion(derecha);
-        if (objeto_encontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
+        if (objetoEncontrado)
         {
-            if (objeto_encontrado->getCaracter() == C_HUMANO)
+            int id = objetoEncontrado->getId();
+            if (id >= ID_VANESA && id < ID_ZOMBIE)
             {
-                humanoDer = true;
+                posicionesPosibles.push_back(derecha);
+                puedeAtacar = true;
             }
         }
-        bool puedeAtacar = false;
         if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else
         {
-            cout << "Ingrese la fila" << endl;
-            cin >> filaEnemigo;
-            cout << "Ingrese la columna" << endl;
-            cin >> columna_enemigo;
-            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columna_enemigo));
-            Ser *enemigo = dynamic_cast<Ser *>(objeto);
-
+            int random = rand()%((posicionesPosibles.size()));
+            objetoEncontrado = juego->tablero->getElementoEnPosicion(posicionesPosibles.at(random));
+            Humano *enemigo = dynamic_cast<Humano *>(objetoEncontrado);
+            enemigo->modificarTransformacion(true);
             this->setEnergia((this->getEnergia()) - 5);
         }
     }
