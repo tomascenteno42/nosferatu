@@ -14,6 +14,7 @@ private:
 
 protected:
     bool transformando = false;
+    bool seTransformo = false;
     vector<Elemento *> inventario;
 
 public:
@@ -57,6 +58,8 @@ public:
     void modificarTransformacion(bool estado);
 
     bool seEstaTransformando();
+
+    bool yaSeTransformo();
 
     void actualizar() override;
 
