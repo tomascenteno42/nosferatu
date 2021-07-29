@@ -23,6 +23,8 @@ public:
 
     void atacar(Juego *juego) override;
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool esCorrecto);
+
     void actualizar() override;
 
     void defender(Juego *juego) override;

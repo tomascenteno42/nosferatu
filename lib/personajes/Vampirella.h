@@ -22,6 +22,8 @@ public:
     bool puedeAtacar();
     bool puedeDefenderse();
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar);
+
     /*
      * Post: decrece en 1 la cantidad de objetos vampirella existentes
      */

@@ -9,83 +9,31 @@ void Vampirella::atacar(Juego *juego)
     int filaEnemigo, columnaEnemigo;
     bool puedeAtacar = false;
 
-    Posicion arriba((this->getFila() - 1), this->getColumna());
-    Objeto *objetoEncontrado;
     if (this->getEnergia() < 4)
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     else
     {
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
+        Posicion arriba((this->getFila() - 1), this->getColumna());
         if (juego->tablero->getMapa()->coordenadaValida(arriba))
         {
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-            if (objetoEncontrado)
-            {
-                char caracter = objetoEncontrado->getCaracter();
-                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
-                {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, arriba, puedeAtacar);
         }
         Posicion abajo((this->getFila() + 1), this->getColumna());
         if (juego->tablero->getMapa()->coordenadaValida(abajo))
         {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-            if (objetoEncontrado)
-            {
-                char caracter = objetoEncontrado->getCaracter();
-                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
-                {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, abajo, puedeAtacar);
         }
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
         if (juego->tablero->getMapa()->coordenadaValida(izquierda))
         {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-            if (objetoEncontrado)
-            {
-                char caracter = objetoEncontrado->getCaracter();
-                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
-                {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, izquierda, puedeAtacar);
         }
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
         if (juego->tablero->getMapa()->coordenadaValida(derecha))
         {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-            if (objetoEncontrado)
-            {
-                char caracter = objetoEncontrado->getCaracter();
-                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
-                {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, derecha, puedeAtacar);
         }
 
         if (!puedeAtacar)
@@ -112,9 +60,40 @@ void Vampirella::atacar(Juego *juego)
             }
             this->setEnergia((this->getEnergia()) - 4);
             if (escudo > 0)
+            {
                 enemigo->setEscudo(escudo - 1);
+                cout << "Ademas, le sacaste 1 punto de escudo /|\\ ^.‿.^ /|\\" << endl;
+            }
         }
     }
+}
+
+bool Vampirella::buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar)
+{
+    Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(posicion);
+    ;
+    Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+    if (serEncontrado)
+    {
+        int id = serEncontrado->getId();
+        if (id >= ID_VANESA && id < ID_ZOMBIE)
+        {
+            if (serEncontrado->seEstaDefendiendo() && serEncontrado->getCaracter() == C_VANESA)
+            {
+                cout << "Vanesa se esta defendiendo, no podes atacarla esta vez ¯\\_(⊙︿⊙)_/¯\n"
+                     << endl;
+            }
+            else
+            {
+                serEncontrado->mostrarInformacion();
+                puedeAtacar = true;
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                     << "\n"
+                     << endl;
+            }
+        }
+    }
+    return puedeAtacar;
 }
 
 void Vampirella::actualizar()
