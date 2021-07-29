@@ -62,7 +62,6 @@ void Humano_cazador::atacar(Juego *juego)
             cout << S_ESTACA << endl;
             opcionesValidas.push_back(S_ESTACA);
         }
-
         do
         {
             cout << "Elija una opcion: " << endl;
@@ -78,14 +77,11 @@ void Humano_cazador::atacar(Juego *juego)
             }
             if (!esValida)
             {
-
                 cout << "Opcion invalida!" << endl
-                     << endl;
+                << endl;
             }
-
             i = 0;
         } while (!esValida);
-
         if (entrada == S_ESCOPETA)
             atacarEscopeta(juego, idxBalas);
         else if (entrada == S_AGUA_BENDITA)
@@ -106,16 +102,22 @@ void Humano_cazador::atacarEscopeta(Juego *juego, int idxBalas)
         for (int j = (this->columna - 2); j <= (this->columna + 2); j++)
         {
             Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
-            if (objetoEncontrado)
+            Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+            if (serEncontrado)
             {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (objetoEncontrado != this))
+                int id = serEncontrado->getId();
+                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (serEncontrado != this))
                 {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
+                    if ((serEncontrado->seEstaDefendiendo()) && serEncontrado->getCaracter() == C_ZOMBI){
+                        cout << "Hay un zombi escondido, no podes atacarlo esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
+                    }
+                    else{
+                        serEncontrado->mostrarInformacion();
+                        puedeAtacar = true;
+                        cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                        << "\n"
+                        << endl;
+                    }
                 }
             }
         }
@@ -124,10 +126,7 @@ void Humano_cazador::atacarEscopeta(Juego *juego, int idxBalas)
         cout << "No tenes enemigos cerca para atacarlos" << endl;
     else if (puedeAtacar)
     {
-        cout << "Ingrese la fila" << endl;
-        cin >> filaEnemigo;
-        cout << "Ingrese la columna" << endl;
-        cin >> columnaEnemigo;
+        juego->pedirPosicion(filaEnemigo, columnaEnemigo);
         Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
         Ser *enemigo = dynamic_cast<Ser *>(objeto);
         int danio, escudo;
@@ -157,9 +156,11 @@ void Humano_cazador::atacarEscopeta(Juego *juego, int idxBalas)
         this->setEnergia((this->getEnergia()) - 6);
         Elemento *balas = inventario.at(idxBalas);
         balas->setCantidad(balas->getCantidad() - 2);
+        if(balas->getCantidad() == 0)
+            inventario.erase(inventario.begin() + idxBalas);
         cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
         cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-             << endl;
+        << endl;
         objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
         enemigo = dynamic_cast<Ser *>(objeto);
         enemigo->mostrarInformacion();
@@ -177,16 +178,17 @@ void Humano_cazador::atacarAgua(Juego *juego, int idxAgua)
         for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
         {
             Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
-            if (objetoEncontrado)
+            Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+            if (serEncontrado)
             {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+                int id = serEncontrado->getId();
+                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
                 {
-                    objetoEncontrado->mostrarInformacion();
+                    serEncontrado->mostrarInformacion();
                     puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
+                    cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                    << "\n"
+                    << endl;
                 }
             }
         }
@@ -196,7 +198,6 @@ void Humano_cazador::atacarAgua(Juego *juego, int idxAgua)
     else
     {
         juego->pedirPosicion(filaEnemigo, columnaEnemigo);
-
         Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
         Ser *enemigo = dynamic_cast<Ser *>(objeto);
         int escudo = enemigo->getEscudo();
@@ -220,8 +221,10 @@ void Humano_cazador::atacarAgua(Juego *juego, int idxAgua)
 
         Elemento *agua = inventario.at(idxAgua);
         agua->setCantidad(agua->getCantidad() - 1);
+        if(agua->getCantidad() == 0)
+            inventario.erase(inventario.begin() + idxAgua);
         cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-             << endl;
+        << endl;
     }
 }
 
@@ -232,21 +235,37 @@ void Humano_cazador::atacarEstaca(Juego *juego)
 
     cout << "Indique a que posicion quiere atacar" << endl;
     cout << "A su alrededor hay: " << endl;
-
     Posicion arriba((this->getFila() - 1), this->getColumna());
+    if (juego->tablero->getMapa()->coordenadaValida(arriba)) {
+        puedeAtacar = buscarAlrededor(juego, arriba, puedeAtacar);
+    }
+    Posicion abajo((this->getFila() + 1), this->getColumna());
+    if (juego->tablero->getMapa()->coordenadaValida(abajo)) {
+        puedeAtacar = buscarAlrededor(juego, abajo, puedeAtacar);
+    }
+    Posicion izquierda(this->getFila(), (this->getColumna() - 1));
+    if (juego->tablero->getMapa()->coordenadaValida(izquierda)) {
+        puedeAtacar = buscarAlrededor(juego, izquierda, puedeAtacar);
+    }
+    Posicion derecha(this->getFila(), (this->getColumna() + 1));
+    if (juego->tablero->getMapa()->coordenadaValida(derecha)) {
+        puedeAtacar = buscarAlrededor(juego, derecha, puedeAtacar);
+    }
+    /*Posicion arriba((this->getFila() - 1), this->getColumna());
     Objeto *objetoEncontrado;
     if (juego->tablero->getMapa()->coordenadaValida(arriba))
     {
 
         objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-        if (objetoEncontrado)
+        Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+        if (serEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+            int id = serEncontrado->getId();
+            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
             {
-                objetoEncontrado->mostrarInformacion();
+                serEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
                      << "\n"
                      << endl;
             }
@@ -255,15 +274,16 @@ void Humano_cazador::atacarEstaca(Juego *juego)
     Posicion abajo((this->getFila() + 1), this->getColumna());
     if (juego->tablero->getMapa()->coordenadaValida(abajo))
     {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-        if (objetoEncontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
+        Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+        if (serEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+            int id = serEncontrado->getId();
+            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
             {
-                objetoEncontrado->mostrarInformacion();
+                serEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
                      << "\n"
                      << endl;
             }
@@ -272,15 +292,16 @@ void Humano_cazador::atacarEstaca(Juego *juego)
     Posicion izquierda(this->getFila(), (this->getColumna() - 1));
     if (juego->tablero->getMapa()->coordenadaValida(izquierda))
     {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-        if (objetoEncontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
+        Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+        if (serEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+            int id = serEncontrado->getId();
+            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
             {
-                objetoEncontrado->mostrarInformacion();
+                serEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
                      << "\n"
                      << endl;
             }
@@ -289,27 +310,27 @@ void Humano_cazador::atacarEstaca(Juego *juego)
     Posicion derecha(this->getFila(), (this->getColumna() + 1));
     if (juego->tablero->getMapa()->coordenadaValida(derecha))
     {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-        if (objetoEncontrado)
+        objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
+        Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+        if (serEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+            int id = serEncontrado->getId();
+            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
             {
-                objetoEncontrado->mostrarInformacion();
+                serEncontrado->mostrarInformacion();
                 puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
                      << "\n"
                      << endl;
             }
         }
-    }
+    }*/
 
     if (!puedeAtacar)
         cout << "No tenes enemigos cerca para atacarlos" << endl;
     else
     {
         juego->pedirPosicion(filaEnemigo, columnaEnemigo);
-
         Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
         Ser *enemigo = dynamic_cast<Ser *>(objeto);
         int danio, escudo;
@@ -341,9 +362,30 @@ void Humano_cazador::atacarEstaca(Juego *juego)
             }
         }
         cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-             << endl;
+        << endl;
         this->setEnergia((this->getEnergia()) - 6);
     }
+}
+
+bool Humano_cazador::buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar){
+    Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(posicion);;
+    Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+    if (serEncontrado) {
+        int id = serEncontrado->getId();
+        if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA) {
+            if(serEncontrado->seEstaDefendiendo() && id >= ID_VAMPIRELLA && id < ID_AGUA_BENDITA){
+                cout << "Hay un personaje en modo de defensa, no podes atacarlo esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
+            }
+            else{
+                serEncontrado->mostrarInformacion();
+                puedeAtacar = true;
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                << "\n"
+                << endl;
+            }
+        }
+    }
+    return puedeAtacar;
 }
 
 void Humano_cazador::actualizar()

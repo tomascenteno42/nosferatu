@@ -27,6 +27,8 @@ public:
 
     void atacarEstaca(Juego *juego);
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar);
+
     void actualizar() override;
 
     bool defender(Juego *juego) override;

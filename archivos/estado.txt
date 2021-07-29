@@ -1,8 +1,10 @@
 10 10
 zombi (1, 1) 101
 humano (1, 2) 005
+humano (2, 1) 007
 agua 20 (4, 4) 300
-Vanesa (7, 7) 000
+Vanesa (6, 7) 000
+cruz (7, 7) 331
 agua 10 (8, 8) 305
 Nosferatu (10, 8) 200
 estaca (10, 7) 401
@@ -14,3 +16,9 @@ Vampirella (3, 5) 201
 estaca (5, 4) 400
 humano CV (10, 1) 067
 vampiro (5, 7) 270
+humano (4, 7) 008
+zombi (10, 6) 102
+zombi (9, 6) 103
+escopeta (9, 1) 351
+bala 2 (9, 2) 372
+vampiro (9, 3) 270

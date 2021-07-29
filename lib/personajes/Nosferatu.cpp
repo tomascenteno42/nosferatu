@@ -38,10 +38,7 @@ void Nosferatu::atacar(Juego *juego)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else if (puedeAtacar)
         {
-            cout << "Ingrese la fila" << endl;
-            cin >> filaEnemigo;
-            cout << "Ingrese la columna" << endl;
-            cin >> columnaEnemigo;
+            juego->pedirPosicion(filaEnemigo, columnaEnemigo);
             Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
             int danio, escudo, vida, energia, fuerza, id;
@@ -170,7 +167,6 @@ bool Nosferatu::defender(Juego *juego)
             puedeDefender = true;
             int filaVampiro, columnaVampiro;
             juego->pedirPosicion(filaVampiro, columnaVampiro);
-
             while (!this->posicionValida(posiciones, filaVampiro, columnaVampiro))
             {
                 cout << "Ingrese una posicion valida" << endl;

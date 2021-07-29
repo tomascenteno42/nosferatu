@@ -18,6 +18,8 @@ public:
 
     void actualizar() override;
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar);
+
     bool defender(Juego* juego) override;
     /*
      * Post: decrece en 1 la cantidad de objetos vampirella existentes

@@ -14,7 +14,6 @@ void Vampiro::atacar(Juego *juego)
     int filaEnemigo, columnaEnemigo;
     bool puedeAtacar = false;
 
-    Posicion arriba((this->getFila() - 1), this->getColumna());
     Objeto *objetoEncontrado;
 
     if(this->getEnergia() < 2)
@@ -22,65 +21,22 @@ void Vampiro::atacar(Juego *juego)
     else {
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
+        Posicion arriba((this->getFila() - 1), this->getColumna());
         if (juego->tablero->getMapa()->coordenadaValida(arriba)) {
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, arriba, puedeAtacar);
         }
         Posicion abajo((this->getFila() + 1), this->getColumna());
         if (juego->tablero->getMapa()->coordenadaValida(abajo)) {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, abajo, puedeAtacar);
         }
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
         if (juego->tablero->getMapa()->coordenadaValida(izquierda)) {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, izquierda, puedeAtacar);
         }
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
         if (juego->tablero->getMapa()->coordenadaValida(derecha)) {
-
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
-                }
-            }
+            puedeAtacar = buscarAlrededor(juego, derecha, puedeAtacar);
         }
-
         if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else {
@@ -104,6 +60,27 @@ void Vampiro::atacar(Juego *juego)
             this->setEnergia((this->getEnergia()) - 2);
         }
     }
+}
+
+bool Vampiro::buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar){
+    Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(posicion);;
+    Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+    if (serEncontrado) {
+        int id = serEncontrado->getId();
+        if (id >= ID_VANESA && id < ID_ZOMBIE) {
+            if(serEncontrado->seEstaDefendiendo() && serEncontrado->getCaracter() == C_VANESA){
+                cout << "Vanesa se esta defendiendo, no podes atacarla esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
+            }
+            else{
+                serEncontrado->mostrarInformacion();
+                puedeAtacar = true;
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                << "\n"
+                << endl;
+            }
+        }
+    }
+    return puedeAtacar;
 }
 
 void Vampiro::actualizar()
