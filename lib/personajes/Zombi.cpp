@@ -123,11 +123,7 @@ bool Zombi::buscarAlrededor(Juego *juego, Posicion posicion, bool esCorrecto){
                     cout << "Vanesa se esta defendiendo, no podes atacarla esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
                 }
                 else{
-                    serEncontrado->mostrarInformacion();
                     esCorrecto = true;
-                    cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
-                    << "\n"
-                    << endl;
                 }
             }
         }
