@@ -11,8 +11,6 @@ private:
     Menu *menuActual;
     enumMenu idxMenu;
 
-    bool salir;
-
     /*
      * Llena la lista de menues con las opciones establecidas en los archivos.
      */
@@ -63,6 +61,7 @@ public:
     Tablero *tablero;
     int personajesJugados = 0;
     Ser *personajeActual = 0;
+    bool salir;
 
     Juego();
 

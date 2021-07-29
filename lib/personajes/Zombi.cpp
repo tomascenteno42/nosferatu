@@ -10,6 +10,11 @@ void Zombi::agarrarObjeto()
     cantidadDeAguaBenditas++;
 }
 
+int Zombi::getCantidadDeAguaBenditas()
+{
+    return cantidadDeAguaBenditas;
+}
+
 void Zombi::atacar(Juego *juego)
 {
     vector<Posicion> posicionesPosibles;

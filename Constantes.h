@@ -7,6 +7,8 @@
 #define OPCIONES_MENU_SIMULACION "archivos/simulacionMenu.txt"
 #define OPCIONES_MENU_TURNO "archivos/turnoMenu.txt"
 #define OPCIONES_MENU_COMIENZO_TURNO "archivos/comienzoTurnoMenu.txt"
+#define PATH_ARCHIVO_GUARDAR_PARTIDA "archivos/partida.txt"
+
 const string PATH_ARCHIVO_ESTADO = "archivos/estado.txt";
 
 //Caracteres que aparecen en el mapa

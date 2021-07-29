@@ -30,6 +30,8 @@ public:
     bool puedeDefenderse();
     bool puedeAtacar();
 
+    int getCantidadDeAguaBenditas();
+
     /*
      * Post: decrece en 1 la cantidad de objetos Zombi existentes
      */

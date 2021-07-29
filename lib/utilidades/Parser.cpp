@@ -113,7 +113,7 @@ Objeto *Parser::obtenerObjetoDelTexto(string texto, int clave, int fila, int col
 
 void Parser::setEspecial(const string &especial)
 {
-    bool cazaVampiros = especial == "CV";
+    bool cazaVampiros = especial == "cv";
     if (!cazaVampiros && !especial.empty())
     {
         this->cantidad = stoi(especial);

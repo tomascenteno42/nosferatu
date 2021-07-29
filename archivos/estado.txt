@@ -1,7 +1,9 @@
 10 10
 zombi (1, 1) 101
 humano (1, 2) 005
+humano cv (10, 1) 067
 agua 20 (4, 4) 300
+Vanesa (7, 7) 000
 agua 10 (8, 8) 305
 Nosferatu (10, 8) 200
 estaca (10, 7) 401

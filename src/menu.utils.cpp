@@ -401,4 +401,122 @@ void procesarOpcionPasarTurno(Juego *juego)
 /* MENU COMIENZO DE TURNO */
 void procesarGuardarJuego(Juego *juego)
 {
+
+    Tablero *tablero = juego->tablero;
+    ABB<int, Objeto *> *diccionario = tablero->getDiccionario();
+
+    Jugador *humanos = tablero->getJugador(0);
+    Jugador *monstruos = tablero->getJugador(1);
+
+    ofstream archivo(PATH_ARCHIVO_GUARDAR_PARTIDA);
+
+    archivo << tablero->idxJugadorActual << "\n";
+
+    archivo << "humanos " << humanos->getCantidadPersonajes() << '\n';
+    guardarPersonajes(humanos->getCantidadPersonajes(), humanos, archivo);
+
+    archivo << "monstruos " << monstruos->getCantidadPersonajes() << '\n';
+    guardarPersonajes(monstruos->getCantidadPersonajes(), monstruos, archivo);
+
+    guardarItems(diccionario, archivo);
+
+    archivo.close();
+
+    juego->salir = true;
+}
+
+void guardarItems(ABB<int, Objeto *> *diccionario, ofstream &archivo)
+{
+    int cantItems = 0;
+    string espacio = " ";
+
+    vector<int> ids = diccionario->clavesEnOrden();
+    vector<int> idsItems;
+
+    for (size_t i = 0; i < ids.size(); i++)
+    {
+        int id = ids.at(i);
+        if (id >= ID_AGUA_BENDITA && id < ID_NO_VALIDO)
+        {
+            idsItems.push_back(id);
+            cantItems++;
+        }
+    }
+
+    archivo << "items " << cantItems << '\n';
+
+    if (cantItems != 0)
+    {
+        for (size_t i = 0; i < idsItems.size(); i++)
+        {
+            int id = idsItems.at(i);
+            Elemento *item = (Elemento *)diccionario->getData(id);
+
+            archivo << item->getNombre() << espacio;
+            archivo << item->getId() << espacio;
+            archivo << item->getCantidad() << espacio;
+            archivo << item->getFila() << espacio;
+            archivo << item->getColumna() << espacio;
+            archivo << '\n';
+        }
+    }
+}
+
+void guardarPersonajes(int cantidadPersonajes, Jugador *jugador, ofstream &archivo)
+{
+    string espacio = " ";
+
+    for (size_t i = 0; i < cantidadPersonajes; i++)
+    {
+        Ser *personaje = jugador->getPersonajes().at(i);
+        archivo << personaje->getNombre() << espacio;
+        archivo << personaje->getId() << espacio;
+        archivo << personaje->getEscudo() << espacio;
+        archivo << personaje->getFuerza() << espacio;
+        archivo << personaje->getVida() << espacio;
+        archivo << personaje->getEnergia() << espacio;
+        archivo << personaje->getFila() << espacio;
+        archivo << personaje->getColumna() << espacio;
+
+        int cantAguasBenditas = 0;
+        int cantCruces = 0;
+        int cantEstacas = 0;
+        int cantEscopetas = 0;
+        int cantBalas = 0;
+
+        // No entra si es monstruo
+        if (personaje->getCaracter() == C_HUMANO || personaje->getCaracter() == C_HUMANO_CV || personaje->getCaracter() == C_VANESA)
+        {
+            Humano *humano = (Humano *)personaje;
+            vector<Elemento *> inventarioHumano = humano->getInventario();
+
+            for (size_t i = 0; i < inventarioHumano.size(); i++)
+            {
+                Elemento *elemento = inventarioHumano.at(i);
+
+                if (elemento->getCaracter() == C_AGUA_BENDITA)
+                    cantAguasBenditas += elemento->getCantidad();
+                else if (elemento->getCaracter() == C_CRUZ)
+                    cantCruces++;
+                else if (elemento->getCaracter() == C_ESTACA)
+                    cantEstacas++;
+                else if (elemento->getCaracter() == C_ESCOPETA)
+                    cantEscopetas++;
+                else if (elemento->getCaracter() == C_BALAS)
+                    cantBalas += elemento->getCantidad();
+            }
+        }
+        if (personaje->getCaracter() == C_ZOMBI)
+        {
+            Zombi *zombi = (Zombi *)personaje;
+            cantAguasBenditas = zombi->getCantidadDeAguaBenditas();
+        }
+
+        archivo << cantAguasBenditas << espacio;
+        archivo << cantCruces << espacio;
+        archivo << cantEstacas << espacio;
+        archivo << cantEscopetas << espacio;
+        archivo << cantBalas << espacio;
+        archivo << '\n';
+    }
 }
