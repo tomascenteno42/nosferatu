@@ -282,13 +282,10 @@ void Juego::avanzar()
         this->tablero->aplicarTransformacionAZombi();
     }
 
-    if (!gameOver())
-    {
-        personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
+    personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
 
-        if (personajeActual->estaMuerto())
-            avanzar();
-    }
+    if (personajeActual->estaMuerto())
+        avanzar();
 }
 
 bool Juego::esValidaElIngresoDelUsuario(string ingreso)

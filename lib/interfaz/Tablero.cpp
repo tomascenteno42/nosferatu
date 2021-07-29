@@ -114,8 +114,8 @@ void Tablero::aplicarTransformacion(int idTransformado, Monstruo *nuevoMonstruo,
 
     /* Insertamos en el diccionario el nuevo puntero
      y damos de alta esa posicion en el tablero */
-    this->getDiccionario()->insertar(idTransformado, nuevoMonstruo);
-    this->darDeAlta(pos, nuevoMonstruo);
+    this->getDiccionario()->insertar(idTransformado, (Objeto *)nuevoMonstruo);
+    this->darDeAlta(pos, (Objeto *)nuevoMonstruo);
 
     cout << "Se transformo el personaje en la posicion: ";
     cout << pos.getFila() << "," << pos.getColumna() << endl;
