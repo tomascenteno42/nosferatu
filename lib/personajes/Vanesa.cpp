@@ -362,8 +362,17 @@ void Vanesa::actualizar()
         this->seDefendio = false;
         this->contadorTurnos = 0;
     }
-    if(seDefendio)
+
+    if(this->contadorTransformacion == 2){
+        this->seTransformo = true;
+        this->transformando = false;
+        this->contadorTransformacion = 0;
+    }
+    if(this->seDefendio)
         contadorTurnos = 1;
+
+    if(this->transformando)
+        this->contadorTransformacion++;
 }
 
 bool Vanesa::posicionValida(vector <Posicion> posiciones, int fila, int columna) {
