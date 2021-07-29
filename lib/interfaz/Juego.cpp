@@ -293,8 +293,6 @@ bool Juego::cerrarMenu()
 
 bool Juego::gameOver()
 {
-    cout << this->tablero->getJugador(0)->getCantidadPersonajes() << endl;
-    cout << this->tablero->getJugador(1)->getCantidadPersonajes() << endl;
     return this->tablero->getJugador(0)->perdio() ||
            this->tablero->getJugador(1)->perdio();
 }

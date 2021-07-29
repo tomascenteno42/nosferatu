@@ -300,7 +300,7 @@ bool Vanesa::buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar){
     if (serEncontrado) {
         int id = serEncontrado->getId();
         if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA) {
-            if(serEncontrado->seEstaDefendiendo() && id >= ID_VAMPIRELLA && id < ID_AGUA_BENDITA){
+            if(serEncontrado->seEstaDefendiendo() && (id >= ID_VAMPIRELLA && id < ID_AGUA_BENDITA) || (id >= ID_ZOMBIE && id < ID_NOSFERATU)){
                 cout << "Hay un personaje en modo de defensa, no podes atacarlo esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
             }
             else{

@@ -22,8 +22,6 @@ int Ser::getEnergia()
 
 int Ser::getVida()
 {
-    cout << "ID: " << id << endl;
-    cout << "VIDA: " << vida << endl;
     return vida;
 }
 
