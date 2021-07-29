@@ -102,5 +102,4 @@ void Casillero::desocupar()
 
 Casillero::~Casillero()
 {
-    delete objeto;
 }

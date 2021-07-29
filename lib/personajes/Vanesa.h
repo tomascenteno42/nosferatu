@@ -8,9 +8,7 @@ class Tablero;
 class Vanesa : public Humano_cazador
 {
 private:
-    static int contador;
-
-    bool defenderConAgua(Juego* juego);
+    bool defenderConAgua(Juego *juego);
 
     bool posicionValida(vector<Posicion> posiciones, int fila, int columna);
 
@@ -20,11 +18,6 @@ public:
      *       Aumenta en 1 la cantidad de objetos Vanesa existentes
      */
     Vanesa(int fila, int columna);
-
-    /*
-     * Post: obtiene la cantidad de objetos Vanesa existentes
-     */
-    static int getContador();
 
     void atacar(Juego *juego);
 
@@ -36,7 +29,7 @@ public:
 
     void actualizar() override;
 
-    bool defender(Juego* juego) override;
+    bool defender(Juego *juego) override;
 
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes

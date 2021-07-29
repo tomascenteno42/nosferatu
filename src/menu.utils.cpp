@@ -273,9 +273,20 @@ void procesarEliminarObjeto(Juego *juego)
     if (objeto != NULL)
     {
         objeto->mostrarInformacion();
+
         int id = objeto->getId();
-        juego->tablero->getDiccionario()->eliminar(id);
+        juego->tablero->getDiccionario()->imprimirEnOrden();
+        // cout << "JUGADOR 0" << juego->tablero->getJugador(0)->getCantidadPersonajes() << endl;
+        // cout << "JUGADOR 1" << juego->tablero->getJugador(1)->getCantidadPersonajes() << endl;
+
+        juego->tablero->getJugador(0)->eliminarPersonaje(id);
+        // cout << "JUGADOR 0" << juego->tablero->getJugador(0)->getCantidadPersonajes() << endl;
+
+        juego->tablero->getJugador(1)->eliminarPersonaje(id);
+        // cout << "JUGADOR 1" << juego->tablero->getJugador(1)->getCantidadPersonajes() << endl;
+        // // delete juego->tablero->getElementoEnPosicion(Posicion(fila, columna));
         juego->tablero->darDeBaja(Posicion(fila, columna));
+        juego->tablero->getDiccionario()->eliminar(id);
     }
     else
     {
@@ -320,7 +331,7 @@ void procesarComenzarSimulacion(Juego *juego)
 void mostrarCantidadPersonajesPorBando(Juego *juego)
 {
     BANDO bando = pedirBando();
-    vector<int> ids = juego->tablero->getDiccionario()->idsEnOrden();
+    vector<int> ids = juego->tablero->getDiccionario()->clavesEnOrden();
     int contador = 0;
 
     if (bando == HUMANOS)
@@ -357,7 +368,8 @@ void procesarOpcionDefenderse(Juego *juego)
 {
     bool pudoDefender = juego->personajeActual->defender(juego);
 
-    if(!pudoDefender){
+    if (!pudoDefender)
+    {
         cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
         Sleep(2000)
     }

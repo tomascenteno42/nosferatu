@@ -68,7 +68,7 @@ void Tablero::darDeBaja(Posicion pos)
 {
 
     if (this->mapa->coordenadaValida(pos))
-        this->mapa->getCasillero(pos)->vaciarObjeto();
+        this->mapa->getCasillero(pos)->eliminarObjeto();
 }
 
 void Tablero::matarPersonaje(Posicion pos)

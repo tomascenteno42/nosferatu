@@ -12,5 +12,5 @@ bala 4 (8, 7) 371
 escopeta (9, 7) 350
 Vampirella (3, 5) 201
 estaca (5, 4) 400
-humano CV (10, 7) 067
+humano CV (10, 1) 067
 vampiro (5, 7) 270

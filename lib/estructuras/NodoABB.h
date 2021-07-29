@@ -6,144 +6,62 @@
 template <class K, class T>
 class NodoABB
 {
+
 private:
+    // Atributos
     K id;
     T data;
-    NodoABB<K, T> *padre;
-    NodoABB<K, T> *izquierdo;
     NodoABB<K, T> *derecho;
+    NodoABB<K, T> *izquierdo;
+    NodoABB<K, T> *padre;
 
 public:
-    /**
-     * @brief Construye un nuevo nodo.
-     * 
-     * @param k id
-     * @param d dato
-     */
-    NodoABB(K k, T d);
+    // Metodos
+    NodoABB(K id, T data);
 
-    /**
-    * @brief Devuelve la data del nodo.
-    * 
-    * @return T 
-    */
+    void setData(T data);
+    void setId(K id);
     T getData();
-
-    /**
-    * @brief Devuelve la id del nodo.
-    * 
-    * @return K
-    */
     K getId();
 
-    /**
-     * @brief Devuelve el nodo derecho
-     * 
-     * @return NodoABB<K, T>* 
-     */
+    void setDerecho(NodoABB<K, T> *derecho);
     NodoABB<K, T> *getDerecho();
 
-    /**
-     * @brief Devuelve el nodo izquierdo
-     * 
-     * @return NodoABB<K, T>* 
-     */
+    void setIzquierdo(NodoABB<K, T> *izquierdo);
     NodoABB<K, T> *getIzquierdo();
 
-    /**
-     * @brief Devuelve el nodo padre
-     * 
-     * @return NodoABB<K, T>* 
-     */
+    void setPadre(NodoABB<K, T> *padre);
     NodoABB<K, T> *getPadre();
 
-    /**
-     * @brief Establece la data del nodo.
-     * 
-     * @param data 
-     */
-    void setData(T data);
-
-    /**
-     * @brief Establece la id del nodo.
-     * 
-     * @param id 
-     */
-    void setId(K id);
-
-    /**
-     * @brief Establece el nodo izquierdo
-     * 
-     * @param nodoIzquierdo 
-     */
-    void setIzquierdo(NodoABB<K, T> *nodoIzquierdo);
-
-    /**
-     * @brief Establece el nodo izquierdo y el nodo padre.
-     * 
-     * @param nodoIzquierdo 
-     * @param nodoPadre 
-     */
-    void setIzquierdo(NodoABB<K, T> *nodoIzquierdo, NodoABB<K, T> *nodoPadre);
-
-    /**
-     * @brief Establece el nodo derecho
-     * 
-     * @param nodoDerecho 
-     */
-    void setDerecho(NodoABB<K, T> *nodoDerecho);
-
-    /**
-     * @brief Establece el nodo derecho y el nodo padre.
-     * 
-     * @param nodoDerecho 
-     * @param nodoPadre 
-     */
-    void setDerecho(NodoABB<K, T> *nodoDerecho, NodoABB<K, T> *nodoPadre);
-
-    /**
-     * @brief Establece el nodo padre
-     * 
-     * @param nodoPadre 
-     */
-    void setPadre(NodoABB<K, T> *nodoPadre);
-
-    /**
-     * @brief Evalua si el hijo izquierdo y el derecho existen.
-     * 
-     * @return true si el hijo izquierdo y el derecho apunta a null. 
-     */
     bool esHoja();
+    bool soloHijoDerecho();
+    bool soloHijoIzquierdo();
 
-    /**
-     * @brief Evalua si el nodo solo tiene un hijo derecho.
-     * 
-     * @return true si el hijo izquierdo apunta a null y el derecho no. 
-     */
-    bool tieneSoloHijoDerecho();
-
-    /**
-     * @brief Evalua si el nodo solo tiene un hijo izquierdo.
-     * 
-     * @return true si el hijo derecho apunta a null y el izquierdo no. 
-     */
-    bool tieneSoloHijoIzquierdo();
-
-    /**
-     * @brief Destructor del nodo ABB
-     * 
-     */
     ~NodoABB();
 };
 
+// -------------- IMPLEMENTATION -----------------
+
 template <class K, class T>
-NodoABB<K, T>::NodoABB(K k, T d)
+NodoABB<K, T>::NodoABB(K id, T data)
 {
-    id = k;
-    data = d;
-    izquierdo = NULL;
-    derecho = NULL;
-    padre = NULL;
+    this->data = data;
+    this->id = id;
+    this->derecho = 0;
+    this->izquierdo = 0;
+    this->padre = 0;
+}
+
+template <class K, class T>
+void NodoABB<K, T>::setData(T data)
+{
+    this->data = data;
+}
+
+template <class K, class T>
+void NodoABB<K, T>::setId(K id)
+{
+    this->id = id;
 }
 
 template <class K, class T>
@@ -159,15 +77,39 @@ K NodoABB<K, T>::getId()
 }
 
 template <class K, class T>
+void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *izquierdo)
+{
+    this->izquierdo = izquierdo;
+
+    if (izquierdo)
+        izquierdo->setPadre(this);
+}
+
+template <class K, class T>
+NodoABB<K, T> *NodoABB<K, T>::getIzquierdo()
+{
+    return this->izquierdo;
+}
+
+template <class K, class T>
+void NodoABB<K, T>::setDerecho(NodoABB<K, T> *derecho)
+{
+    this->derecho = derecho;
+
+    if (derecho)
+        derecho->setPadre(this);
+}
+
+template <class K, class T>
 NodoABB<K, T> *NodoABB<K, T>::getDerecho()
 {
     return derecho;
 }
 
 template <class K, class T>
-NodoABB<K, T> *NodoABB<K, T>::getIzquierdo()
+void NodoABB<K, T>::setPadre(NodoABB<K, T> *padre)
 {
-    return izquierdo;
+    this->padre = padre;
 }
 
 template <class K, class T>
@@ -177,73 +119,27 @@ NodoABB<K, T> *NodoABB<K, T>::getPadre()
 }
 
 template <class K, class T>
-void NodoABB<K, T>::setData(T data)
-{
-    data = data;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setId(K id)
-{
-    id = id;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setDerecho(NodoABB<K, T> *nodoDerecho)
-{
-    derecho = nodoDerecho;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setDerecho(NodoABB<K, T> *nodoDerecho, NodoABB<K, T> *nodoPadre)
-{
-    derecho = nodoDerecho;
-    padre = nodoPadre;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *nodoIzquierdo)
-{
-    izquierdo = nodoIzquierdo;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *nodoIzquierdo, NodoABB<K, T> *nodoPadre)
-{
-    izquierdo = izquierdo;
-    padre = nodoPadre;
-}
-
-template <class K, class T>
-void NodoABB<K, T>::setPadre(NodoABB<K, T> *nodoPadre)
-{
-    padre = nodoPadre;
-}
-
-template <class K, class T>
 bool NodoABB<K, T>::esHoja()
 {
-
-    return (izquierdo == 0 && derecho == 0);
+    return (getIzquierdo() == 0 && getDerecho() == 0);
 }
 
 template <class K, class T>
-bool NodoABB<K, T>::tieneSoloHijoDerecho()
+bool NodoABB<K, T>::soloHijoDerecho()
 {
-
-    return (izquierdo == 0 && derecho != 0);
+    return (getIzquierdo() == 0 && getDerecho() != 0);
 }
 
 template <class K, class T>
-bool NodoABB<K, T>::tieneSoloHijoIzquierdo()
+bool NodoABB<K, T>::soloHijoIzquierdo()
 {
-
-    return (izquierdo != 0 && derecho == 0);
+    return (getIzquierdo() != 0 && getDerecho() == 0);
 }
 
 template <class K, class T>
 NodoABB<K, T>::~NodoABB()
 {
+    delete data;
 }
 
 #endif //TP3_NodoABB_H

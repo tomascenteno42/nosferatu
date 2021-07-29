@@ -18,7 +18,8 @@ void Humano::agarrarObjeto(Elemento *objeto)
     {
         size_t i = 0;
 
-        while (!contieneEscopeta && i < inventario.size()) {
+        while (!contieneEscopeta && i < inventario.size())
+        {
             if (inventario.at(i)->getCaracter() == C_ESCOPETA)
                 contieneEscopeta = true;
             i++;
@@ -50,8 +51,9 @@ void Humano::mostrarInventario()
          << endl;
 }
 
-void Humano::modificarTransformacion(bool estado) {
-    if(estado == false) // Detengo la transformacion
+void Humano::modificarTransformacion(bool estado)
+{
+    if (estado == false) // Detengo la transformacion
         contadorTransformacion = 0;
     transformando = estado;
 }
@@ -67,7 +69,8 @@ void Humano::atacar(Juego *juego)
     {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2){
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2)
+        {
             idxBalas = i;
             contieneBalas = true;
         }
@@ -154,11 +157,13 @@ void Humano::atacarEscopeta(Juego *juego, int idxBalas)
     }
 }
 
-bool Humano::seEstaTransformando() {
+bool Humano::seEstaTransformando()
+{
     return transformando;
 }
 
-bool Humano::yaSeTransformo() {
+bool Humano::yaSeTransformo()
+{
     return seTransformo;
 }
 
@@ -171,74 +176,86 @@ void Humano::actualizar()
     else
         this->energia = nuevaEnergia;
 
-    if(contadorTurnos == 1) {
+    if (contadorTurnos == 1)
+    {
         this->escudo--;
         this->seDefendio = false;
         this->contadorTurnos = 0;
     }
 
-    if(contadorTransformacion == 2)
+    if (contadorTransformacion == 2)
         this->seTransformo = true;
 
-    if(seDefendio)
+    if (seDefendio)
         this->contadorTurnos = 1;
 
-    if(transformando)
+    if (transformando)
         this->contadorTransformacion++;
 }
 
-bool Humano::defender(Juego *juego) {
-    int tamanio = (int) inventario.size();
+bool Humano::defender(Juego *juego)
+{
+    int tamanio = (int)inventario.size();
     string leido;
     bool tieneAgua = false;
     int i = 0;
     Elemento *aux;
 
-    while (!tieneAgua && i < tamanio) {
+    while (!tieneAgua && i < tamanio)
+    {
         leido = inventario.at(i)->getNombre();
         aux = inventario.at(i);
-        if ((leido == S_AGUA_BENDITA) && (aux->getCantidad() > 0)) {
+        if ((leido == S_AGUA_BENDITA) && (aux->getCantidad() > 0))
+        {
             tieneAgua = true;
         }
         i++;
     }
-    if (tieneAgua) {
+    if (tieneAgua)
+    {
         cout << "Tiene agua bendita en su inventario, desea usarla?" << endl;
         cout << "1 - Si" << endl;
         cout << "2 - No" << endl;
         leido = juego->solicitarOpcion();
 
-        while (!esUnNumero(leido) || stoi(leido) < 1 || stoi(leido) > 2) {
+        while (!esUnNumero(leido) || stoi(leido) < 1 || stoi(leido) > 2)
+        {
             cout << "Por favor ingrese un numero valido" << endl;
             leido = juego->solicitarOpcion();
         }
         int respuesta = stoi(leido);
 
-        if (respuesta == 2) { // Si tiene pero prefiere no usarla
-            if(seDefendio)      //Si ya se habia defendido, dejo el escudo como esta, pero por un turno mas
+        if (respuesta == 2)
+        {                   // Si tiene pero prefiere no usarla
+            if (seDefendio) //Si ya se habia defendido, dejo el escudo como esta, pero por un turno mas
                 contadorTurnos = 0;
-            else if (this->escudo < MAX_ESCUDO){         // Solo se le aumenta el escudo si no tiene lo maximo posible
-                    int anterior = this->escudo;
-                    this->escudo++;
-                    this->seDefendio = true;
-                    cout << "Escudo:" << anterior << "--> " << this->escudo << endl;
+            else if (this->escudo < MAX_ESCUDO)
+            { // Solo se le aumenta el escudo si no tiene lo maximo posible
+                int anterior = this->escudo;
+                this->escudo++;
+                this->seDefendio = true;
+                cout << "Escudo:" << anterior << "--> " << this->escudo << endl;
             }
-            else {                      //  Si ya no se puede agregar mas escudo
+            else
+            { //  Si ya no se puede agregar mas escudo
                 int anterior = this->energia;
                 this->energia += 3;
                 cout << "Ya tenes el maximo escudo posible" << endl;
                 cout << "Energia:" << anterior << "--> " << this->energia << endl;
             }
         }
-        else if(respuesta == 1){ // Si quiere usar el agua
+        else if (respuesta == 1)
+        { // Si quiere usar el agua
             int anterior = this->energia;
             this->energia = MAX_ENERGIA;
             aux->setCantidad(aux->getCantidad() - 1);
             cout << "Energia:" << anterior << "--> " << this->energia << endl;
         }
     }
-    else { // Si no tiene agua
-        if((this->energia += 3) <= MAX_ENERGIA) {
+    else
+    { // Si no tiene agua
+        if ((this->energia += 3) <= MAX_ENERGIA)
+        {
             int anterior = this->energia;
             this->energia += 3;
             cout << "Energia:" << anterior << "--> " << this->energia << endl;
