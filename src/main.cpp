@@ -10,6 +10,22 @@ int main()
         juego->mostrar();
     }
 
+    if (juego->gameOver())
+    {
+        clearTerminal();
+        juego->tablero->getMapa()->mostrarMapa();
+
+        cout << endl
+             << endl;
+        cout << "GAME OVER!" << endl;
+
+        if (juego->tablero->getJugador(0)->perdio())
+            cout << "Gano el bando de los Monstruos!!!!!!!" << endl;
+        else
+            cout << "Gano el bando de los Humanos!!!!!!!" << endl;
+    }
+
     delete juego;
+
     return 0;
 }

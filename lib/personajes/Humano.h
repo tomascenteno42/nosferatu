@@ -53,7 +53,7 @@ public:
      */
     void mostrarInventario();
 
-    bool defender(Juego* juego) override;
+    void defender(Juego *juego) override;
 
     void modificarTransformacion(bool estado);
 
@@ -61,7 +61,13 @@ public:
 
     bool yaSeTransformo();
 
+    bool puedeAtacar();
+
+    bool puedeDefenderse();
+
     void actualizar() override;
+
+    vector<Elemento *> getInventario();
 
     /*
      * Post: decrece en 1 la cantidad existentes de humanos

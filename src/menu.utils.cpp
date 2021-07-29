@@ -275,17 +275,12 @@ void procesarEliminarObjeto(Juego *juego)
         objeto->mostrarInformacion();
 
         int id = objeto->getId();
-        juego->tablero->getDiccionario()->imprimirEnOrden();
-        // cout << "JUGADOR 0" << juego->tablero->getJugador(0)->getCantidadPersonajes() << endl;
-        // cout << "JUGADOR 1" << juego->tablero->getJugador(1)->getCantidadPersonajes() << endl;
 
         juego->tablero->getJugador(0)->eliminarPersonaje(id);
-        // cout << "JUGADOR 0" << juego->tablero->getJugador(0)->getCantidadPersonajes() << endl;
-
         juego->tablero->getJugador(1)->eliminarPersonaje(id);
-        // cout << "JUGADOR 1" << juego->tablero->getJugador(1)->getCantidadPersonajes() << endl;
-        // // delete juego->tablero->getElementoEnPosicion(Posicion(fila, columna));
+
         juego->tablero->darDeBaja(Posicion(fila, columna));
+
         juego->tablero->getDiccionario()->eliminar(id);
     }
     else
@@ -366,14 +361,9 @@ void procesarSeleccionBando(Juego *juego)
 /* MENU TURNO */
 void procesarOpcionDefenderse(Juego *juego)
 {
-    bool pudoDefender = juego->personajeActual->defender(juego);
-
-    if (!pudoDefender)
-    {
-        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
-        Sleep(2000)
-    }
+    juego->personajeActual->defender(juego);
 }
+
 void procesarOpcionAtacar(Juego *juego)
 {
     juego->personajeActual->atacar(juego);

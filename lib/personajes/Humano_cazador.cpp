@@ -21,7 +21,8 @@ void Humano_cazador::atacar(Juego *juego)
     {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2){
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2)
+        {
             idxBalas = i;
             contieneBalas = true;
         }
@@ -356,10 +357,11 @@ void Humano_cazador::actualizar()
         this->energia = nuevaEnergia;
 }
 
-bool Humano_cazador::defender(Juego *juego){
-    bool puedeDefender = false;
+void Humano_cazador::defender(Juego *juego)
+{
 
-    if(this->energia >= 5){
+    if (puedeDefenderse())
+    {
         string leido;
 
         cout << "Ingrese la opcion deseada:" << endl;
@@ -367,27 +369,32 @@ bool Humano_cazador::defender(Juego *juego){
         cout << "2 - Curar a todos los aliados 20 puntos de vida" << endl;
         leido = juego->solicitarOpcion();
 
-        while(!esUnNumero(leido) || stoi(leido) < 1 || stoi(leido) > 2){
+        while (!esUnNumero(leido) || stoi(leido) < 1 || stoi(leido) > 2)
+        {
             cout << "Ingrese un numero valido" << endl;
             leido = juego->solicitarOpcion();
         }
 
         int respuesta = stoi(leido);
 
-        if(respuesta == 1){
-            if((this->vida + 50) > MAX_VIDA)
+        if (respuesta == 1)
+        {
+            if ((this->vida + 50) > MAX_VIDA)
                 this->vida = MAX_VIDA;
             else
                 this->vida += 50;
         }
-        else if(respuesta == 2) {
+        else if (respuesta == 2)
+        {
             int personajesVivos = juego->tablero->getJugadorActual()->personajesVivos();
             vector<Ser *> personajes = juego->tablero->getJugadorActual()->getPersonajes();
 
-            for(int i = 0; i < personajesVivos; i++){
-                if((personajes.at(i)->getVida() + 20) > MAX_VIDA)
+            for (int i = 0; i < personajesVivos; i++)
+            {
+                if ((personajes.at(i)->getVida() + 20) > MAX_VIDA)
                     personajes.at(i)->setVida(MAX_VIDA);
-                else{
+                else
+                {
                     int nuevaVida = personajes.at(i)->getVida() + 20;
                     personajes.at(i)->setVida(nuevaVida);
                     this->vida -= 20;
@@ -395,9 +402,22 @@ bool Humano_cazador::defender(Juego *juego){
             }
         }
         this->energia -= 5;
-        puedeDefender = true;
     }
-    return puedeDefender;
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
+
+bool Humano_cazador::puedeDefenderse()
+{
+    return this->energia >= 5;
+}
+
+bool Humano_cazador::puedeAtacar()
+{
+    return this->energia >= 6;
 }
 
 Humano_cazador::~Humano_cazador()

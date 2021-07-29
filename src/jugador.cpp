@@ -45,7 +45,7 @@ int Jugador::personajesVivos()
 
 bool Jugador::perdio()
 {
-    return personajesVivos() == 0;
+    return getPersonajes().size() == 0 || personajesVivos() == 0;
 }
 
 Jugador::~Jugador()

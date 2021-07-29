@@ -10,7 +10,7 @@ void Vanesa::atacar(Juego *juego)
     size_t i = 0;
     int idxAgua = -1;
     int idxBalas = -1;
-    if (this->getEnergia() < 8)
+    if (!puedeAtacar())
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
@@ -427,11 +427,11 @@ bool Vanesa::defenderConAgua(Juego *juego)
     return puedeCurar;
 }
 
-bool Vanesa::defender(Juego *juego)
+void Vanesa::defender(Juego *juego)
 {
     bool puedeDefender = false;
 
-    if (this->energia >= 10)
+    if (puedeDefenderse())
     {
         puedeDefender = true;
         bool tieneAgua = false;
@@ -493,9 +493,24 @@ bool Vanesa::defender(Juego *juego)
         }
     }
     if (puedeDefender)
+    {
         this->energia -= 10;
+    }
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
 
-    return puedeDefender;
+bool Vanesa::puedeDefenderse()
+{
+    return this->energia >= 10;
+}
+
+bool Vanesa::puedeAtacar()
+{
+    return this->energia >= 8;
 }
 
 Vanesa::~Vanesa()

@@ -2,7 +2,6 @@
 zombi (1, 1) 101
 humano (1, 2) 005
 agua 20 (4, 4) 300
-Vanesa (7, 7) 000
 agua 10 (8, 8) 305
 Nosferatu (10, 8) 200
 estaca (10, 7) 401
@@ -12,5 +11,4 @@ bala 4 (8, 7) 371
 escopeta (9, 7) 350
 Vampirella (3, 5) 201
 estaca (5, 4) 400
-humano CV (10, 1) 067
 vampiro (5, 7) 270

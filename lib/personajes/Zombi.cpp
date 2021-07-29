@@ -12,7 +12,7 @@ void Zombi::agarrarObjeto()
 
 void Zombi::atacar(Juego *juego)
 {
-    vector<Posicion > posicionesPosibles;
+    vector<Posicion> posicionesPosibles;
     bool puedeAtacar = false;
     if (this->getEnergia() < 5)
     {
@@ -24,8 +24,8 @@ void Zombi::atacar(Juego *juego)
         Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
         if (objetoEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            char caracter = objetoEncontrado->getCaracter();
+            if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
             {
                 posicionesPosibles.push_back(arriba);
                 puedeAtacar = true;
@@ -36,8 +36,8 @@ void Zombi::atacar(Juego *juego)
         objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
         if (objetoEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            char caracter = objetoEncontrado->getCaracter();
+            if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
             {
                 posicionesPosibles.push_back(abajo);
                 puedeAtacar = true;
@@ -48,8 +48,8 @@ void Zombi::atacar(Juego *juego)
         objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
         if (objetoEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            char caracter = objetoEncontrado->getCaracter();
+            if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
             {
                 posicionesPosibles.push_back(izquierda);
                 puedeAtacar = true;
@@ -60,8 +60,8 @@ void Zombi::atacar(Juego *juego)
         objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
         if (objetoEncontrado)
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            char caracter = objetoEncontrado->getCaracter();
+            if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
             {
                 posicionesPosibles.push_back(derecha);
                 puedeAtacar = true;
@@ -71,8 +71,10 @@ void Zombi::atacar(Juego *juego)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else
         {
-            int random = rand()%((posicionesPosibles.size()));
+            int random = rand() % ((posicionesPosibles.size()));
+            cout << "RANDOM:" << random << endl;
             objetoEncontrado = juego->tablero->getElementoEnPosicion(posicionesPosibles.at(random));
+            objetoEncontrado->mostrarInformacion();
             Humano *enemigo = dynamic_cast<Humano *>(objetoEncontrado);
             enemigo->modificarTransformacion(true);
             this->setEnergia((this->getEnergia()) - 5);
@@ -89,28 +91,42 @@ void Zombi::actualizar()
     else
         this->energia = nuevaEnergia;
 
-    if(contadorTurnos == 1){
+    if (contadorTurnos == 1)
+    {
         this->contadorTurnos = 0;
         this->seDefendio = false;
     }
-    if(seDefendio)
+    if (seDefendio)
         this->contadorTurnos = 1;
 }
 
-bool Zombi::defender(Juego *juego) {
-    bool puedeDefender = false;
-
-    if(this->energia >= 2){
-        if(this->vida + 20 > MAX_VIDA)
+void Zombi::defender(Juego *juego)
+{
+    if (puedeDefenderse())
+    {
+        if (this->vida + 20 > MAX_VIDA)
             this->vida = MAX_VIDA;
         else
             this->vida += 20;
 
         this->seDefendio = true;
         this->energia -= 2;
-        puedeDefender = true;
     }
-    return puedeDefender;
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
+
+bool Zombi::puedeDefenderse()
+{
+    return this->energia >= 2;
+}
+
+bool Zombi::puedeAtacar()
+{
+    return this->energia >= 5;
 }
 
 Zombi::~Zombi()

@@ -29,7 +29,10 @@ public:
 
     void actualizar() override;
 
-    bool defender(Juego *juego) override;
+    void defender(Juego *juego) override;
+
+    bool puedeAtacar();
+    bool puedeDefenderse();
 
     /*
      * Post: decrece en 1 la cantidad de objetos Vanesa existentes

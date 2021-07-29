@@ -45,7 +45,9 @@ void Juego::mostrarOpciones()
     for (size_t i = 0; i < menuActual->getCantidad(); i++)
         cout << i + 1 << ") " + menuActual->getOpcion(i) << endl;
 
-    cout << "Ingrese una opcion: " << endl;
+    cout << endl
+         << "Ingrese una opcion: " << endl
+         << endl;
 }
 
 void Juego::mostrar()
@@ -81,8 +83,10 @@ void Juego::mostrar()
 
     renderizarOpcion(this->tablero->getDiccionario());
 
-    cout << "Presione enter para continuar..." << endl;
+    cout << endl
+         << "Presione enter para continuar..." << endl;
 
+    getchar();
     getchar();
 }
 
@@ -93,7 +97,9 @@ void Juego::renderizarOpcion(ABB<int, Objeto *> *diccionario)
     if (!esValidaElIngresoDelUsuario(eleccionUsuario))
         cout << "Ingreso invalido, ingrese nuevamente: ";
     else
+    {
         procesarOpcion(stoi(eleccionUsuario), diccionario);
+    }
 }
 
 string Juego::solicitarOpcion()
@@ -261,23 +267,28 @@ void Juego::avanzar()
     // Termino el turno
     if (personajesJugados == this->tablero->getJugadorActual()->getCantidadPersonajes())
     {
-        cout << "TERMINO EL TURNO" << endl;
-        //TODO: DONT KNOW IF I HAVE TO CHECK FOR GAMEOVER?
         personajesJugados = 0;
         this->tablero->idxJugadorActual = (this->tablero->idxJugadorActual + 1) % 2;
         cambiarMenu(menuComienzoDeTurno);
 
-        vector<Ser *> personajes = this->tablero->getJugadorActual()->getPersonajes();
-        int cantidadPersonajes = this->tablero->getJugadorActual()->personajesVivos();
+        for (size_t i = 0; i < this->tablero->getJugadorActual()->personajesVivos(); i++)
+        {
+            if (!this->tablero->getJugadorActual()->getPersonajes().at(i)->estaMuerto())
+            {
+                this->tablero->getJugadorActual()->getPersonajes().at(i)->actualizar();
+            }
+        }
 
-        for (int i = 0; i < cantidadPersonajes; i++)
-            personajes.at(i)->actualizar();
+        this->tablero->aplicarTransformacionAZombi();
     }
 
-    personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
+    if (!gameOver())
+    {
+        personajeActual = this->tablero->getJugadorActual()->getPersonajes().at(personajesJugados);
 
-    if (personajeActual->estaMuerto())
-        avanzar();
+        if (personajeActual->estaMuerto())
+            avanzar();
+    }
 }
 
 bool Juego::esValidaElIngresoDelUsuario(string ingreso)
@@ -293,8 +304,6 @@ bool Juego::cerrarMenu()
 
 bool Juego::gameOver()
 {
-    cout << this->tablero->getJugador(0)->getCantidadPersonajes() << endl;
-    cout << this->tablero->getJugador(1)->getCantidadPersonajes() << endl;
     return this->tablero->getJugador(0)->perdio() ||
            this->tablero->getJugador(1)->perdio();
 }
@@ -303,5 +312,4 @@ Juego::~Juego()
 {
     delete menues;
     delete tablero;
-    delete personajeActual;
 }

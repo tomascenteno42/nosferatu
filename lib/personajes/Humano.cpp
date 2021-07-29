@@ -63,7 +63,7 @@ void Humano::atacar(Juego *juego)
     bool contieneEscopeta = false, contieneBalas = false;
     size_t i = 0;
     int idxBalas = -1;
-    if (this->getEnergia() < 5)
+    if (!puedeAtacar())
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     while (i < inventario.size() && this->getEnergia() >= 5)
     {
@@ -184,7 +184,10 @@ void Humano::actualizar()
     }
 
     if (contadorTransformacion == 2)
+    {
         this->seTransformo = true;
+        this->transformando = false;
+    }
 
     if (seDefendio)
         this->contadorTurnos = 1;
@@ -193,7 +196,7 @@ void Humano::actualizar()
         this->contadorTransformacion++;
 }
 
-bool Humano::defender(Juego *juego)
+void Humano::defender(Juego *juego)
 {
     int tamanio = (int)inventario.size();
     string leido;
@@ -263,7 +266,21 @@ bool Humano::defender(Juego *juego)
         else
             this->energia = MAX_ENERGIA;
     }
+}
+
+bool Humano::puedeDefenderse()
+{
     return true;
+}
+
+bool Humano::puedeAtacar()
+{
+    return this->energia >= 5;
+}
+
+vector<Elemento *> Humano::getInventario()
+{
+    return this->inventario;
 }
 
 Humano::~Humano()

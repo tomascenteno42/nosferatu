@@ -5,7 +5,6 @@
 
 class Monstruo : public Ser
 {
-private:
 public:
     /*
      * Post: se crea el objeto Monstruo con nombre y caracter por parametro

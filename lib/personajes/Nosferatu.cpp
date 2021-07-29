@@ -21,8 +21,8 @@ void Nosferatu::atacar(Juego *juego)
                 Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
                 if (objetoEncontrado)
                 {
-                    int id = objetoEncontrado->getId();
-                    if (id >= ID_VANESA && id < ID_ZOMBIE && (objetoEncontrado != this))
+                    char caracter = objetoEncontrado->getCaracter();
+                    if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
                     {
                         objetoEncontrado->mostrarInformacion();
                         puedeAtacar = true;
@@ -38,14 +38,11 @@ void Nosferatu::atacar(Juego *juego)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else if (puedeAtacar)
         {
-            cout << "Ingrese la fila" << endl;
-            cin >> filaEnemigo;
-            cout << "Ingrese la columna" << endl;
-            cin >> columnaEnemigo;
-            Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-            Ser *enemigo = dynamic_cast<Ser *>(objeto);
-            int danio, escudo, vida, energia, fuerza, id;
-            //REVISAR INVENTARIO, GUARDAR AGUA BENDITA
+            juego->pedirPosicion(filaEnemigo, columnaEnemigo);
+            Posicion pos(filaEnemigo, columnaEnemigo);
+            Humano *enemigo = (Humano *)juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
+            int danio, escudo;
+
             if (enemigo->getVida() > 30)
             {
                 escudo = enemigo->getEscudo();
@@ -57,57 +54,21 @@ void Nosferatu::atacar(Juego *juego)
                      << endl;
                 if (enemigo->estaMuerto())
                 {
-                    juego->tablero->matarPersonaje(Posicion(filaEnemigo, columnaEnemigo));
+                    juego->tablero->matarPersonaje(pos);
                     cout << "El enemigo ha muerto." << endl;
                 }
             }
             else
             {
-                vida = enemigo->getVida();
-                escudo = enemigo->getEscudo();
-                energia = enemigo->getEnergia();
-                fuerza = enemigo->getFuerza();
-                id = enemigo->getId();
-                juego->tablero->matarPersonaje(Posicion(filaEnemigo, columnaEnemigo));
-                Objeto *vampiro_nuevo = new Vampiro(id, filaEnemigo, columnaEnemigo);
-                juego->tablero->darDeAlta(Posicion(filaEnemigo, columnaEnemigo), vampiro_nuevo);
-                Ser *vampiro = dynamic_cast<Ser *>(vampiro_nuevo);
-                vampiro->setVida(vida);
-                vampiro->setEscudo(escudo);
-                vampiro->setEnergia(energia);
-                vampiro->setFuerza(fuerza);
-                //AGREGAR AGUA BENDITA AL INVENTARIO
+                int idEnemigo = enemigo->getId();
+                Vampiro *vampiro = new Vampiro(idEnemigo, filaEnemigo, columnaEnemigo);
+
+                juego->tablero->aplicarTransformacion(idEnemigo, vampiro, pos, false);
             }
             this->setEnergia((this->getEnergia()) - 6);
-            objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-            enemigo = dynamic_cast<Ser *>(objeto);
-            enemigo->mostrarInformacion();
         }
     }
 }
-/*
-        else
-        {
-            vida = enemigo->getVida();
-            escudo = enemigo->getEscudo();
-            energia = enemigo->getEnergia();
-            fuerza = enemigo->getFuerza();
-            int id = enemigo->getId();
-            juego->tablero->darDeBaja(Posicion(filaEnemigo, columnaEnemigo));
-            Objeto *vampiro_nuevo = new Vampiro(id, filaEnemigo, columnaEnemigo);
-            juego->tablero->darDeAlta(Posicion(filaEnemigo, columnaEnemigo), vampiro_nuevo);
-            Ser *vampiro = dynamic_cast<Ser *>(vampiro_nuevo);
-            vampiro->setVida(vida);
-            vampiro->setEscudo(escudo);
-            vampiro->setEnergia(energia);
-            vampiro->setFuerza(fuerza);
-            this->setEnergia((this->getEnergia()) - 6);
-        }
-        objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-        enemigo = dynamic_cast<Ser *>(objeto);
-        enemigo->mostrarInformacion();
-    }
-}*/
 
 bool Nosferatu::posicionValida(vector<Posicion> posiciones, int fila, int columna)
 {
@@ -133,14 +94,14 @@ void Nosferatu::actualizar()
         this->energia = nuevaEnergia;
 }
 
-bool Nosferatu::defender(Juego *juego)
+void Nosferatu::defender(Juego *juego)
 {
     vector<Posicion> posiciones;
     Objeto *objetoEncontrado;
     bool puedeCambiar = false;
     bool puedeDefender = false;
 
-    if (this->energia >= 10)
+    if (puedeDefenderse())
     {
         for (int i = (this->fila - 2); i <= (this->fila + 2); i++)
         {
@@ -189,7 +150,21 @@ bool Nosferatu::defender(Juego *juego)
             Sleep(750)
         }
     }
-    return puedeDefender;
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
+
+bool Nosferatu::puedeDefenderse()
+{
+    return this->energia >= 10;
+}
+
+bool Nosferatu::puedeAtacar()
+{
+    return this->energia >= 6;
 }
 
 Nosferatu::~Nosferatu()

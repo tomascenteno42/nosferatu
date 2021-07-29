@@ -52,6 +52,17 @@ public:
      */
     void darDeAlta(Posicion pos, Objeto *nuevo_objeto);
 
+    /**
+     * @brief Se encarga de ajustar el mapa y el tablero tras una transformacion
+     */
+    void aplicarTransformacion(int idTransformado, Monstruo *nuevoMonstruo, Posicion pos, bool esZombi);
+
+    /**
+     * @brief Se encargar de verificar si hay que transformar un zombi
+     *  y si es el caso lo transforma
+     */
+    void aplicarTransformacionAZombi();
+
     /*
     *
     * Post: Se obtiene el porcentaje del objeto en referencia al nombre en el mapa

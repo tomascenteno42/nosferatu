@@ -25,7 +25,10 @@ public:
 
     void actualizar() override;
 
-    bool defender(Juego* juego) override;
+    void defender(Juego *juego) override;
+
+    bool puedeDefenderse();
+    bool puedeAtacar();
 
     /*
      * Post: decrece en 1 la cantidad de objetos Zombi existentes

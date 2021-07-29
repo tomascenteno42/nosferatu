@@ -11,16 +11,20 @@ void Vampirella::atacar(Juego *juego)
 
     Posicion arriba((this->getFila() - 1), this->getColumna());
     Objeto *objetoEncontrado;
-    if(this->getEnergia() < 4)
+    if (this->getEnergia() < 4)
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
-    else {
+    else
+    {
         cout << "Indique a que posicion quiere atacar" << endl;
         cout << "A su alrededor hay: " << endl;
-        if (juego->tablero->getMapa()->coordenadaValida(arriba)) {
+        if (juego->tablero->getMapa()->coordenadaValida(arriba))
+        {
             objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
+            if (objetoEncontrado)
+            {
+                char caracter = objetoEncontrado->getCaracter();
+                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
+                {
                     objetoEncontrado->mostrarInformacion();
                     puedeAtacar = true;
                     cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
@@ -30,12 +34,15 @@ void Vampirella::atacar(Juego *juego)
             }
         }
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        if (juego->tablero->getMapa()->coordenadaValida(abajo)) {
+        if (juego->tablero->getMapa()->coordenadaValida(abajo))
+        {
 
             objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
+            if (objetoEncontrado)
+            {
+                char caracter = objetoEncontrado->getCaracter();
+                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
+                {
                     objetoEncontrado->mostrarInformacion();
                     puedeAtacar = true;
                     cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
@@ -45,12 +52,15 @@ void Vampirella::atacar(Juego *juego)
             }
         }
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        if (juego->tablero->getMapa()->coordenadaValida(izquierda)) {
+        if (juego->tablero->getMapa()->coordenadaValida(izquierda))
+        {
 
             objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
+            if (objetoEncontrado)
+            {
+                char caracter = objetoEncontrado->getCaracter();
+                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
+                {
                     objetoEncontrado->mostrarInformacion();
                     puedeAtacar = true;
                     cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
@@ -60,12 +70,15 @@ void Vampirella::atacar(Juego *juego)
             }
         }
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        if (juego->tablero->getMapa()->coordenadaValida(derecha)) {
+        if (juego->tablero->getMapa()->coordenadaValida(derecha))
+        {
 
             objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-            if (objetoEncontrado) {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_VANESA && id < ID_ZOMBIE) {
+            if (objetoEncontrado)
+            {
+                char caracter = objetoEncontrado->getCaracter();
+                if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
+                {
                     objetoEncontrado->mostrarInformacion();
                     puedeAtacar = true;
                     cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
@@ -77,7 +90,8 @@ void Vampirella::atacar(Juego *juego)
 
         if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else {
+        else
+        {
             juego->pedirPosicion(filaEnemigo, columnaEnemigo);
             Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
             Ser *enemigo = dynamic_cast<Ser *>(objeto);
@@ -86,16 +100,18 @@ void Vampirella::atacar(Juego *juego)
             danio = (this->getFuerza());
             ajustarDanio(danio, escudo);
             enemigo->setVida(enemigo->getVida() - danio);
-            if (enemigo->estaMuerto()) {
+            if (enemigo->estaMuerto())
+            {
                 cout << "Eliminaste a tu enemigo " << endl;
                 juego->tablero->matarPersonaje(Posicion(filaEnemigo, columnaEnemigo));
             }
-            else{
+            else
+            {
                 cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
                 cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio << endl;
             }
             this->setEnergia((this->getEnergia()) - 4);
-            if(escudo > 0)
+            if (escudo > 0)
                 enemigo->setEscudo(escudo - 1);
         }
     }
@@ -110,24 +126,38 @@ void Vampirella::actualizar()
     else
         this->energia = nuevaEnergia;
 
-    if(this->contadorTurnos == 1){
+    if (this->contadorTurnos == 1)
+    {
         this->seDefendio = false;
         this->contadorTurnos = 0;
     }
 
-    if(this->seDefendio)
+    if (this->seDefendio)
         contadorTurnos = 1;
 }
 
-bool Vampirella::defender(Juego *juego) {
-    bool puedeDefender = false;
-
-    if(this->energia >= 5){
+void Vampirella::defender(Juego *juego)
+{
+    if (puedeDefenderse())
+    {
         this->seDefendio = true;
         this->energia -= 5;
-        puedeDefender = true;
     }
-    return puedeDefender;
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
+
+bool Vampirella::puedeDefenderse()
+{
+    return this->energia >= 5;
+}
+
+bool Vampirella::puedeAtacar()
+{
+    return this->energia >= 4;
 }
 
 Vampirella::~Vampirella()
