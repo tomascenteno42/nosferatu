@@ -322,6 +322,14 @@ void Humano_cazador::actualizar()
         this->energia = MAX_ENERGIA;
     else
         this->energia = nuevaEnergia;
+
+    if(this->contadorTransformacion == 2){
+        this->seTransformo = true;
+        this->transformando = false;
+        this->contadorTransformacion = 0;
+    }
+    if(this->transformando)
+        this->contadorTransformacion++;
 }
 
 void Humano_cazador::defender(Juego *juego)

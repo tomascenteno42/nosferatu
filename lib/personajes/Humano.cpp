@@ -188,10 +188,11 @@ void Humano::actualizar()
         this->contadorTurnos = 0;
     }
 
-    if (contadorTransformacion == 2)
-    {
+
+    if(contadorTransformacion == 2) {
         this->seTransformo = true;
         this->transformando = false;
+        this->contadorTransformacion = 0;
     }
 
     if (seDefendio)

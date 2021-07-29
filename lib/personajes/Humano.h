@@ -10,9 +10,9 @@ class Humano : public Ser
 {
 private:
     static int contador;
-    int contadorTransformacion;
-
 protected:
+
+    int contadorTransformacion;
     bool transformando = false;
     bool seTransformo = false;
     vector<Elemento *> inventario;
