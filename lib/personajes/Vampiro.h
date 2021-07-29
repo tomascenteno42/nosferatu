@@ -6,7 +6,6 @@ class Juego;
 
 class Vampiro : public Monstruo
 {
-private:
 public:
     /*
      * Post: Se crea el objeto vampiro listo para usarse
@@ -22,9 +21,14 @@ public:
 
     void atacar(Juego *juego);
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar);
+
     void actualizar() override;
 
-    bool defender(Juego* juego) override;
+    void defender(Juego *juego) override;
+
+    bool puedeDefenderse();
+    bool puedeAtacar();
 
     /*
      * Post: decrece en 1 la cantidad de objetos Vampiro existentes

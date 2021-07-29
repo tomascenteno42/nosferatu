@@ -1,15 +1,7 @@
 #include "../../src/main.h"
 
-int Vanesa::contador = 0;
-
 Vanesa::Vanesa(int fila, int columna) : Humano_cazador(S_VANESA, C_VANESA, ID_VANESA, fila, columna)
 {
-    Vanesa::contador++;
-}
-
-int Vanesa::getContador()
-{
-    return Vanesa::contador;
 }
 
 void Vanesa::atacar(Juego *juego)
@@ -18,13 +10,16 @@ void Vanesa::atacar(Juego *juego)
     size_t i = 0;
     int idxAgua = -1;
     int idxBalas = -1;
-    if (this->getEnergia() < 8)
+    if (!puedeAtacar())
+    {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
+    }
     while (i < inventario.size() && this->getEnergia() >= 8)
     {
         if (inventario.at(i)->getCaracter() == C_ESCOPETA)
             contieneEscopeta = true;
-        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2){
+        else if (inventario.at(i)->getCaracter() == C_BALAS && inventario.at(i)->getCantidad() >= 2)
+        {
             idxBalas = i;
             contieneBalas = true;
         }
@@ -83,7 +78,7 @@ void Vanesa::atacar(Juego *juego)
             {
 
                 cout << "Opcion invalida!" << endl
-                     << endl;
+                << endl;
             }
 
             i = 0;
@@ -109,28 +104,32 @@ void Vanesa::atacarEscopeta(Juego *juego, int idxBalas)
         for (int j = (this->columna - 2); j <= (this->columna + 2); j++)
         {
             Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
-            if (objetoEncontrado)
+            Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+            if (serEncontrado)
             {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (objetoEncontrado != this))
+                int id = serEncontrado->getId();
+                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && serEncontrado != this)
                 {
-                    objetoEncontrado->mostrarInformacion();
-                    puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
+                    if ((serEncontrado->seEstaDefendiendo()) && serEncontrado->getCaracter() == C_ZOMBI){
+                        cout << "Hay un zombi escondido, no podes atacarlo esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
+                    }
+                    else{
+                        serEncontrado->mostrarInformacion();
+                        puedeAtacar = true;
+                        cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                        << "\n"
+                        << endl;
+                    }
                 }
             }
         }
     }
     if (!puedeAtacar)
         cout << "No tenes enemigos cerca para atacarlos" << endl;
-    else if (puedeAtacar)
+    else
     {
-        cout << "Ingrese la fila" << endl;
-        cin >> filaEnemigo;
-        cout << "Ingrese la columna" << endl;
-        cin >> columnaEnemigo;
+        juego->pedirPosicion(filaEnemigo, columnaEnemigo);
+
         Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
         Ser *enemigo = dynamic_cast<Ser *>(objeto);
         int danio, escudo;
@@ -160,12 +159,11 @@ void Vanesa::atacarEscopeta(Juego *juego, int idxBalas)
         this->setEnergia((this->getEnergia()) - 8);
         Elemento *balas = inventario.at(idxBalas);
         balas->setCantidad(balas->getCantidad() - 2);
+        if(balas->getCantidad() == 0)
+            inventario.erase(inventario.begin() + idxBalas);
         cout << "Atacado! (☞ ﾟヮﾟ)☞" << endl;
         cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-             << endl;
-        objeto = juego->tablero->getElementoEnPosicion(Posicion(filaEnemigo, columnaEnemigo));
-        enemigo = dynamic_cast<Ser *>(objeto);
-        enemigo->mostrarInformacion();
+        << endl;
     }
 }
 
@@ -180,16 +178,17 @@ void Vanesa::atacarAgua(Juego *juego, int idxAgua)
         for (int j = (this->columna - 1); j <= (this->columna + 1); j++)
         {
             Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
-            if (objetoEncontrado)
+            Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+            if (serEncontrado)
             {
-                int id = objetoEncontrado->getId();
-                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
+                int id = serEncontrado->getId();
+                if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA && (!serEncontrado->seEstaDefendiendo()))
                 {
-                    objetoEncontrado->mostrarInformacion();
+                    serEncontrado->mostrarInformacion();
                     puedeAtacar = true;
-                    cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                         << "\n"
-                         << endl;
+                    cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                    << "\n"
+                    << endl;
                 }
             }
         }
@@ -223,9 +222,10 @@ void Vanesa::atacarAgua(Juego *juego, int idxAgua)
 
         Elemento *agua = inventario.at(idxAgua);
         agua->setCantidad(agua->getCantidad() - 1);
-
+        if(agua->getCantidad() == 0)
+            inventario.erase(inventario.begin() + idxAgua);
         cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-             << endl;
+        << endl;
     }
 }
 
@@ -238,76 +238,21 @@ void Vanesa::atacarEstaca(Juego *juego)
     cout << "A su alrededor hay: " << endl;
 
     Posicion arriba((this->getFila() - 1), this->getColumna());
-    Objeto *objetoEncontrado;
-    if (juego->tablero->getMapa()->coordenadaValida(arriba))
-    {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
-            {
-                objetoEncontrado->mostrarInformacion();
-                puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                     << "\n"
-                     << endl;
-            }
-        }
+    if (juego->tablero->getMapa()->coordenadaValida(arriba)) {
+        puedeAtacar = buscarAlrededor(juego, arriba, puedeAtacar);
     }
     Posicion abajo((this->getFila() + 1), this->getColumna());
-    if (juego->tablero->getMapa()->coordenadaValida(abajo))
-    {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
-            {
-                objetoEncontrado->mostrarInformacion();
-                puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                     << "\n"
-                     << endl;
-            }
-        }
+    if (juego->tablero->getMapa()->coordenadaValida(abajo)) {
+        puedeAtacar = buscarAlrededor(juego, abajo, puedeAtacar);
     }
     Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-    if (juego->tablero->getMapa()->coordenadaValida(izquierda))
-    {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
-            {
-                objetoEncontrado->mostrarInformacion();
-                puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                     << "\n"
-                     << endl;
-            }
-        }
+    if (juego->tablero->getMapa()->coordenadaValida(izquierda)) {
+        puedeAtacar = buscarAlrededor(juego, izquierda, puedeAtacar);
     }
-
     Posicion derecha(this->getFila(), (this->getColumna() + 1));
-    if (juego->tablero->getMapa()->coordenadaValida(derecha))
-    {
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA)
-            {
-                objetoEncontrado->mostrarInformacion();
-                puedeAtacar = true;
-                cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                     << "\n"
-                     << endl;
-            }
-        }
+    if (juego->tablero->getMapa()->coordenadaValida(derecha)) {
+        puedeAtacar = buscarAlrededor(juego, derecha, puedeAtacar);
     }
-
     if (!puedeAtacar)
         cout << "No tenes enemigos cerca para atacarlos" << endl;
     else
@@ -334,7 +279,7 @@ void Vanesa::atacarEstaca(Juego *juego)
             else
             {
                 cout << "Tu enemigo tenia un escudo de " << enemigo->getEscudo() << " entonces tu daño fue de " << danio
-                     << endl;
+                << endl;
             }
         }
         else if (enemigo->getId() >= ID_NOSFERATU && enemigo->getId() < ID_AGUA_BENDITA)
@@ -349,6 +294,27 @@ void Vanesa::atacarEstaca(Juego *juego)
     }
 }
 
+bool Vanesa::buscarAlrededor(Juego *juego, Posicion posicion, bool puedeAtacar){
+    Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(posicion);;
+    Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+    if (serEncontrado) {
+        int id = serEncontrado->getId();
+        if (id >= ID_ZOMBIE && id < ID_AGUA_BENDITA) {
+            if(serEncontrado->seEstaDefendiendo() && (id >= ID_VAMPIRELLA && id < ID_AGUA_BENDITA) || (id >= ID_ZOMBIE && id < ID_NOSFERATU)){
+                cout << "Hay un personaje en modo de defensa, no podes atacarlo esta vez ¯\\_(⊙︿⊙)_/¯\n" << endl;
+            }
+            else{
+                serEncontrado->mostrarInformacion();
+                puedeAtacar = true;
+                cout << "en la posicion: " << serEncontrado->getFila() << "," << serEncontrado->getColumna()
+                << "\n"
+                << endl;
+            }
+        }
+    }
+    return puedeAtacar;
+}
+
 void Vanesa::actualizar()
 {
     int nuevaEnergia = this->energia + 10;
@@ -358,7 +324,8 @@ void Vanesa::actualizar()
     else
         this->energia = nuevaEnergia;
 
-    if(contadorTurnos == 1){
+    if (contadorTurnos == 1)
+    {
         this->seDefendio = false;
         this->contadorTurnos = 0;
     }
@@ -375,90 +342,103 @@ void Vanesa::actualizar()
         this->contadorTransformacion++;
 }
 
-bool Vanesa::posicionValida(vector <Posicion> posiciones, int fila, int columna) {
+bool Vanesa::posicionValida(vector<Posicion> posiciones, int fila, int columna)
+{
     bool valida = false;
     int i = 0;
 
-    while(!valida && i < posiciones.size()){
-        if(posiciones.at(i).getFila() == fila && posiciones.at(i).getColumna() == columna)
+    while (!valida && i < posiciones.size())
+    {
+        if (posiciones.at(i).getFila() == fila && posiciones.at(i).getColumna() == columna)
             valida = true;
         i++;
     }
     return valida;
 }
 
-bool Vanesa::defenderConAgua(Juego *juego) {
+bool Vanesa::defenderConAgua(Juego *juego)
+{
     Objeto *objetoEncontrado;
     bool puedeCurar = false;
     vector<Posicion> posiciones;
 
-    for (int i = (this->fila - 2); i <= (this->fila + 2); i++){
-        for (int j = (this->columna - 2); j <= (this->columna + 2); j++){
+    for (int i = (this->fila - 2); i <= (this->fila + 2); i++)
+    {
+        for (int j = (this->columna - 2); j <= (this->columna + 2); j++)
+        {
             objetoEncontrado = juego->tablero->getElementoEnPosicion(Posicion(i, j));
 
-            if (objetoEncontrado){
+            if (objetoEncontrado)
+            {
                 string nombre = objetoEncontrado->getNombre();
-                if (nombre == S_HUMANO || nombre == S_HUMANO_CV || nombre == S_VANESA){
-                    Humano* humano;
-                    humano = dynamic_cast<Humano*>(objetoEncontrado);
+                if (nombre == S_HUMANO || nombre == S_HUMANO_CV || nombre == S_VANESA)
+                {
+                    Humano *humano;
+                    humano = dynamic_cast<Humano *>(objetoEncontrado);
 
-                    if(humano->seEstaTransformando()){
+                    if (humano->seEstaTransformando())
+                    {
                         puedeCurar = true;
                         Posicion nueva(i, j);
                         posiciones.push_back(nueva);
                         humano->mostrarInformacion();
                         cout << "en la posicion: " << objetoEncontrado->getFila() << "," << objetoEncontrado->getColumna()
-                             << endl
-                             << endl;
+                        << endl
+                        << endl;
                     }
                 }
             }
         }
     }
-    if(!puedeCurar)
+    if (!puedeCurar)
         cout << "Nadie a tu alrededor esta siendo tranformado :o" << endl;
 
-    else{
+    else
+    {
         int filaAliado, columnaAliado;
         juego->pedirPosicion(filaAliado, columnaAliado);
 
-        while(!posicionValida(posiciones, filaAliado, columnaAliado)){
+        while (!posicionValida(posiciones, filaAliado, columnaAliado))
+        {
             cout << "Ingrese una posicion valida" << endl;
             juego->pedirPosicion(filaAliado, columnaAliado);
         }
-        Objeto* objeto = juego->tablero->getElementoEnPosicion(Posicion(filaAliado, columnaAliado));
-        Humano* humano;
-        humano = dynamic_cast<Humano*>(objeto);
+        Objeto *objeto = juego->tablero->getElementoEnPosicion(Posicion(filaAliado, columnaAliado));
+        Humano *humano;
+        humano = dynamic_cast<Humano *>(objeto);
 
         humano->modificarTransformacion(false);
     }
     return puedeCurar;
-
 }
 
-bool Vanesa::defender(Juego *juego)
+void Vanesa::defender(Juego *juego)
 {
     bool puedeDefender = false;
 
-    if(this->energia >= 10){
+    if (puedeDefenderse())
+    {
         puedeDefender = true;
         bool tieneAgua = false;
         bool tieneCruz = false;
         int tamanio = (int)inventario.size();
-        Elemento* agua;
+        Elemento *agua;
         string nombre;
 
-        for(int i = 0; i < tamanio; i++){
+        for (int i = 0; i < tamanio; i++)
+        {
             nombre = inventario.at(i)->getNombre();
-            if(nombre == S_AGUA_BENDITA) {
+            if (nombre == S_AGUA_BENDITA)
+            {
                 tieneAgua = true;
                 agua = inventario.at(i);
             }
-            else if(nombre == S_CRUZ)
+            else if (nombre == S_CRUZ)
                 tieneCruz = true;
         }
-        if(!tieneAgua && !tieneCruz) {
-            if(this->vida + 10 > MAX_VIDA)
+        if (!tieneAgua && !tieneCruz)
+        {
+            if (this->vida + 10 > MAX_VIDA)
                 this->vida = MAX_VIDA;
             else
                 this->vida += 10;
@@ -466,40 +446,58 @@ bool Vanesa::defender(Juego *juego)
         else if (!tieneAgua && tieneCruz)
             this->seDefendio = true;
 
-        else if(tieneAgua && !tieneCruz){
+        else if (tieneAgua && !tieneCruz)
+        {
             puedeDefender = this->defenderConAgua(juego);
-            if(puedeDefender)
+            if (puedeDefender)
                 agua->setCantidad(agua->getCantidad() - 1);
         }
-        else if(tieneAgua && tieneCruz){
+        else if (tieneAgua && tieneCruz)
+        {
             string ingreso;
             cout << "Ingrese con que desearia defender:" << endl;
             cout << "1 - Agua bendita" << endl;
             cout << "2 - Cruz" << endl;
             ingreso = juego->solicitarOpcion();
 
-            while (!esUnNumero(ingreso) || stoi(ingreso) > 2 || stoi(ingreso) < 1){
+            while (!esUnNumero(ingreso) || stoi(ingreso) > 2 || stoi(ingreso) < 1)
+            {
                 cout << "Ingrese una opcion valida" << endl;
                 ingreso = juego->solicitarOpcion();
             }
             int respuesta = stoi(ingreso);
 
-            if(respuesta == 1) {
+            if (respuesta == 1)
+            {
                 puedeDefender = this->defenderConAgua(juego);
-                if(puedeDefender)
+                if (puedeDefender)
                     agua->setCantidad(agua->getCantidad() - 1);
             }
             else
                 this->seDefendio = true;
         }
     }
-    if(puedeDefender)
+    if (puedeDefender)
+    {
         this->energia -= 10;
+    }
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
 
-    return puedeDefender;
+bool Vanesa::puedeDefenderse()
+{
+    return this->energia >= 10;
+}
+
+bool Vanesa::puedeAtacar()
+{
+    return this->energia >= 8;
 }
 
 Vanesa::~Vanesa()
 {
-    Vanesa::contador--;
 }

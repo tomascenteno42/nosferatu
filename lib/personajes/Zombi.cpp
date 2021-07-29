@@ -10,74 +10,93 @@ void Zombi::agarrarObjeto()
     cantidadDeAguaBenditas++;
 }
 
+int Zombi::getCantidadDeAguaBenditas()
+{
+    return cantidadDeAguaBenditas;
+}
+
 void Zombi::atacar(Juego *juego)
 {
-    vector<Posicion > posicionesPosibles;
-    bool puedeAtacar = false;
+    vector<Posicion> posicionesPosibles;
+    bool puedeAtacar = false, posArriba = false, posAbajo = false, posIzq = false, posDer = false;
     if (this->getEnergia() < 5)
     {
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     }
-    if (this->getEnergia() >= 5)
+    else if (this->getEnergia() >= 5)
     {
         Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-        if (objetoEncontrado)
+        if (juego->tablero->getMapa()->coordenadaValida(arriba))
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            posArriba = buscarAlrededor(juego, arriba, posArriba);
+            if (posArriba)
             {
                 posicionesPosibles.push_back(arriba);
                 puedeAtacar = true;
             }
         }
-
         Posicion abajo((this->getFila() + 1), this->getColumna());
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-        if (objetoEncontrado)
+        if (juego->tablero->getMapa()->coordenadaValida(abajo))
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            posAbajo = buscarAlrededor(juego, abajo, posAbajo);
+            if (posAbajo)
             {
                 posicionesPosibles.push_back(abajo);
                 puedeAtacar = true;
             }
         }
-
         Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-        if (objetoEncontrado)
+        if (juego->tablero->getMapa()->coordenadaValida(izquierda))
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            posIzq = buscarAlrededor(juego, izquierda, posIzq);
+            if (posIzq)
             {
                 posicionesPosibles.push_back(izquierda);
                 puedeAtacar = true;
             }
         }
-
         Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-        if (objetoEncontrado)
+        if (juego->tablero->getMapa()->coordenadaValida(derecha))
         {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
+            posDer = buscarAlrededor(juego, derecha, posDer);
+            if (posDer)
             {
                 posicionesPosibles.push_back(derecha);
                 puedeAtacar = true;
             }
         }
-        if (!puedeAtacar)
-            cout << "No tenes enemigos cerca para atacarlos" << endl;
-        else
-        {
-            int random = rand()%((posicionesPosibles.size()));
-            objetoEncontrado = juego->tablero->getElementoEnPosicion(posicionesPosibles.at(random));
-            Humano *enemigo = dynamic_cast<Humano *>(objetoEncontrado);
-            enemigo->modificarTransformacion(true);
-            this->setEnergia((this->getEnergia()) - 5);
-        }
     }
+    if (!puedeAtacar)
+        cout << "No tenes enemigos cerca para atacarlos" << endl;
+    else
+    {
+        int random = rand() % ((posicionesPosibles.size()));
+        Objeto *objetoElegido = juego->tablero->getElementoEnPosicion(posicionesPosibles.at(random));
+        Humano *enemigo = dynamic_cast<Humano *>(objetoElegido);
+        enemigo->modificarTransformacion(true);
+        this->setEnergia((this->getEnergia()) - 5);
+    }
+}
+
+bool Zombi::buscarAlrededor(Juego *juego, Posicion posicion, bool esCorrecto)
+{
+    Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(posicion);
+    Ser *serEncontrado = dynamic_cast<Ser *>(objetoEncontrado);
+    if (serEncontrado)
+    {
+        char caracter = serEncontrado->getCaracter();
+        if (caracter == C_HUMANO || caracter == C_HUMANO_CV || caracter == C_VANESA)
+            if (serEncontrado->seEstaDefendiendo() && serEncontrado->getCaracter() == C_VANESA)
+            {
+                cout << "Vanesa se esta defendiendo, no podes atacarla esta vez ¯\\_(⊙︿⊙)_/¯\n"
+                     << endl;
+            }
+            else
+            {
+                esCorrecto = true;
+            }
+    }
+    return esCorrecto;
 }
 
 void Zombi::actualizar()
@@ -89,28 +108,42 @@ void Zombi::actualizar()
     else
         this->energia = nuevaEnergia;
 
-    if(contadorTurnos == 1){
+    if (contadorTurnos == 1)
+    {
         this->contadorTurnos = 0;
         this->seDefendio = false;
     }
-    if(seDefendio)
+    if (seDefendio)
         this->contadorTurnos = 1;
 }
 
-bool Zombi::defender(Juego *juego) {
-    bool puedeDefender = false;
-
-    if(this->energia >= 2){
-        if(this->vida + 20 > MAX_VIDA)
+void Zombi::defender(Juego *juego)
+{
+    if (puedeDefenderse())
+    {
+        if (this->vida + 20 > MAX_VIDA)
             this->vida = MAX_VIDA;
         else
             this->vida += 20;
 
         this->seDefendio = true;
         this->energia -= 2;
-        puedeDefender = true;
     }
-    return puedeDefender;
+    else
+    {
+        cout << "O no se cumplen las condiciones para ejecutar la defensa o no tiene suficiente energia" << endl;
+        Sleep(2000)
+    }
+}
+
+bool Zombi::puedeDefenderse()
+{
+    return this->energia >= 2;
+}
+
+bool Zombi::puedeAtacar()
+{
+    return this->energia >= 5;
 }
 
 Zombi::~Zombi()

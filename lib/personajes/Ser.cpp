@@ -5,7 +5,7 @@ Ser::Ser(string nombre, char caracter, int id, int fila, int columna) : Objeto(n
     nombre = nombre;
     caracter = caracter;
     energia = rand() % (MAX_ENERGIA + 1);
-    vida = rand() % (MAX_VIDA + 1) + 20;
+    vida = rand() % (MAX_VIDA - 20 + 1) + 20;
     escudo = rand() % (MAX_ESCUDO + 1);
     fuerza = rand() % (MAX_FUERZA - 10 + 1) + 10;
     id = id;
@@ -61,17 +61,17 @@ void Ser::ajustarDanio(int &danio, int escudo)
 {
     switch (escudo)
     {
-        case 0:
-            break;
-        case 1:
-            danio *= 0.9;
-            break;
-        case 2:
-            danio *= 0.8;
-            break;
-        default:
-            danio *= 0.2;
-            break;
+    case 0:
+        break;
+    case 1:
+        danio *= 0.9;
+        break;
+    case 2:
+        danio *= 0.8;
+        break;
+    default:
+        danio *= 0.2;
+        break;
     }
 }
 
@@ -155,60 +155,64 @@ void Ser::chequearCamino(Grafo *mapa, vector<int> *camino, string nombre)
             }
         }
     }
-    else if (nombre == S_VAMPIRELLA || nombre == S_NOSFERATU || nombre == S_VAMPIRO){
-        Casillero* casillero;
-        for (int i = 0; i < tamanio; i++){
+    else if (nombre == S_VAMPIRELLA || nombre == S_NOSFERATU || nombre == S_VAMPIRO)
+    {
+        Casillero *casillero;
+        for (int i = 0; i < tamanio; i++)
+        {
             casillero = mapa->getCasillero(camino->at(i));
             objetoLeido = casillero->getObjeto();
-            if(objetoLeido != nullptr){
+            if (objetoLeido != nullptr)
+            {
                 tipoLeido = objetoLeido->getNombre();
-                if(tipoLeido == S_ESTACA)
+                if (tipoLeido == S_ESTACA)
                     casillero->eliminarObjeto();
             }
-
         }
     }
 }
 
-void Ser::imprimirCamino(Grafo* mapa, vector<Posicion>* posiciones, Ser* ser)
+void Ser::imprimirCamino(Grafo *mapa, vector<Posicion> *posiciones, Ser *ser)
 {
     int tamanio = (int)posiciones->size();
-    Casillero* casillero;
-    Objeto* personaje;
-    Objeto* anterior;                       // objeto que estaba antes en el casillero
-    personaje = dynamic_cast<Objeto*>(ser);
-    for(int i = 0; i < tamanio - 1; i++){
+    Casillero *casillero;
+    Objeto *personaje;
+    Objeto *anterior; // objeto que estaba antes en el casillero
+    personaje = dynamic_cast<Objeto *>(ser);
+    for (int i = 0; i < tamanio - 1; i++)
+    {
         clearTerminal();
         casillero = mapa->getCasillero(posiciones->at(i));
         anterior = casillero->getObjeto();
         casillero->setObjeto(personaje);
         mapa->mostrarMapa();
         Sleep(600)
-        casillero->eliminarObjeto();
+            casillero->eliminarObjeto();
         casillero->desocupar();
 
-        if(anterior != nullptr){
+        if (anterior != nullptr)
+        {
             casillero->setObjeto(anterior);
         }
     }
-
-
 }
 
-bool Ser::mover(Grafo *mapa, Posicion destino) {
+bool Ser::mover(Grafo *mapa, Posicion destino)
+{
     bool seMovio = false;
     Posicion origen(this->getFila(), this->getColumna());
 
     mapa->establecerCaminos(this->getNombre());
     vector<int> *camino = mapa->caminoMinimo(origen, destino, this->getEnergia());
 
-    if (camino != nullptr) {
+    if (camino != nullptr)
+    {
         int costoCamino = mapa->sumarCamino(camino);
         this->energia -= costoCamino;
 
         chequearCamino(mapa, camino, this->nombre);
         actualizarMapa(mapa, origen, destino);
-        vector <Posicion> *posiciones;
+        vector<Posicion> *posiciones;
 
         posiciones = obtenerPosiciones(mapa, camino);
         reverse(posiciones->begin(), posiciones->end());

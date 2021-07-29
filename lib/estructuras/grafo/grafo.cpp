@@ -230,16 +230,17 @@ int Grafo::buscarIndice(Posicion coordenada)
     return indice;
 }
 
-
 /* Pre: camino no debe ser nullptr
  * Pos: Dada una secuencia de casilleros camino, suma el costo total del recorrido
  */
-int Grafo::sumarCamino(vector<int> *camino) {
+int Grafo::sumarCamino(vector<int> *camino)
+{
     int tamanio = (int)camino->size();
     int total = 0;
     int parcial;
     int indice;
-    for(int i = 0; (i + 1) < tamanio; i++){
+    for (int i = 0; (i + 1) < tamanio; i++)
+    {
         indice = camino->at(i);
         parcial = matriz_adyacencia[indice][camino->at(i + 1)];
         total += parcial;
@@ -261,8 +262,9 @@ void Grafo::agregarObjeto(Objeto *nuevoObjeto, Posicion pos)
 
 /* Pos: Dada una Posicion pos, elimina el objeto que se encuentra alli
  * */
-void Grafo::eliminarObjeto(Posicion pos) {
-    if(coordenadaValida(pos))
+void Grafo::eliminarObjeto(Posicion pos)
+{
+    if (coordenadaValida(pos))
     {
         int indice = buscarIndice(pos);
         casilleros.at(indice)->eliminarObjeto();
@@ -320,8 +322,7 @@ void Grafo::ocupar(Posicion coordenada)
  */
 void Grafo::desocupar(Posicion coordenada)
 {
-    bool valida = coordenadaValida(coordenada);
-    if (valida)
+    if (coordenadaValida(coordenada))
     {
         int indice = buscarIndice(coordenada);
         casilleros[indice]->desocupar();
@@ -349,7 +350,7 @@ Casillero *Grafo::getCasillero(Posicion coordenada)
 
 /*Devuelve el casillero segun el indice
 */
-Casillero* Grafo::getCasillero(int indice)
+Casillero *Grafo::getCasillero(int indice)
 {
     return casilleros.at(indice);
 }
@@ -452,7 +453,8 @@ vector<int> *Grafo::caminoMinimo(Posicion origen, Posicion destino, int energiaP
 /* Pre: la coordenada debe ser valida
  * Pos: Devuelve true si el casillero de esas coordenadas esra ocupado y false si no lo esta
  * */
-bool Grafo::estaOcupado(Posicion coordenada) {
+bool Grafo::estaOcupado(Posicion coordenada)
+{
     int indice = buscarIndice(coordenada);
     return casilleros[indice]->estaOcupado();
 }

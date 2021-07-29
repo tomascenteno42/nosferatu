@@ -23,9 +23,16 @@ public:
 
     void atacar(Juego *juego) override;
 
+    bool buscarAlrededor(Juego *juego, Posicion posicion, bool esCorrecto);
+
     void actualizar() override;
 
-    bool defender(Juego* juego) override;
+    void defender(Juego *juego) override;
+
+    bool puedeDefenderse();
+    bool puedeAtacar();
+
+    int getCantidadDeAguaBenditas();
 
     /*
      * Post: decrece en 1 la cantidad de objetos Zombi existentes

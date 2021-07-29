@@ -77,7 +77,7 @@ public:
      */
     void setFuerza(int f);
 
-    virtual bool defender(Juego *juego) = 0;
+    virtual void defender(Juego *juego) = 0;
 
     virtual void actualizar() = 0;
 
@@ -102,10 +102,13 @@ public:
      */
     bool estaMuerto();
 
-
     /* Pre: Devuelve true si el ser se esta defendiendo o false si no lo esta
      * */
     bool seEstaDefendiendo();
+
+    bool puedeDefenderse();
+
+    bool puedeAtacar();
 
     /*
      * Post: Se muestra por pantalla la informacion del objeto: nombre

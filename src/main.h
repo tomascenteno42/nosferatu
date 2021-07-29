@@ -73,6 +73,10 @@ using namespace std;
 #include "../lib/interfaz/Menu.h"
 #include "../lib/interfaz/Juego.h"
 
+// ARCHIVOS
+void guardarItems(ABB<int, Objeto *> *diccionario, ofstream &archivo);
+void guardarPersonajes(int cantidadPersonajes, Jugador *jugador, ofstream &archivo);
+
 // UTILS
 void clearTerminal();
 void mostrarBando(BANDO bando);

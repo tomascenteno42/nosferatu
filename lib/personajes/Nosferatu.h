@@ -7,8 +7,6 @@ class Juego;
 class Nosferatu : public Vampiro
 {
 private:
-    static int contador;
-
     bool posicionValida(vector<Posicion> posiciones, int filaVampiro, int columnaVampiro);
 
 public:
@@ -20,9 +18,12 @@ public:
 
     void atacar(Juego *juego) override;
 
-    bool defender(Juego* juego) override;
+    void defender(Juego *juego) override;
 
     void actualizar() override;
+
+    bool puedeAtacar();
+    bool puedeDefenderse();
 
     /*
      * Post: decrece en 1 la cantidad de Nosferatu existentes

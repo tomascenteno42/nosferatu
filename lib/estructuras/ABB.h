@@ -1,206 +1,281 @@
-#ifndef TP3_BST_H
-#define TP3_BST_H
+#ifndef TP3_ABB_H
+#define TP3_ABB_H
 
 #include "../../src/main.h"
-
-template <class K, class T>
-class NodoABB;
 
 template <class K, class T>
 class ABB
 {
 private:
+    NodoABB<K, T> *raiz;
     int cantidad;
 
-    NodoABB<K, T> *raiz;
+    NodoABB<K, T> *insertar(K id, T data, NodoABB<K, T> *nodo);
+    NodoABB<K, T> *buscar(K id, NodoABB<K, T> *nodo);
+    NodoABB<K, T> *eliminar(K id, NodoABB<K, T> *nodo);
 
-    /**
-     * @brief Busca de forma recursiva el nodo con el clave mas chica y retorna su clave.
-     * 
-     * @param nodo 
-     * @return K clave
-     */
     K buscarMinimo(NodoABB<K, T> *nodo);
-
-    /**
-     * @brief Busca de forma recursiva el nodo con el clave mas grande y retorna su clave.
-     * 
-     * @param nodo 
-     * @return K clave
-     */
     K buscarMaximo(NodoABB<K, T> *nodo);
-
-    /**
-     * @brief 
-     * 
-     * @param nodo 
-     * @return K 
-     */
     K sucesor(NodoABB<K, T> *nodo);
-    /**
-     * @brief 
-     * 
-     * @param nodo 
-     * @return K
-     */
     K predecesor(NodoABB<K, T> *nodo);
 
-    /**
-     * @brief Busca el nodo por la clave de forma recursiva.
-     * 
-     * @param nodo 
-     * @param clave 
-     * @return NodoABB<K, T>* 
-     */
-    NodoABB<K, T> *buscar(NodoABB<K, T> *nodo, K clave);
-
-    /**
-     * @brief Inserta el nodo en su respectivo lugar con su clave y data.
-     * 
-     * @param nodo 
-     * @param clave 
-     * @param data 
-     * @return NodoABB<K, T>* 
-     */
-    NodoABB<K, T> *insertar(K clave, T data, NodoABB<K, T> *nodo);
-
-    /**
-     * @brief Elimina un nodo que tiene clave.
-     * 
-     * @param nodo 
-     * @param clave 
-     * @return NodoABB<K, T>* 
-     */
-    NodoABB<K, T> *eliminar(NodoABB<K, T> *nodo, K clave);
-
-    /**
-     * @brief Imprime todos los valores del ABB.
-     * 
-     * @param nodo 
-     */
     void imprimirEnOrden(NodoABB<K, T> *nodo);
+    void clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves);
 
-    /**
-     * @brief Ordena las claves y las va colocando en un vector pasado por referencia.
-     * 
-     * @param nodo 
-     * @param claves 
-     */
-    void idsEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves);
-
-    /**
-     * @brief Limpia el ABB.
-     * 
-     * @param nodo 
-     */
     void eliminarTodo(NodoABB<K, T> *nodo);
 
 public:
-    /**
-     * @brief Construye un arbol de busqueda binaria.
-     * 
-     */
     ABB();
 
-    T getData(K clave);
+    // Inserts element in tree (id, data)
+    void insertar(K id, T data);
+    bool buscar(K id);
+    void eliminar(K id);
+
+    int getCantidad();
+    K buscarMinimo();
+    K buscarMaximo();
+    K sucesor(K id);
+    K predecesor(K id);
+
+    T getData(K id);
     NodoABB<K, T> *getRaiz();
 
-    /**
-     * @brief Busca el minimo nodo y retorna su valor.
-     * 
-     * @return K clave
-     */
-    K buscarMinimo();
-
-    /**
-     * @brief Busca el maximo nodo y retorna su valor.
-     * 
-     * @return K clave
-     */
-    K buscarMaximo();
-
-    /**
-     * @brief Busca el sucesor de un nodo dado un valor.
-     * 
-     * @param clave 
-     * @return K 
-     */
-    K sucesor(K clave);
-
-    /**
-     * @brief Busca el predecesor de un nodo dado un valor.
-     * 
-     * @param clave
-     * @return K
-     */
-    K predecesor(K clave);
-
-    /**
-     * @brief Crea un nuevo nodo con clave y data.
-     * 
-     * @param clave 
-     * @param data 
-     */
-    void insertar(K clave, T data);
-
-    /**
-     * @brief Elimina un nodo del ABB.
-     * 
-     * @param clave
-     */
-    void eliminar(K clave);
-
-    /**
-     * @brief Determinar si un nodo existe en el ABB. 
-     * 
-     * @param clave 
-     * @return true 
-     * @return false 
-     */
-    bool existe(K clave);
-
-    /**
-     * @brief Comprueba que el nodo raiz es null.
-     */
-    bool vacio();
-
-    /**
-     * @brief Imprime toda la data del ABB, desde el menor al mayor.
-     * 
-     */
     void imprimirEnOrden();
+    std::vector<K> clavesEnOrden();
 
-    /**
-     * @brief Devuelve las claves del ABB en orden.
-     * 
-     * @return std::vector<K> 
-     */
-    std::vector<K> idsEnOrden();
-
-    /**
-     * @brief Elimina todos los nodos del ABB.
-     */
     void eliminarTodo();
 
-    /**
-     * @brief Destruye el arbol.
-     * 
-     */
+    bool existe(K id);
+
     ~ABB();
 };
 
 template <class K, class T>
 ABB<K, T>::ABB()
 {
-    raiz = NULL;
+    raiz = 0;
     cantidad = 0;
+}
+template <class K, class T>
+bool ABB<K, T>::existe(K id)
+{
+    return buscar(id, this->raiz) != NULL;
 }
 
 template <class K, class T>
-T ABB<K, T>::getData(K clave)
+NodoABB<K, T> *ABB<K, T>::insertar(K id, T data, NodoABB<K, T> *nodo)
 {
-    NodoABB<K, T> *nodo = buscar(raiz, clave);
-    return nodo->getData();
+    if (nodo == 0)
+        nodo = new NodoABB<K, T>(id, data);
+    else if (id < nodo->getId())
+        nodo->setIzquierdo(insertar(id, data, nodo->getIzquierdo()));
+    else
+        nodo->setDerecho(insertar(id, data, nodo->getDerecho()));
+
+    return nodo;
+}
+
+template <class K, class T>
+void ABB<K, T>::insertar(K id, T data)
+{
+    if (!buscar(id))
+    {
+        raiz = insertar(id, data, raiz);
+        cantidad++;
+    }
+}
+
+template <class K, class T>
+NodoABB<K, T> *ABB<K, T>::buscar(K id, NodoABB<K, T> *nodo)
+{
+    if (nodo && id < nodo->getId())
+        nodo = buscar(id, nodo->getIzquierdo());
+    if (nodo && id > nodo->getId())
+        nodo = buscar(id, nodo->getDerecho());
+
+    return nodo;
+}
+
+template <class K, class T>
+bool ABB<K, T>::buscar(K id)
+{
+    return (buscar(id, raiz) != 0);
+}
+
+template <class K, class T>
+NodoABB<K, T> *ABB<K, T>::eliminar(K id, NodoABB<K, T> *nodo)
+{
+    if (!nodo)
+    {
+    }
+
+    else if (id < nodo->getId())
+    {
+        nodo->setIzquierdo(eliminar(id, nodo->getIzquierdo()));
+        cantidad--;
+    }
+    else if (id > nodo->getId())
+    {
+        nodo->setDerecho(eliminar(id, nodo->getDerecho()));
+        cantidad--;
+    }
+    else
+    {
+        if (nodo->esHoja())
+        {
+            delete nodo;
+            nodo = 0;
+        }
+        else if (nodo->soloHijoDerecho())
+        {
+            nodo->getDerecho()->setPadre(nodo->getPadre());
+            NodoABB<K, T> *aux = nodo->getDerecho();
+            delete nodo;
+            nodo = aux;
+        }
+        else if (nodo->soloHijoIzquierdo())
+        {
+            nodo->getIzquierdo()->setPadre(nodo->getPadre());
+            NodoABB<K, T> *aux = nodo->getIzquierdo();
+            delete nodo;
+            nodo = aux;
+        }
+        else
+        {
+            K replacement;
+            if (buscar(sucesor(id)))
+                replacement = buscar(sucesor(id), raiz)->getId();
+            else
+                replacement = buscar(predecesor(id), raiz)->getId();
+            T newData = getData(replacement);
+            raiz = eliminar(replacement, raiz);
+            nodo->setData(newData);
+            nodo->setId(replacement);
+        }
+        cantidad--;
+    }
+    return nodo;
+}
+
+template <class K, class T>
+void ABB<K, T>::eliminar(K id)
+{
+    if (buscar(id))
+        raiz = eliminar(id, raiz);
+    else
+        std::cout << "The tree does not contain specified data" << endl;
+}
+
+template <class K, class T>
+int ABB<K, T>::getCantidad()
+{
+    return cantidad;
+}
+
+template <class K, class T>
+K ABB<K, T>::buscarMinimo(NodoABB<K, T> *nodo)
+{
+    if (nodo->getIzquierdo())
+        return buscarMinimo(nodo->getIzquierdo());
+    else
+        return nodo->getId();
+}
+
+template <class K, class T>
+K ABB<K, T>::buscarMinimo()
+{
+    if (raiz)
+        return buscarMinimo(raiz);
+    else
+        return -1;
+}
+
+template <class K, class T>
+K ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
+{
+    if (nodo->getDerecho())
+        return buscarMaximo(nodo->getDerecho());
+    else
+        return nodo->getId();
+}
+
+template <class K, class T>
+K ABB<K, T>::buscarMaximo()
+{
+    if (raiz)
+        return buscarMaximo(raiz);
+    else
+        return -1;
+}
+
+template <class K, class T>
+K ABB<K, T>::sucesor(NodoABB<K, T> *nodo)
+{
+    K outcome;
+
+    if (nodo->getId() == buscarMaximo()) // nodo has no sucesor
+        outcome = -1;
+    else if (nodo->getDerecho())
+        outcome = buscarMinimo(nodo->getDerecho());
+    else
+    {
+        T data = nodo->getData();
+        NodoABB<K, T> *ancestor = nodo->getPadre();
+        while (data >= ancestor->getData())
+            ancestor = ancestor->getPadre();
+        outcome = ancestor->getId();
+    }
+    return outcome;
+}
+
+template <class K, class T>
+K ABB<K, T>::sucesor(K id)
+{
+    NodoABB<K, T> *nodo = buscar(id, raiz);
+
+    if (nodo)
+        return sucesor(nodo);
+    else
+        return -1;
+}
+
+template <class K, class T>
+K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
+{
+    K outcome;
+    if (nodo->getId() == buscarMinimo()) // nodo has no predecesor
+        outcome = -1;
+    else if (nodo->getIzquierdo())
+        outcome = buscarMaximo(nodo->getIzquierdo());
+    else
+    {
+        T data = nodo->getData();
+        NodoABB<K, T> *ancestor = nodo->getPadre();
+        while (data <= ancestor->getData())
+            ancestor = ancestor->getPadre();
+        outcome = ancestor->getId();
+    }
+    return outcome;
+}
+
+template <class K, class T>
+K ABB<K, T>::predecesor(K id)
+{
+    NodoABB<K, T> *nodo = buscar(id, raiz);
+
+    if (nodo)
+        return predecesor(nodo);
+    else
+        return -1;
+}
+
+template <class K, class T>
+T ABB<K, T>::getData(K id)
+{
+    NodoABB<K, T> *nodo = buscar(id, raiz);
+    T data = nodo->getData();
+    return data;
 }
 
 template <class K, class T>
@@ -210,240 +285,12 @@ NodoABB<K, T> *ABB<K, T>::getRaiz()
 }
 
 template <class K, class T>
-NodoABB<K, T> *ABB<K, T>::buscar(NodoABB<K, T> *nodo, K clave)
-{
-    if (nodo && clave < nodo->getId())
-        nodo = buscar(nodo->getIzquierdo(), clave);
-
-    if (nodo && clave > nodo->getId())
-        nodo = buscar(nodo->getDerecho(), clave);
-
-    return nodo;
-}
-
-template <class K, class T>
-K ABB<K, T>::buscarMinimo()
-{
-    if (vacio())
-    {
-        return -1;
-    }
-
-    return buscarMinimo(raiz);
-}
-
-template <class K, class T>
-K ABB<K, T>::buscarMinimo(NodoABB<K, T> *nodo)
-{
-    NodoABB<K, T> *nodoIzquierdo = nodo->getIzquierdo();
-
-    if (nodoIzquierdo)
-    {
-        return buscarMinimo(nodoIzquierdo);
-    }
-
-    return nodo->getId();
-}
-
-template <class K, class T>
-K ABB<K, T>::buscarMaximo()
-{
-    if (vacio())
-    {
-        return -1;
-    }
-
-    return buscarMaximo(raiz);
-}
-
-template <class K, class T>
-K ABB<K, T>::buscarMaximo(NodoABB<K, T> *nodo)
-{
-    NodoABB<K, T> *nodoDerecho = nodo->getDerecho();
-
-    if (nodoDerecho)
-    {
-        buscarMaximo(nodoDerecho);
-    }
-
-    return nodo->getId();
-}
-
-template <class K, class T>
-K ABB<K, T>::predecesor(K clave)
-{
-    NodoABB<K, T> *nodo = buscar(this->raiz, clave);
-
-    if (!nodo)
-        return -1;
-
-    return predecesor(nodo);
-}
-
-template <class K, class T>
-K ABB<K, T>::predecesor(NodoABB<K, T> *nodo)
-{
-
-    if (nodo->getId() == buscarMinimo())
-        return -1;
-
-    if (nodo->getIzquierdo())
-        return buscarMaximo(nodo->getIzquierdo());
-
-    K clave = nodo->getId();
-
-    NodoABB<K, T> *ancestro = nodo->getPadre();
-
-    while (clave <= ancestro->getId())
-        ancestro = ancestro->getPadre();
-
-    return ancestro->getId();
-}
-
-template <class K, class T>
-K ABB<K, T>::sucesor(K clave)
-{
-    NodoABB<K, T> *nodo = buscar(this->raiz, clave);
-
-    if (!nodo)
-        return -1;
-
-    return sucesor(nodo);
-}
-
-template <class K, class T>
-K ABB<K, T>::sucesor(NodoABB<K, T> *nodo)
-{
-    if (nodo->getId() == buscarMaximo())
-        return -1;
-
-    if (nodo->getDerecho())
-        return buscarMinimo(nodo->getDerecho());
-
-    K clave = nodo->getId();
-
-    NodoABB<K, T> *ancestro = nodo->getPadre();
-
-    while (clave >= ancestro->getId())
-        ancestro = ancestro->getPadre();
-
-    return ancestro->getId();
-}
-
-template <class K, class T>
-void ABB<K, T>::insertar(K clave, T data)
-{
-    if (!existe(clave))
-    {
-        raiz = insertar(clave, data, this->raiz);
-        cantidad++;
-    }
-}
-
-template <class K, class T>
-NodoABB<K, T> *ABB<K, T>::insertar(K clave, T data, NodoABB<K, T> *nodo)
-{
-    if (!nodo)
-    {
-        nodo = new NodoABB<K, T>(clave, data);
-    }
-    else if (clave < nodo->getId())
-    {
-        nodo->setIzquierdo(insertar(clave, data, nodo->getIzquierdo()));
-    }
-    else
-    {
-        nodo->setDerecho(insertar(clave, data, nodo->getDerecho()));
-    }
-
-    return nodo;
-}
-
-template <class K, class T>
-void ABB<K, T>::eliminar(K clave)
-{
-    if (existe(clave))
-    {
-        raiz = eliminar(raiz, clave);
-    }
-}
-
-template <class K, class T>
-NodoABB<K, T> *ABB<K, T>::eliminar(NodoABB<K, T> *nodo, K clave)
-{
-    if (clave < nodo->getId())
-    {
-        nodo->setIzquierdo(eliminar(nodo->getIzquierdo(), clave));
-        cantidad--;
-    }
-    else if (clave > nodo->getId())
-    {
-        nodo->setDerecho(eliminar(nodo->getDerecho(), clave));
-        cantidad--;
-    }
-    else
-    {
-        if (nodo->esHoja())
-        {
-            delete nodo;
-            nodo = NULL;
-        }
-        else if (nodo->tieneSoloHijoDerecho())
-        {
-            nodo->getDerecho()->setPadre(nodo->getPadre());
-            NodoABB<K, T> *nodoAux = nodo->getDerecho();
-            delete nodo;
-            nodo = nodoAux;
-        }
-        else if (nodo->tieneSoloHijoIzquierdo())
-        {
-            nodo->getIzquierdo()->setPadre(nodo->getPadre());
-            NodoABB<K, T> *nodoAux = nodo->getIzquierdo();
-            delete nodo;
-            nodo = nodoAux;
-        }
-        else
-        {
-            K remplazo;
-
-            if (existe(sucesor(clave)))
-            {
-                remplazo = buscar(raiz, sucesor(clave))->getId();
-            }
-            else
-            {
-                remplazo = buscar(raiz, predecesor(clave))->getId();
-            }
-
-            T newData = getData(remplazo);
-            raiz = eliminar(raiz, remplazo);
-            nodo->setData(newData);
-            nodo->setId(remplazo);
-        }
-        cantidad--;
-    }
-    return nodo;
-}
-
-template <class K, class T>
-bool ABB<K, T>::existe(K clave)
-{
-    return buscar(raiz, clave) != NULL;
-}
-
-template <class K, class T>
-bool ABB<K, T>::vacio()
-{
-    return cantidad == 0;
-}
-
-template <class K, class T>
 void ABB<K, T>::imprimirEnOrden(NodoABB<K, T> *nodo)
 {
-    if (nodo != NULL)
+    if (nodo != 0)
     {
         imprimirEnOrden(nodo->getIzquierdo());
-        cout << nodo->getId() << ' ';
+        std::cout << nodo->getId() << " ";
         imprimirEnOrden(nodo->getDerecho());
     }
 }
@@ -452,30 +299,26 @@ template <class K, class T>
 void ABB<K, T>::imprimirEnOrden()
 {
     imprimirEnOrden(raiz);
-    cout << endl;
+    std::cout << endl;
 }
 
 template <class K, class T>
-std::vector<K> ABB<K, T>::idsEnOrden()
+void ABB<K, T>::clavesEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
+{
+    if (nodo != 0)
+    {
+        clavesEnOrden(nodo->getIzquierdo(), claves);
+        claves.push_back(nodo->getId());
+        clavesEnOrden(nodo->getDerecho(), claves);
+    }
+}
+
+template <class K, class T>
+std::vector<K> ABB<K, T>::clavesEnOrden()
 {
     std::vector<K> claves;
-
-    idsEnOrden(raiz, claves);
-
+    clavesEnOrden(raiz, claves);
     return claves;
-}
-
-template <class K, class T>
-void ABB<K, T>::idsEnOrden(NodoABB<K, T> *nodo, std::vector<K> &claves)
-{
-    if (nodo != NULL)
-    {
-        idsEnOrden(nodo->getIzquierdo(), claves);
-
-        claves.push_back(nodo->getId());
-
-        idsEnOrden(nodo->getDerecho(), claves);
-    }
 }
 
 template <class K, class T>
@@ -485,7 +328,6 @@ void ABB<K, T>::eliminarTodo(NodoABB<K, T> *nodo)
     {
         eliminarTodo(nodo->getIzquierdo());
         eliminarTodo(nodo->getDerecho());
-
         delete nodo;
     }
 }
