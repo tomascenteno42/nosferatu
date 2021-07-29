@@ -53,53 +53,6 @@ void Zombi::atacar(Juego *juego)
             }
         }
     }
-        /*Posicion arriba((this->getFila() - 1), this->getColumna());
-        Objeto *objetoEncontrado = juego->tablero->getElementoEnPosicion(arriba);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
-            {
-                posicionesPosibles.push_back(arriba);
-                puedeAtacar = true;
-            }
-        }
-
-        Posicion abajo((this->getFila() + 1), this->getColumna());
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(abajo);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
-            {
-                posicionesPosibles.push_back(abajo);
-                puedeAtacar = true;
-            }
-        }
-
-        Posicion izquierda(this->getFila(), (this->getColumna() - 1));
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(izquierda);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
-            {
-                posicionesPosibles.push_back(izquierda);
-                puedeAtacar = true;
-            }
-        }
-
-        Posicion derecha(this->getFila(), (this->getColumna() + 1));
-        objetoEncontrado = juego->tablero->getElementoEnPosicion(derecha);
-        if (objetoEncontrado)
-        {
-            int id = objetoEncontrado->getId();
-            if (id >= ID_VANESA && id < ID_ZOMBIE)
-            {
-                posicionesPosibles.push_back(derecha);
-                puedeAtacar = true;
-            }
-        }*/
         if (!puedeAtacar)
             cout << "No tenes enemigos cerca para atacarlos" << endl;
         else

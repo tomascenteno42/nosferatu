@@ -14,8 +14,6 @@ void Vampiro::atacar(Juego *juego)
     int filaEnemigo, columnaEnemigo;
     bool puedeAtacar = false;
 
-    Objeto *objetoEncontrado;
-
     if(this->getEnergia() < 2)
         cout << "No podes hacer eso, te falta energia ლ(ಠ_ಠლ)" << endl;
     else {
